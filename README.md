@@ -4,7 +4,7 @@
 
 ## Members
 * Politis, Theodore (s3661671)
-* SURNAME, GivenName (sXXXX)
+* Kodithuwakku, M.K. Dulshan (s3813354)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
