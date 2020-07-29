@@ -3,7 +3,7 @@
 # Group 00
 
 ## Members
-* SURNAME, GivenName (sXXXX)
+* Politis, Theodore (s3661671)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
@@ -11,7 +11,7 @@
 
 ## Records
 
-* Github repository : https://github.com/RMIT-SEPT/MajorProject/Groupx
+* Github repository : https://github.com/RMIT-SEPT/majorproject-3-thurs-10-30-6
 * ClickUp Workspace : https://app.clickup.com/xxxx/yyyy
 
 
