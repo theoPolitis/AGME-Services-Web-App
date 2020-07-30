@@ -12,7 +12,7 @@
 ## Records
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-3-thurs-10-30-6
-* ClickUp Workspace : https://app.clickup.com/xxxx/yyyy
+* ClickUp Workspace : https://share.clickup.com/b/h/5-4969166-2/df77f1c0fbae541
 
 
 ## Code documentation
