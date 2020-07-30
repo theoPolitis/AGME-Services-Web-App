@@ -5,7 +5,7 @@
 ## Members
 * Politis, Theodore (s3661671)
 * Kodithuwakku, M.K. Dulshan (s3813354)
-* SURNAME, GivenName (sXXXX)
+* Williams, Jack (s3788167)
 * SURNAME, GivenName (sXXXX)
 * SURNAME, GivenName (sXXXX)
 
