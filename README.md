@@ -6,7 +6,7 @@
 * Politis, Theodore (s3661671)
 * Kodithuwakku, M.K. Dulshan (s3813354)
 * Williams, Jack (s3788167)
-* SURNAME, GivenName (sXXXX)
+* Rizzo, Julian (s3781198)
 * SURNAME, GivenName (sXXXX)
 
 ## Records
