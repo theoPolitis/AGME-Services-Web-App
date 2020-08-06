@@ -13,12 +13,11 @@ public class Customer {
     private Integer id;
     private String password;
     private String email;
-    @Size(min=1,message = "Please enter a username between 3-20 characters")
+    @Size(min=1, max = Integer.MAX_VALUE, message = "Please enter a first name of at least 1 character length")
     private String firstName;
-    @Size(min=1,message = "Please enter a username between 3-20 characters")
+    @Size(min=1,max = Integer.MAX_VALUE,message = "Please enter a last name of at least 1 character length")
     private String lastName;
     private String address;
-    @Size(min=1,message = "Please enter a username between 3-20 characters")
     private Integer phoneNumber;
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
     private String username;
