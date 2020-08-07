@@ -22,8 +22,38 @@ public class Customer {
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
     private String username;
 
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date createdDate;
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date updatedDate;
+
+    @PrePersist
+    protected void onCreated(){
+        this.createdDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate(){
+        this.updatedDate = new Date();
+    }
     public Customer()
     {
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public void setCreatedDate(Date createdDate) {
+        this.createdDate = createdDate;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
+
+    public void setUpdatedDate(Date updatedDate) {
+        this.updatedDate = updatedDate;
     }
 
     public Integer getId()
