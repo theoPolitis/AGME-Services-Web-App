@@ -1,9 +1,9 @@
 package septmajorproject.bookingsys.repository;
 
 import org.springframework.data.repository.CrudRepository;
-import septmajorproject.bookingsys.model.Roster;
+import septmajorproject.bookingsys.model.Booking;
 
 import java.util.Date;
 
-public interface RosterRepository extends CrudRepository<Roster, Date> {
+public interface BookingRepository extends CrudRepository<Booking, Date> {
 }

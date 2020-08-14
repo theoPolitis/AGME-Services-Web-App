@@ -1,13 +1,11 @@
 package septmajorproject.bookingsys.service;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import septmajorproject.bookingsys.repository.RosterRepository;
+import septmajorproject.bookingsys.repository.BookingRepository;
 
 @Service
-public class RosterService {
-
+public class BookingService {
     @Autowired
-    private RosterRepository rosterRepository;
+    private BookingRepository bookingRepository;
 }

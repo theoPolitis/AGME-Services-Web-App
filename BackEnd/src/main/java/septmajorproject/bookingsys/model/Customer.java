@@ -5,11 +5,14 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import com.fasterxml.jackson.annotation.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name = "CUSTOMER")
 public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "customer_id")
     private Integer id;
     private String password;
     private String email;
@@ -27,6 +30,9 @@ public class Customer {
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedDate;
 
+    @OneToMany(mappedBy = "customer")
+    private List<Roster> customerList;
+
     @PrePersist
     protected void onCreated(){
         this.createdDate = new Date();
@@ -36,6 +42,8 @@ public class Customer {
     protected void onUpdate(){
         this.updatedDate = new Date();
     }
+
+
     public Customer()
     {
     }
@@ -129,5 +137,13 @@ public class Customer {
     public void setAddress(String address)
     {
         this.address = address;
+    }
+
+    public void setCustomerList(List<Roster> customerList) {
+        this.customerList = customerList;
+    }
+
+    public List<Roster> getCustomerList() {
+        return customerList;
     }
 }

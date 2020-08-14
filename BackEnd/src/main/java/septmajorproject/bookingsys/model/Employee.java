@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,8 +39,10 @@ public class Employee {
     private Date updatedDate;
 
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    @JoinColumn(name="employee_id", referencedColumnName = "employee_id")
-    private List<Roster> rosterArray;
+    private List<Roster> rosterList;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Roster> bookingList;
 
     //default constructor
     public Employee(){
@@ -121,5 +122,21 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRosterList(List<Roster> rosterArray) {
+        this.rosterList = rosterArray;
+    }
+
+    public void setBookingList(List<Roster> bookingArray) {
+        this.bookingList = bookingArray;
+    }
+
+    public List<Roster> getRosterList() {
+        return rosterList;
+    }
+
+    public List<Roster> getBookingList() {
+        return bookingList;
     }
 }
