@@ -5,13 +5,17 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name="EMPLOYEE")
 public class Employee {
     //values that make up a person object and the sql table
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="employee_id")
     private long id;
     private boolean isAdmin;
     @Size(min=1, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than one character.")
@@ -34,6 +38,10 @@ public class Employee {
     private Date createdDate;
     @JsonFormat(pattern="yyyy-mm-dd")
     private Date updatedDate;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    @JoinColumn(name="employee_id", referencedColumnName = "employee_id")
+    private List<Roster> rosterArray;
 
     //default constructor
     public Employee(){
