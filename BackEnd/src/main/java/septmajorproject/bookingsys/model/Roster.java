@@ -13,38 +13,31 @@ public class Roster {
     @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
 
-    @Id
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date rosterDate;
-    @Id
-    @JsonFormat(pattern = "HH:mm")
-    private Time rosterTime;
+    @EmbeddedId
+    private RosterPK rosterPK;
 
     public Roster(){
 
+    }
+
+    public Roster(Employee employee, RosterPK rosterPK) {
+        this.employee = employee;
+        this.rosterPK = rosterPK;
     }
 
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
-    public void setRosterDate(Date rosterDate) {
-        this.rosterDate = rosterDate;
-    }
-
-    public void setRosterTime(Time rosterTime) {
-        this.rosterTime = rosterTime;
-    }
-
     public Employee getEmployee() {
         return employee;
     }
 
-    public Date getRosterDate() {
-        return rosterDate;
+    public void setRosterPK(RosterPK rosterPK) {
+        this.rosterPK = rosterPK;
     }
 
-    public Time getRosterTime() {
-        return rosterTime;
+    public RosterPK getRosterPK() {
+        return rosterPK;
     }
 }

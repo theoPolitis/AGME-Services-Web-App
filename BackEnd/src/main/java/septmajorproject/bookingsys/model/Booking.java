@@ -4,12 +4,16 @@ package septmajorproject.bookingsys.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
 @Entity
 @Table(name = "BOOKING")
 public class Booking {
+
+    @EmbeddedId
+    private BookingPK bookingPK;
 
     @ManyToOne
     @JoinColumn(name="employee_id", nullable=false)
@@ -19,15 +23,13 @@ public class Booking {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @Id
-    @JsonFormat(pattern = "yyyy-mm-dd")
-    private Date rosterDate;
-
-    @Id
-    @JsonFormat(pattern = "HH:mm")
-    private Time rosterTime;
-
     public Booking() {
+    }
+
+    public Booking(BookingPK bookingPK, Employee employee, Customer customer) {
+        this.bookingPK = bookingPK;
+        this.employee = employee;
+        this.customer = customer;
     }
 
     public Employee getEmployee() {
@@ -38,14 +40,6 @@ public class Booking {
         return customer;
     }
 
-    public Date getRosterDate() {
-        return rosterDate;
-    }
-
-    public Time getRosterTime() {
-        return rosterTime;
-    }
-
     public void setEmployee(Employee employee) {
         this.employee = employee;
     }
@@ -54,11 +48,11 @@ public class Booking {
         this.customer = customer;
     }
 
-    public void setRosterDate(Date rosterDate) {
-        this.rosterDate = rosterDate;
+    public void setBookingPK(BookingPK bookingPK) {
+        this.bookingPK = bookingPK;
     }
 
-    public void setRosterTime(Time rosterTime) {
-        this.rosterTime = rosterTime;
+    public BookingPK getBookingPK() {
+        return bookingPK;
     }
 }
