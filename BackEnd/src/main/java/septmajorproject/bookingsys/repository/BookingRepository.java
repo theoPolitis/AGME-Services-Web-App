@@ -1,9 +1,11 @@
 package septmajorproject.bookingsys.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.BookingPK;
 
-
-public interface BookingRepository extends CrudRepository<Booking, BookingPK> {
+@Repository
+public interface BookingRepository extends JpaRepository<Booking, BookingPK> {
 }

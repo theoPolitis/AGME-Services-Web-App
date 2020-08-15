@@ -31,7 +31,7 @@ public class Customer {
     private Date updatedDate;
 
     @OneToMany(mappedBy = "customer")
-    private List<Roster> customerList;
+    private List<Booking> customerList;
 
     @PrePersist
     protected void onCreated(){
@@ -139,11 +139,11 @@ public class Customer {
         this.address = address;
     }
 
-    public void setCustomerList(List<Roster> customerList) {
+    public void setCustomerList(List<Booking> customerList) {
         this.customerList = customerList;
     }
 
-    public List<Roster> getCustomerList() {
+    public List<Booking> getCustomerList() {
         return customerList;
     }
 }
