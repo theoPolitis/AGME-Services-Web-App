@@ -6,12 +6,15 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
+import java.util.List;
 
 @Entity
+@Table(name="EMPLOYEE")
 public class Employee {
     //values that make up a person object and the sql table
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="employee_id")
     private long id;
     private boolean isAdmin;
     @Size(min=1, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than one character.")
@@ -34,6 +37,12 @@ public class Employee {
     private Date createdDate;
     @JsonFormat(pattern="yyyy-mm-dd")
     private Date updatedDate;
+
+    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
+    private List<Roster> rosterList;
+
+    @OneToMany(mappedBy = "employee")
+    private List<Roster> bookingList;
 
     //default constructor
     public Employee(){
@@ -113,5 +122,21 @@ public class Employee {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setRosterList(List<Roster> rosterArray) {
+        this.rosterList = rosterArray;
+    }
+
+    public void setBookingList(List<Roster> bookingArray) {
+        this.bookingList = bookingArray;
+    }
+
+    public List<Roster> getRosterList() {
+        return rosterList;
+    }
+
+    public List<Roster> getBookingList() {
+        return bookingList;
     }
 }
