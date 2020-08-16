@@ -10,44 +10,57 @@ import java.util.List;
 @Entity
 @Table(name = "CUSTOMER")
 public class Customer {
+    //Customer ID is the primary key, it is just simply a unique integer used to identify each customer
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Integer id;
+    //Password will be stored as an encrypted string
     private String password;
+    //Email will be checked using a regular expression prior to being stored in the table
     private String email;
+    //Firstname will be checked against a regular expression prior to being stored in the database,
+    //the @Size tag is used to ensure the firstname field is atleast 1 character long
     @Size(min=1, max = Integer.MAX_VALUE, message = "Please enter a first name of at least 1 character length")
     private String firstName;
+    //Similarly to the firstname, lastname will also being enforced as being atleast one character long
     @Size(min=1,max = Integer.MAX_VALUE,message = "Please enter a last name of at least 1 character length")
     private String lastName;
+    //Address will be checked against a regular expression
     private String address;
+    //Phone number is of type Integer as the primative int type cannot be used.
     private Integer phoneNumber;
+    //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
     private String username;
-
+    //Created date will be forced into the corresponding Json format
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date createdDate;
+    //updatedDate will be also forced into the corresponding Json format, this attribute will be updated
+    //whenever the relevant item in the database is updated.
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date updatedDate;
-
+    //The customer id will be used as a foreign key in the booking table, and has a one to many relationship
+    //As many bookings can be made by the one Customer.
     @OneToMany(mappedBy = "customer")
     private List<Booking> customerList;
-
+    //When the Customer is created the createdDate object is created and corresponds to the current date.
     @PrePersist
     protected void onCreated(){
         this.createdDate = new Date();
     }
-
+    //Whenever the customer object is updated the updatedDate is then also updated.
     @PreUpdate
     protected void onUpdate(){
         this.updatedDate = new Date();
     }
 
-
+    //default constructor
     public Customer()
     {
     }
 
+    //Below are just a series of basic setters/getters.
     public Date getCreatedDate() {
         return createdDate;
     }
