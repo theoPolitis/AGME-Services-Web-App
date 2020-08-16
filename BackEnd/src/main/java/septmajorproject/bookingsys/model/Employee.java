@@ -15,6 +15,7 @@ public class Employee {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="employee_id")
+    //provides a unique id for each employee that is generated
     private long id;
     private boolean isAdmin;
     @Size(min=1, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than one character.")
@@ -40,16 +41,19 @@ public class Employee {
     @JsonFormat(pattern="yyyy-mm-dd")
     private Date updatedDate;
 
+    //foreign keys to other databses
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Roster> rosterList;
 
     @OneToMany(mappedBy = "employee")
     private List<Roster> bookingList;
 
+    //default constructor
     public Employee(){
 
     }
 
+    //simple constructor for employees
     public Employee(String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password){
         this.firstName = firstName;
         this.lastName = lastName;
