@@ -10,4 +10,5 @@ import java.util.Date;
 
 @Repository
 public interface RosterRepository extends JpaRepository<Roster, RosterPK> {
+    //Further table functionality will be entered as needed
 }

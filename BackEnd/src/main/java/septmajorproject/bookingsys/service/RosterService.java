@@ -10,4 +10,7 @@ public class RosterService {
 
     @Autowired
     private RosterRepository rosterRepository;
+
+    //Add in addition/modification/retrieval logic
+
 }
