@@ -31,6 +31,8 @@ public class Employee {
     @Size(min=8, max=Integer.MAX_VALUE, message="Enter a Valid password that is greater than 8 charcters")
     @NotBlank(message="Password cannot be blank")
     private String password;
+    @NotBlank(message = "UserName cannot be blank")
+    private String userName;
 
     //created and modified date for records following format yyyy-mm-dd
     @JsonFormat(pattern="yyyy-mm-dd")
@@ -44,8 +46,18 @@ public class Employee {
     @OneToMany(mappedBy = "employee")
     private List<Roster> bookingList;
 
-    //default constructor
     public Employee(){
+
+    }
+
+    public Employee(String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password){
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber =  phoneNumber;
+        this.address = address;
+        this.userName = userName;
+        this.password = password;
     }
 
     //updates the date variables automatically with annotations
@@ -60,6 +72,15 @@ public class Employee {
     }
 
     //getters and setters
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
     public long getId() {
         return id;
     }

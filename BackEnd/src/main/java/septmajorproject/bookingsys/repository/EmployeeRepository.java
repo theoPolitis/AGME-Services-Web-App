@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 import septmajorproject.bookingsys.model.Employee;
 
 @Repository
-public interface EmployeeRepository extends JpaRepository<Employee, Long> {
-//    @Override
-//    Iterable<Employee> findAllById(Iterable<Long> iterable);
+public interface EmployeeRepository extends CrudRepository<Employee, Long> {
+    @Override
+    Iterable<Employee> findAllById(Iterable<Long> iterable);
 }
