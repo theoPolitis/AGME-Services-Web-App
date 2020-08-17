@@ -26,7 +26,7 @@ html, body{
 }
 
 .Links{
-    position: absolute;
+    /* position: absolute; */
     width: 536px;
     height: 50px;
     left: 872px;
