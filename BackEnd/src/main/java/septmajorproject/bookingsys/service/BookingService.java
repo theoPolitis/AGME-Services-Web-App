@@ -8,4 +8,6 @@ import septmajorproject.bookingsys.repository.BookingRepository;
 public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
+
+    //Add in addition/modification/retrieval logic
 }

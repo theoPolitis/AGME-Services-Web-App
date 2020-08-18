@@ -8,4 +8,5 @@ import septmajorproject.bookingsys.model.BookingPK;
 
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, BookingPK> {
+    //Further table functionality will be entered as needed
 }
