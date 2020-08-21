@@ -5,10 +5,10 @@ import './Layout.css';
 function Header() {
     return (
         <header>
-        <h1 className='Logo'>AGMEServices</h1>
-            <nav>
+            <h1 className='logo'>AGMEServices</h1>
+            <nav className='top-menu'>
                 <a>Home</a>
-                <a>Make a Bokking</a>
+                <a>Make a Booking</a>
                 <a>Employee</a>
                 <a>Customer</a>
                 <a>Login</a>
