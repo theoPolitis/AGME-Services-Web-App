@@ -152,4 +152,9 @@
     border: none;
     text-align: center;
     color: #FFFFFF;
+    cursor: pointer;
+}
+
+.homepageStyle {
+    margin-top: 100px;
 }

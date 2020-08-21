@@ -6,11 +6,11 @@ class HomePage extends Component {
     render() {
         return (
            <div className='homepageStyle'>
-                        <section className="Phrase">Find a Service that suits you</section>
-                        <a className="Line"></a>
-                        <div className="Sign_Up_Button">
-                            <Link to="/createAccount"><button className="Sign_Up">Sign Up</button></Link>
-                        </div>
+                <section className="Phrase">Find a Service that suits you</section>
+                <i className="Line"></i>
+                <div className="Sign_Up_Button">
+                    <Link to="/createAccount"><button className="Sign_Up">Sign Up</button></Link>
+                </div>
            </div>
         )
     }
