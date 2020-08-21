@@ -1,13 +1,13 @@
 import React from 'react';
 import './Layout.css';
 import { Link } from 'react-router-dom';
-//import { Link } from 'react-router-dom';
+
 
 function Header() {
     return (
         <header>
         <h1 className='Logo'>AGMEServices</h1>
-            <nav>
+            <div>
                 <Link to="/" style={linkStyle} >Home</Link>
                 <Link to='/booking' style={linkStyle}>Make a Booking</Link>
                 <Link to='/employee' style={linkStyle}>Employee</Link>
@@ -15,7 +15,7 @@ function Header() {
                 <Link to='/login' style={linkStyle}>Login</Link>
                 <Link to='/staffLogin' style={linkStyle}>Staff Login</Link>
                 <Link to='/createAccount' style={linkStyle}><button className="RegisterButton">Register</button></Link>
-            </nav>
+            </div>
         </header>
     )
 }

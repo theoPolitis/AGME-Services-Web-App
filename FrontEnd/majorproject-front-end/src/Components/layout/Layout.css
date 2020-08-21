@@ -2,15 +2,20 @@ body {
     min-width: 900px;
 }
 
+header {
+    margin: 20px;
+}
+
 a {
     padding-left: 10px;
     padding-right: 10px;
     font-size: 25px;
 }
 
-.Logo{
+.logo{
     font-size: 40px;
     padding-left: 25px;
+    display: inline;
 }
 
 .RegisterButton{
@@ -24,4 +29,9 @@ a {
     color: white;
     margin-left: 15px;
     cursor: pointer;
+}
+
+.top-menu {
+    display: inline;
+    float: right;
 }
