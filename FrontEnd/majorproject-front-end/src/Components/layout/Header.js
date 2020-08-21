@@ -7,7 +7,7 @@ function Header() {
     return (
         <header>
         <h1 className='Logo'>AGMEServices</h1>
-            <div>
+            <div className='top-menu'>
                 <Link to="/" style={linkStyle} >Home</Link>
                 <Link to='/booking' style={linkStyle}>Make a Booking</Link>
                 <Link to='/employee' style={linkStyle}>Employee</Link>

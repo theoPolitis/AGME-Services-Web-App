@@ -1,5 +1,5 @@
 body {
-    min-width: 900px;
+    min-width: 960px;
 }
 
 header {
@@ -12,9 +12,9 @@ a {
     font-size: 25px;
 }
 
-.logo{
+.Logo{
     font-size: 40px;
-    padding-left: 25px;
+    padding-left: 18px;
     display: inline;
 }
 
