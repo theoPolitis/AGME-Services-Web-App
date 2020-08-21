@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './Account.css';
 
-class Login extends Component {
+class StaffLogin extends Component {
 
     handleSubmit(event) {
 
@@ -12,7 +12,7 @@ class Login extends Component {
         return (
                 
             <div className="container">
-                <h1>LOGIN</h1>
+                <h1>STAFF LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="row">
@@ -44,4 +44,4 @@ class Login extends Component {
         )
     }
 }
-export default Login;
+export default StaffLogin;

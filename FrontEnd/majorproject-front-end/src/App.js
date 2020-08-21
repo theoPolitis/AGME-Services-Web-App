@@ -5,6 +5,7 @@ import Header from './Components/layout/Header.js';
 import HomePage from './Components/homepage/HomePage';
 import Signup from './Components/account/Signup.js';
 import Login from './Components/account/Login.js';
+import StaffLogin from './Components/account/StaffLogin';
 
  export default class App extends React.Component {
    render() {
@@ -15,6 +16,7 @@ import Login from './Components/account/Login.js';
             <Route exact path="/" component={HomePage} />
             <Route path='/createAccount' component={Signup}/>
             <Route path='/login' component={Login}/>
+            <Route path='/staffLogin'component={StaffLogin} />
           </div>
        </Router>
      )
