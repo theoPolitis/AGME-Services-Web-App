@@ -1,14 +1,14 @@
 import React from 'react';
 import './App.css';
-import HomePage from './components/homepage/HomePage.js';
-// import Login from './components/account/Login.js';
-// import Signup from './components/account/Signup.js';
+import Header from './Components/layout/Header';
 
-
-function App() {
-  return (
-    <div><HomePage/></div>
-  );
-}
-
-export default App;
+ export default class App extends React.Component {
+   render() {
+     return (
+       <div>
+          <Header/>
+       </div>
+     )
+   }
+ }
+ 
