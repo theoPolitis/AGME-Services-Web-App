@@ -28,7 +28,7 @@ class Signup extends Component {
                     </header>
                         
                     <div className="container">
-                        <h1>LOGIN</h1>
+                        <h1>Sign Up</h1>
                         <form onSubmit={this.handleSubmit}>
 
                             <div className="row">

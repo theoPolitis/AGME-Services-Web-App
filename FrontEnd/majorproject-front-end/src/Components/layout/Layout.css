@@ -1,3 +1,7 @@
+body {
+    min-width: 900px;
+}
+
 a {
     padding-left: 10px;
     padding-right: 10px;
@@ -19,4 +23,5 @@ a {
     background-color: #2197DA;
     color: white;
     margin-left: 15px;
+    cursor: pointer;
 }
