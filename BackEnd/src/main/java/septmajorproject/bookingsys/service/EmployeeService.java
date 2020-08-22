@@ -6,7 +6,7 @@ import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.repository.EmployeeRepository;
 
 @Service
-public class EmployeeService {
+public class EmployeeService{
     @Autowired
     private EmployeeRepository employeeRepository;
 
