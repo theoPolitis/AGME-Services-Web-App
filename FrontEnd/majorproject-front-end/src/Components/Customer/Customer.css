@@ -1,0 +1,151 @@
+html, body{
+    position: relative;
+    width: 1440px;
+    height: 900px;
+
+    background: #000000;
+}
+.Logo {
+    position: absolute;
+    width: 186px;
+    height: 96px;
+    left: 53px;
+    top: 41px;
+    
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 40px;
+    line-height: 48px;
+    display: flex;
+    align-items: center;
+    text-align: center;
+
+    color: #FFFDFD;
+      
+}
+
+.Links{
+    /* position: absolute; */
+    width: 536px;
+    height: 50px;
+    left: 872px;
+    top: 49px;
+
+    color: #FFFFFF;
+}
+
+.Services {
+    position: absolute;
+    width: 87px;
+    height: 29px;
+    left: 872px;
+    top: 60px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+}
+
+.Staff_Login {
+    position: absolute;
+    width: 112px;
+    height: 29px;
+    left: 1009px;
+    top: 60px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.Login{
+    position: absolute;
+    width: 57px;
+    height: 29px;
+    left: 1171px;
+    top: 60px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.Button{
+    position: absolute;
+    width: 130px;
+    height: 50px;
+    left: 1278px;
+    top: 49px;
+}
+
+.Register{
+    position: absolute;
+    width: 86px;
+    height: 29px;
+    left: 1300px;
+    top: 59px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+    display: flex;
+    align-items: center;
+
+    color: #FFFFFF;
+}
+
+.Button_Background {
+    position: absolute;
+    width: 130px;
+    height: 50px;
+    left: 1278px;
+    top: 49px;
+
+    background: #2197DA;
+    border-radius: 15px;
+}
+
+.BookingsTitle{
+    position: absolute;
+    width: 137px;
+    height: 29px;
+    left: 590px;
+    top: 178px;
+
+    font-family: Lato;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 29px;
+    /* identical to box height */
+
+
+    color: #FFFFFF;
+}
