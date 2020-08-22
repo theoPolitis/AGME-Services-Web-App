@@ -1,8 +1,9 @@
 .BookingTitle{
+
     position: absolute;
     width: 286px;
     height: 48px;
-    left: 579px;
+    left: 500px;
     top: 196px;
 
     font-family: Lato;
@@ -16,7 +17,7 @@
     align-items: center;
     text-align: center;
 
-    color: #FFFDFD;
+    color: #2197DA;
 }
 
 .Service {

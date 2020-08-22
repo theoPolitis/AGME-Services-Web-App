@@ -5,6 +5,7 @@ import Header from './Components/layout/Header.js';
 import HomePage from './Components/homepage/HomePage';
 import Signup from './Components/account/Signup.js';
 import Login from './Components/account/Login.js';
+import Booking from "./Components/booking/Booking.js"
 
  export default class App extends React.Component {
    render() {
@@ -13,6 +14,7 @@ import Login from './Components/account/Login.js';
           <div>
             <Header/>
             <Route exact path="/" component={HomePage} />
+            <Route path='/booking' component={Booking} />
             <Route path='/createAccount' component={Signup}/>
             <Route path='/login' component={Login}/>
           </div>

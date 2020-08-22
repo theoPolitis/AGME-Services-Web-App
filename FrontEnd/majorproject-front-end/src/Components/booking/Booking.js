@@ -12,20 +12,6 @@ class Booking extends Component {
         return (
            <body>
                 <main>
-                    <header>
-                        <nav>
-                            <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
-                            <h1 className="Logo">AGMEServices</h1>
-                            <div className="Links">
-                                <a className="Services">Services</a>
-                                <a className="Staff_Login">Staff Login</a>
-                                <a className="Login">Login</a>
-                                <a className="Button_Background"></a>
-                                <a className="Register">Register</a>
-                            </div>
-                        </nav>
-                    </header>
-        
                         <h1 className = "BookingTitle">Make A Booking</h1>
                             <form onSubmit={this.handleSubmit}>
 
