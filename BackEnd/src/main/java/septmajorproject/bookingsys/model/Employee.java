@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import javax.xml.transform.Source;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public class Employee {
     //provides a unique id for each employee that is generated
     private long id;
     private boolean isAdmin;
-    @Size(min=1, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than one character.")
+    @Size(min=3, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than two character.")
     @NotBlank(message="Please Enter a First Name.")
     private String firstName;
     @Size(min=3, max=Integer.MAX_VALUE, message="Enter a Valid last name that is greater than 1 character")
@@ -29,7 +30,6 @@ public class Employee {
     @NotBlank(message="Please Enter an Address.")
     private String email;
     private int phoneNumber;
-    @Size(min=8, max=Integer.MAX_VALUE, message="Enter a Valid password that is greater than 8 charcters")
     @NotBlank(message="Password cannot be blank")
     private String password;
     @NotBlank(message = "UserName cannot be blank")
