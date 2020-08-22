@@ -1,212 +1,53 @@
 .BookingTitle{
 
-    position: absolute;
-    width: 286px;
-    height: 48px;
-    left: 500px;
-    top: 196px;
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 40px;
-    line-height: 48px;
-
-    /* identical to box height */
-    display: flex;
-    align-items: center;
-    text-align: center;
+    margin-bottom: 50px;
 
     color: #2197DA;
 }
 
-.Service {
-    position: absolute;
-    width: 406px;
-    height: 38px;
-    left: 510px;
-    top: 321px;
-    white-space: nowrap;
-}
-
-.ServiceLabel
-{ 
-    position: absolute;
-    display: inline-block;
-    width: 138px;
-    height: 38px;
-    right: 300px;
-    top: 0;
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-
-    color: #FFFFFF;
-}
-
-.ServiceInput{
-    position: absolute;
-    width: 268px;
-    height: 38px;
-    right:0px;
-    top: 0px;
-
-    background: #FFFFFF;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.Employee
-{
-    position: absolute;
-    width: 436px;
-    height: 38px;
-    left: 480px;
-    top: 436px;
-}
-.EmployeeLabel
-{
-    position: absolute;
-    width: 158px;
-    height: 38px;
-    right: 300px;
-    top: 0px;
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-
-    color: #FFFFFF;
-}
-
-.EmployeeInput
-{
-    
-    position: absolute;
-    width: 268px;
-    height: 38px;
-    right:0px;
-    top: 0px;
-
-    background: #FFFFFF;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.BookingDate
-{
-    position: absolute;
-    width: 502px;
-    height: 38px;
-    left: 414px;
-    top: 551px;
-}
-
-.BookingDateLabel
-{
-    position: absolute;
-    width: 207px;
-    height: 38px;
-    right: 300px;
-    top: 0px;
-    
-    font-family: Lato;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    
-    color: #ffffff;
-}
-
-.BookingDateInput
-{
-    position: absolute;
-    width: 268px;
-    height: 38px;
-    right:0px;
-    top: 0px;
-
-    background: #FFFFFF;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.BookingTime
-{
-    position: absolute;
-    width: 458px;
-    height: 39px;
-    left: 458px;
-    top: 666px;
-}
-
-.BookingTimeLabel
-{
-    position: absolute;
-    width: 153px;
-    height: 39px;
-    right: 350px;
-    top: 0px;
-
-    font-family: Lato;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #FFFFFF;
-}
-
-.BookingTimeInput
-{
-    position: absolute;
-    width: 268px;
-    height: 38px;
-    right: 0px;
-    top: 0px;
-
-    background: #FFFFFF;
-    border: 1px solid #000000;
-    box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.Button{
-    position: absolute;
-    width: 183px;
-    height: 53px;
-    left: 733px;
-    top: 782px;
-
-    background: #2197DA;
+.buttons{
+    margin-top: 600px;
+    background: #1111;
     border-radius: 15px;
     font-family: Lato;
     font-style: normal;
     font-weight: normal;
     font-size: 24px;
-    line-height: 29px;
-    display: flex;
-    align-items: center;
+    color: #111111;
+    float: left;
+}
 
-    color: #FFFFFF;
+.container {
+    width: 46%;
+    /* background-color: white; */
+    margin: 10% 27%;
+    padding: 20px 40px;
+    border-radius: 10px;
+}
+
+.container > h1 {
+    color: #2197DA;
+    margin-bottom: 50px;
+}
+
+label {
+    font-size: 18px;
+    color: white;
+}
+
+
+.col-1 {
+    width: 20%;
+    float: left;
+}
+
+.col-2 {
+    width: 60%;
+    float: left;
+}
+
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
 }
