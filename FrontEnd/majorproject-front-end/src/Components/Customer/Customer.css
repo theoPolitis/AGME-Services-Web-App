@@ -136,7 +136,7 @@ body {
   position: absolute;
   width: 137px;
   height: 29px;
-  left: 590px;
+  left: 630px;
   top: 178px;
 
   font-family: Lato;
@@ -164,12 +164,23 @@ body {
   overflow: auto;
 }
 
+button {
+  position: relative;
+  width: 101px;
+  height: 39px;
+  left: 658px;
+  top: 370px;
+
+  background: #2197da;
+  border-radius: 15px;
+}
+
 p {
   color: black;
 }
 
 .SpecialInstructions {
-  position: absolute;
+  position: relative;
   width: 400px;
   height: 22px;
   left: 554px;

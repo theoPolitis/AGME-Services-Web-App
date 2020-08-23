@@ -58,6 +58,8 @@ class Customer extends Component {
           <p>something</p>
         </ul>
 
+        <button name="Cancel">Cancel</button>
+
         <p className="SpecialInstructions">
           *select the booking and then click on cancel
         </p>
