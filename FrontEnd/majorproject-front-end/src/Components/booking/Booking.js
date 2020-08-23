@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Booking.css';
+import '../account/Account.css'
 class Booking extends Component {
 
     handleSubmit(event) 
@@ -51,7 +52,8 @@ class Booking extends Component {
 
                                     </input>
                                 </div>
-                                <input className ="buttons" type="submit" value="Submit"/>
+                                <div className="row"></div>
+                                <input className = "Button" type="submit" value="Submit"/>
                                 
                             </form>
                         </div>
