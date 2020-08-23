@@ -1,14 +1,13 @@
 import React, { Component } from 'react'
 import './Account.css';
 
-class Login extends Component {
-
+class StaffLogin extends Component {
     constructor(props){
         super(props);
+
         this.state = {
             username: "",
-            password: "",
-            loginErrors: ""
+            password: ""
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -18,7 +17,6 @@ class Login extends Component {
     handleSubmit(e) {
         console.log("form submitted");
         e.preventDefault();
-
     }
 
     handleChange(e) {
@@ -32,8 +30,8 @@ class Login extends Component {
         return (
                 
             <div className="container">
-                <h1>Logged in Status: {this.props.loggedInStatus} </h1>
-                <h1>LOGIN</h1>
+                <h1>Logged In Status: {this.props.loggedInStatus}</h1>
+                <h1>STAFF LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="row">
@@ -58,12 +56,11 @@ class Login extends Component {
                         </div>
                     </div>
 
-                    <button type="submit">Log in</button>
+                    <button type="submit" value="Submit">Log in</button>
                 </form>
             </div>
 
         )
     }
 }
-
-export default Login;
+export default StaffLogin;
