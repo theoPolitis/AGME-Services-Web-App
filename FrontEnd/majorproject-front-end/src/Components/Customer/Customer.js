@@ -2,36 +2,22 @@ import React, { Component } from "react";
 import "./Customer.css";
 
 class Customer extends Component {
-  constructor() {
-    super();
-
-    const numbers = ["one", "two", "three", "four"];
-
-    var bookings = [
-      [
-        "Dulshan",
-        "Kodithuwakku",
-        "12,savichi st, elephant",
-        "s3813354@student.rmit.edu.au",
-        "0405611615",
-        "Dulshank",
-        "12345A",
-      ],
-      [
-        "Elias",
-        "Sembol",
-        "12,savichi st, elephant",
-        "s3813354@student.rmit.edu.au",
-        "0405611615",
-        "Dulshank",
-        "12345B",
-      ],
-    ];
-  }
-
   handleSubmit(event) {}
 
   render() {
+    var bookings = [
+      ["1", "20/10/2020", "10.00am", "Hair cut"],
+      ["1", "20/10/2020", "11.00am", "Manicure"],
+      ["1", "20/10/2020", "12.00pm", "something else"],
+      ["1", "20/10/2020", "1.00pm", "something else"],
+      ["1", "20/10/2020", "2.00pm", "something else"],
+      ["1", "20/10/2020", "3.00pm", "something else"],
+    ];
+
+    var bookingsDisplayArray = bookings.map((index) => (
+      <p>{index[1] + " " + index[2] + " " + index[3] + " "}</p>
+    ));
+
     return (
       <div>
         <link
@@ -51,12 +37,7 @@ class Customer extends Component {
         <h1 className="BookingsTitle"> My Bookings </h1>
 
         {/* the things should loop here but i have no idea how to do it */}
-        <ul className="Bookings">
-          <p>something</p>
-          <p>something</p>
-          <p>something</p>
-          <p>something</p>
-        </ul>
+        <ul className="Bookings">{bookingsDisplayArray}</ul>
 
         <button name="Cancel">Cancel</button>
 
@@ -65,7 +46,7 @@ class Customer extends Component {
         </p>
 
         {/* the attribute value called dulshan should be changed into whatever is in the list/array */}
-        <form className="FormAttribute">
+        <form className="FormAttribute" method="get">
           <label>
             First Name:
             <input value="Dulshan" type="text" name="firstName" size="100" />
@@ -92,11 +73,21 @@ class Customer extends Component {
           </label>
           <label>
             Old Password:
-            <input value="Dulshan" type="text" name="oldPassword" size="100" />
+            <input
+              placeholder="Enter the old password"
+              type="text"
+              name="oldPassword"
+              size="100"
+            />
           </label>
           <label>
             New Password:
-            <input value="Dulshan" type="text" name="newPassword" size="100" />
+            <input
+              placeholder="Enter the new password"
+              type="text"
+              name="newPassword"
+              size="100"
+            />
           </label>
           <input className="UpdateButton" type="submit" value="Update" />
         </form>
@@ -105,28 +96,3 @@ class Customer extends Component {
   }
 }
 export default Customer;
-
-// state = {
-//     bookings: [
-//         {
-//             firstName:'Dulshan',
-//             lastName:'Kodithuwakku',
-//             address:'12,savichi st, elephant',
-//             email:'s3813354@student.rmit.edu.au',
-//             mobile:'0405611615',
-//             userName:'Dulshank',
-//             password:'12345A'
-
-//         },
-//         {
-//             firstName:'Elias',
-//             lastName:'Sembol',
-//             address:'12,savichi st, elephant',
-//             email:'s3813354@student.rmit.edu.au',
-//             mobile:'0405611615',
-//             userName:'Dulshank',
-//             password:'12345B'
-
-//         }
-//     ]
-// }
