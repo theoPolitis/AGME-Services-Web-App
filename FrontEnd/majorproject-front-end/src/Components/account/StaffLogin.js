@@ -2,13 +2,27 @@ import React, { Component } from 'react'
 import './Account.css';
 
 class StaffLogin extends Component {
-
-    constructor(props) {
+    constructor(props){
         super(props);
+
+        this.state = {
+            username: "",
+            password: ""
+        }
+
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(event) {
+    handleSubmit(e) {
+        console.log("form submitted");
+        e.preventDefault();
+    }
 
+    handleChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     
@@ -16,7 +30,6 @@ class StaffLogin extends Component {
         return (
                 
             <div className="container">
-                //testing purposes
                 <h1>Logged In Status: {this.props.loggedInStatus}</h1>
                 <h1>STAFF LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -28,7 +41,7 @@ class StaffLogin extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="username"/>
+                            <input type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -39,11 +52,11 @@ class StaffLogin extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="password" name="password"/>
+                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
-                    <input type="submit" value="Submit"/>
+                    <button type="submit" value="Submit">Log in</button>
                 </form>
             </div>
 

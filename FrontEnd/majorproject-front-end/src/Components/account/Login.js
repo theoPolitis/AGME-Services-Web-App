@@ -16,13 +16,15 @@ class Login extends Component {
     }
 
     handleSubmit(e) {
-        console.log("Form Submitted");
+        console.log("form submitted");
         e.preventDefault();
 
     }
 
     handleChange(e) {
-        console.log("handle change ", e);
+        this.setState({
+            [e.target.name]: e.target.value
+        })
     }
 
     
@@ -30,7 +32,6 @@ class Login extends Component {
         return (
                 
             <div className="container">
-            //Testing purposes for logged in user
                 <h1>Logged in Status: {this.props.loggedInStatus} </h1>
                 <h1>LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
@@ -65,7 +66,4 @@ class Login extends Component {
     }
 }
 
-const testStyle = {
-    color: "White"
-}
 export default Login;

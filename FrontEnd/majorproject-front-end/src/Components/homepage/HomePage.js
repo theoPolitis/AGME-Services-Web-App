@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 class HomePage extends Component {
-    constructor(props){
-        super(props);
-    }
 
     render() {
         return (
