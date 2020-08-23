@@ -4,6 +4,10 @@ import './Account.css';
 
 class Signup extends Component {
 
+    constructor(props){
+        super(props);
+    }
+
     handleSubmit(event) {
 
     }
@@ -13,6 +17,8 @@ class Signup extends Component {
         return (
                 
             <div className="container">
+                //testing purposes
+                <h1>Logged in status: {this.props.loggedInStatus}</h1>
                 <h1>Sign Up</h1>
                 <form onSubmit={this.handleSubmit}>
 

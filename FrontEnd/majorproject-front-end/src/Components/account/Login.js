@@ -3,8 +3,26 @@ import './Account.css';
 
 class Login extends Component {
 
-    handleSubmit(event) {
+    constructor(props){
+        super(props);
+        this.state = {
+            username: "",
+            password: "",
+            loginErrors: ""
+        }
 
+        this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+    }
+
+    handleSubmit(e) {
+        console.log("Form Submitted");
+        e.preventDefault();
+
+    }
+
+    handleChange(e) {
+        console.log("handle change ", e);
     }
 
     
@@ -12,6 +30,8 @@ class Login extends Component {
         return (
                 
             <div className="container">
+            //Testing purposes for logged in user
+                <h1>Logged in Status: {this.props.loggedInStatus} </h1>
                 <h1>LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
 
@@ -22,7 +42,7 @@ class Login extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="username"/>
+                            <input type="text" name="username" placeholder="Username" value={this.state.username} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -33,15 +53,19 @@ class Login extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="password" name="password"/>
+                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
-                    <input type="submit" value="Submit"/>
+                    <button type="submit">Log in</button>
                 </form>
             </div>
 
         )
     }
+}
+
+const testStyle = {
+    color: "White"
 }
 export default Login;

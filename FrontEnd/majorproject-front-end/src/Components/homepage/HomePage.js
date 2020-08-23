@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import './HomePage.css';
 
 class HomePage extends Component {
+    constructor(props){
+        super(props);
+    }
+
     render() {
         return (
            <div className='homepageStyle'>
@@ -10,7 +14,9 @@ class HomePage extends Component {
                 <i className="Line"></i>
                 <div className="Sign_Up_Button">
                     <Link to="/createAccount"><button className="Sign_Up">Sign Up</button></Link>
+                    <h1>Logged In Status: {this.props.loggedInStatus}</h1>
                 </div>
+
            </div>
         )
     }
