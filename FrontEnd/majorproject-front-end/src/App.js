@@ -6,6 +6,7 @@ import HomePage from './Components/homepage/HomePage';
 import Signup from './Components/account/Signup.js';
 import Login from './Components/account/Login.js';
 import StaffLogin from './Components/account/StaffLogin';
+import Booking from './Components/booking/Booking';
 
  class App extends React.Component {
    constructor(){
@@ -41,6 +42,10 @@ import StaffLogin from './Components/account/StaffLogin';
 
             <Route path='/staffLogin' render={props => (
               <StaffLogin {...props} loggedInStatus={this.state.loggedInStatus} />
+            )} />
+
+            <Route path="/booking" render={props => (
+              <Booking {...props} loggedInStatus={this.state.loggedInStatus} />
             )} />
 
           </div>
