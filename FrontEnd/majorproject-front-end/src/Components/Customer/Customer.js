@@ -20,20 +20,6 @@ class Customer extends Component {
 
     return (
       <div>
-        <link
-          rel="stylesheet"
-          type="text/css"
-          href="//fonts.googleapis.com/css?family=Lato"
-        />
-        <h1 className="Logo">UIServices</h1>
-        <div className="Links">
-          <a className="Services">Services</a>
-          <a className="Staff_Login">Staff Login</a>
-          <a className="Login">Login</a>
-          <a className="Button_Background"></a>
-          <a className="Register">Register</a>
-        </div>
-
         <h1 className="BookingsTitle"> My Bookings </h1>
 
         {/* the things should loop here but i have no idea how to do it */}
