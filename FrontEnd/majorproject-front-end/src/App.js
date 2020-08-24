@@ -48,7 +48,10 @@ import Booking from './Components/booking/Booking';
             <Route path="/booking" render={props => (
               <Booking {...props} loggedInStatus={this.state.loggedInStatus} />
             )} />
-
+            
+            <Route path="/customer" render={props => (
+              <Booking {...props} loggedInStatus={this.state.loggedInStatus}/>
+            )} />
           </div>
        </Router>
      )
