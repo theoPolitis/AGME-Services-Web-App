@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import '../homepage/HomePage.css'
 import './Booking.css';
+import '../account/Account.css'
 class Booking extends Component {
 
     handleSubmit(event) 
@@ -12,61 +12,51 @@ class Booking extends Component {
         return (
            <body>
                 <main>
-                    <header>
-                        <nav>
-                            <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Lato" />
-                            <h1 className="Logo">AGMEServices</h1>
-                            <div className="Links">
-                                <a className="Services">Services</a>
-                                <a className="Staff_Login">Staff Login</a>
-                                <a className="Login">Login</a>
-                                <a className="Button_Background"></a>
-                                <a className="Register">Register</a>
-                            </div>
-                        </nav>
-                    </header>
-        
+                        
+                        <div className = "container">
                         <h1 className = "BookingTitle">Make A Booking</h1>
                             <form onSubmit={this.handleSubmit}>
 
-                                <div className="Service">
-                                    <label className="ServiceLabel">
+                                <div className="row">
+                                    <label className="col-1">
                                         Service:
                                     </label>
-                                    <input type="text" className="ServiceInput">
+                                    <input type="text" className="col-2">
 
                                     </input>
                                 </div>
 
-                                <div className="Employee">
-                                    <label className="EmployeeLabel">
+                                <div className="row">
+                                    <label className="col-1">
                                         Employee:
                                     </label>
-                                    <input type="date" className="EmployeeInput">
+                                    <input type="date" className="col-2">
 
                                     </input>
                                 </div>
 
-                                <div className="BookingDate">
-                                    <label className="BookingDateLabel">
+                                <div className="row">
+                                    <label className="col-1">
                                         Booking Date:
                                     </label>
-                                    <input type="date" className="BookingDateInput">
+                                    <input type="date" className="col-2">
 
                                     </input>
                                 </div>
 
-                                <div className="BookingTime">
-                                    <label className="BookingTimeLabel">
+                                <div className="row">
+                                    <label className="col-1">
                                         Booking Time:
                                     </label>
-                                    <input type="text" className="BookingTimeInput">
+                                    <input type="text" className="col-2">
 
                                     </input>
                                 </div>
-                                <input className = "Button"type="submit" value="Submit"/>
+                                <div className="row"></div>
+                                <input className = "Button" type="submit" value="Submit"/>
+                                
                             </form>
-                    
+                        </div>
                 </main>
            </body>
         )
