@@ -5,7 +5,7 @@
     color: #2197DA;
 }
 
-.buttons{
+.buttons {
     margin-top: 600px;
     background: #1111;
     border-radius: 15px;
@@ -50,4 +50,10 @@ label {
     content: "";
     display: table;
     clear: both;
+}
+
+.updateButton {
+    background: #2197da;
+    border-radius: 15px;
+    cursor: pointer;
 }

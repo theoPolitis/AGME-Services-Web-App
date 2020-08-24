@@ -30,7 +30,7 @@
   overflow: auto;
 }
 
-button {
+.cancelBtn {
   position: relative;
   width: 101px;
   height: 39px;

@@ -53,7 +53,7 @@ class Booking extends Component {
                                     </input>
                                 </div>
                                 <div className="row"></div>
-                                <input className = "Button" type="submit" value="Submit"/>
+                                <input className="updateButton" type="submit" value="Submit"/>
                                 
                             </form>
                         </div>

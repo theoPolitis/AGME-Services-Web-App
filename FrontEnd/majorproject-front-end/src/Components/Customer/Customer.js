@@ -25,7 +25,7 @@ class Customer extends Component {
         {/* the things should loop here but i have no idea how to do it */}
         <ul className="Bookings">{bookingsDisplayArray}</ul>
 
-        <button name="Cancel">Cancel</button>
+        <button className="cancelBtn" name="Cancel">Cancel</button>
 
         <p className="SpecialInstructions">
           *select the booking and then click on cancel
