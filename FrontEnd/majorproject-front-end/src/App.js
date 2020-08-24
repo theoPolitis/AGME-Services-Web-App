@@ -1,6 +1,8 @@
 import React from 'react';
 import {BrowserRouter as Router, Route} from 'react-router-dom';
 import './App.css';
+
+import Customer from './Components/Customer/Customer.js';
 import Header from './Components/layout/Header.js';
 import HomePage from './Components/homepage/HomePage';
 import Signup from './Components/account/Signup.js';
@@ -11,7 +13,6 @@ import Booking from './Components/booking/Booking';
  class App extends React.Component {
    constructor(){
      super()
-
      this.state = {
        //this will boolean at some point but can change later 
        loggedInStatus: "NOT_LOGGED_IN",
