@@ -8,4 +8,8 @@ import septmajorproject.bookingsys.model.Customer;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     //Further table functionality will be entered as needed
+    Customer findByFirstName(String firstName);
+
+    Customer findByUsername(String username);
+
 }
