@@ -18,14 +18,14 @@ jobs:
           command: ls /home/circleci/BackEnd/
 
       - restore_cache:
-          key: circleci-demo-java-spring-{{ checksum "~/BackEnd/pom.xml" }}
+          key: circleci-demo-java-spring-{{ checksum "~/BackEnd/BackEnd/pom.xml" }}
       
       - run: mvn dependency:go-offline
       
       - save_cache:
           paths:
             - ~/.m2
-          key: circleci-demo-java-spring-{{ checksum "~/BackEnd/pom.xml" }}
+          key: circleci-demo-java-spring-{{ checksum "~/BackEnd/BackEnd/pom.xml" }}
       
       - run: mvn package
       
