@@ -13,6 +13,9 @@ jobs:
 
       - checkout
 
+      - run:
+          command: ls /home/circleci/my-project/src/
+
       - restore_cache:
           key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
       
