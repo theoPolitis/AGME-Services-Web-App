@@ -13,6 +13,7 @@
 
 * Github repository : https://github.com/RMIT-SEPT/majorproject-3-thurs-10-30-6
 * Trello Workspace  : https://trello.com/b/rt9Jvpph 
+* Teams Chat        : https://teams.microsoft.com/l/channel/19%3a9765137343d24784b863a46bf0cbedea%40thread.tacv2/General?groupId=c3b3d769-ce80-4a62-bb0e-626ed08730b2&tenantId=d1323671-cdbe-4417-b4d4-bdb24b51316b
 
 
 ## Code documentation
