@@ -2,7 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
-import Customer from "./Components/customer/Customer.js";
+import Employee from "./Components/employee/Employee"
+import Customer from "./Components/customer/Customer"
 import Header from "./Components/layout/Header.js";
 import HomePage from "./Components/homepage/HomePage";
 import Signup from "./Components/account/Signup.js";
@@ -73,6 +74,14 @@ class App extends React.Component {
               <Customer {...props} loggedInStatus={this.state.loggedInStatus} />
             )}
           />
+
+          <Route
+            path="/employee"
+            render={(props) => (
+              <Employee {...props} loggedInStatus={this.state.loggedInStatus} />
+            )}
+          />
+
         </div>
       </Router>
     );
