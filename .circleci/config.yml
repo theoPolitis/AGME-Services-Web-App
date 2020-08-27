@@ -12,7 +12,7 @@ jobs:
     steps:
 
       - checkout:
-          path: ~/BackEnd
+          path: ~/BackEnd/src
 
       - run:
           command: ls /home/circleci/BackEnd/
