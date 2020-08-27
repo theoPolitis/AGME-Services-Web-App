@@ -1,10 +1,5 @@
 version: 2
 jobs:
-  deploy-job:
-   steps:
-     - add_ssh_keys:
-         fingerprints:
-            -"ba:61:df:3f:9f:70:fb:38:1f:a5:35:72:b3:51:1a:c5"
   build:
     working_directory: ~/../BackEnd
     docker:
