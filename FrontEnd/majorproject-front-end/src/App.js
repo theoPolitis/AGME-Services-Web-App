@@ -2,8 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
-import Employee from "./Components/employee/Employee"
-import Customer from "./Components/customer/Customer"
+import Employee from "./Components/employee/Employee";
+import Customer from "./Components/customer/Customer";
 import Header from "./Components/layout/Header.js";
 import HomePage from "./Components/homepage/HomePage";
 import Signup from "./Components/account/Signup.js";
@@ -81,7 +81,6 @@ class App extends React.Component {
               <Employee {...props} loggedInStatus={this.state.loggedInStatus} />
             )}
           />
-
         </div>
       </Router>
     );
