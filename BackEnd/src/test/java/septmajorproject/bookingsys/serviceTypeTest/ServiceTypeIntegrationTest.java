@@ -20,7 +20,7 @@ import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.springframework.test.util.AssertionErrors.assertTrue;
-
+ //test pushing
 @RunWith(SpringRunner.class)
 @DataJpaTest
 public class ServiceTypeIntegrationTest {
