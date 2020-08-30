@@ -51,17 +51,6 @@ public class BookingController {
 //    @GetMapping("/all")
 //    public List<Booking> all() {
 //
-//        Time time = new Time(12,30,0);
-//        Date date = new Date(2020,8,27);
-//
-//        BookingPK pk = new BookingPK(date, time);
-//        Employee emp = new Employee("Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
-//        Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
-//
-//        Booking booking = new Booking(pk, emp, cust);
-//
-//        bookingService.saveOrUpdateBooking(booking);
-//
 //        return bookingService.getAll();
 //    }
 

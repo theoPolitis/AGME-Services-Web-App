@@ -3,6 +3,8 @@ package septmajorproject.bookingsys.model;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
@@ -13,9 +15,11 @@ import java.util.Date;
  */
 public class BookingPK implements Serializable {
 
+    @NotNull(message = "Please attach a date")
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date rosterDate;
 
+    @NotNull(message = "Please attach a time")
     @JsonFormat(pattern = "HH:mm")
     private Time rosterTime;
 

@@ -2,6 +2,7 @@ package septmajorproject.bookingsys.model;
 
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "BOOKING")
@@ -16,11 +17,13 @@ public class Booking {
 
     //many to one connection initialization for Employee table
     @ManyToOne
+    @NotNull(message = "Employee required")
     @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
 
     //many to one connection initialization for Customer table
     @ManyToOne
+    @NotNull(message = "Customer required")
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 

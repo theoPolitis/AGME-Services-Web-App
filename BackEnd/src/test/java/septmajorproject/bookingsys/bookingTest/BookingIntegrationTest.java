@@ -29,6 +29,15 @@ public class BookingIntegrationTest {
     private Validator validator;
     private LocalValidatorFactoryBean localValidatorFactory;
 
+
+    Time time = new Time(12,30,0);
+    Date date = new Date(2020,8,27);
+
+    BookingPK pk = new BookingPK(date, time);
+    Employee emp = new Employee("Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
+    Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
+
+
     @Before
     public void setUp() {
         localValidatorFactory = new LocalValidatorFactoryBean();
@@ -36,21 +45,60 @@ public class BookingIntegrationTest {
         localValidatorFactory.afterPropertiesSet();
     }
 
+    // Testing a bookingPK with no time specified
     @Test
-    public void whenInsertBookingWithValidValues_thenReturnTrue(){
+    public void whenInsertBookingWithNoTime_thenReturnFalse() {
+        BookingPK nullTimePK = new BookingPK();
+        nullTimePK.setRosterDate(date);
 
-        Time time = new Time(12,30,0);
-        Date date = new Date(2020,8,27);
+        Set<ConstraintViolation<BookingPK>> constraintViolations = localValidatorFactory.validate(nullTimePK);
 
-        BookingPK pk = new BookingPK(date, time);
-        Employee emp = new Employee("Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
-        Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
+        assertFalse(constraintViolations.size() == 0, "Booking must have a time attached");
+    }
 
+    // Testing a bookingPK with no date specified
+    @Test
+    public void whenInsertBookingWithNoDate_thenReturnFalse() {
+        BookingPK nullDatePK = new BookingPK();
+        nullDatePK.setRosterTime(time);
+
+        Set<ConstraintViolation<BookingPK>> constraintViolations = localValidatorFactory.validate(nullDatePK);
+
+        assertFalse(constraintViolations.size() == 0, "Booking must have a date attached");
+    }
+
+    //Testing a booking with no customer attached
+    @Test
+    public void whenInsertBookingWithNoCustomer_thenReturnFalse() {
+        Booking booking = new Booking();
+        booking.setBookingPK(pk);
+        booking.setEmployee(emp);
+
+        Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
+
+        assertFalse(constraintViolations.size() == 0, "Booking must have a customer attached");
+    }
+
+    //Testing a booking with no employee attached
+    @Test
+    public void whenInsertBookingWithNoEmployee_thenReturnFalse() {
+        Booking booking = new Booking();
+        booking.setBookingPK(pk);
+        booking.setCustomer(cust);
+
+        Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
+
+        assertFalse(constraintViolations.size() == 0, "Booking must have an employee attached");
+    }
+
+    // Testing a booking with valid customer, employee and booking data
+    @Test
+    public void whenInsertBookingWithValidValues_thenReturnTrue() {
         Booking booking = new Booking(pk, emp, cust);
 
         Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
 
-        // assertTrue(constraintViolations.size() == 0, "Enter a Valid first name that is greater than three characters.");
+        assertTrue(constraintViolations.size() == 0);
     }
 
 }
