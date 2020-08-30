@@ -29,7 +29,9 @@ public class BookingController {
 
     @Autowired
     private BookingService bookingService;
+    @Autowired
     private EmployeeService employeeService;
+    @Autowired
     private CustomerService customerService;
 
     @PostMapping("")
