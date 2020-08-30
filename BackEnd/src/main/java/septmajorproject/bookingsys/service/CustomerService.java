@@ -11,4 +11,8 @@ public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
     //Add in customer addition/modification/retrieval logic
+
+    public Customer saveOrUpdateCustomer(Customer customer) {
+        return customerRepository.save(customer);
+    }
 }

@@ -14,7 +14,7 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
-    private Integer id;
+    private long id;
     //Password will be stored as an encrypted string
     private String password;
     //Email will be checked using a regular expression prior to being stored in the table
@@ -29,7 +29,7 @@ public class Customer {
     //Address will be checked against a regular expression
     private String address;
     //Phone number is of type Integer as the primative int type cannot be used.
-    private Integer phoneNumber;
+    private String phoneNumber;
     //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
     private String username;
@@ -60,6 +60,16 @@ public class Customer {
     {
     }
 
+    public Customer(String password, String email, String firstName, String lastName, String address, String phoneNumber, String username) {
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+    }
+
     //Below are just a series of basic setters/getters.
     public Date getCreatedDate() {
         return createdDate;
@@ -77,7 +87,7 @@ public class Customer {
         this.updatedDate = updatedDate;
     }
 
-    public Integer getId()
+    public long getId()
     {
         return id;
     }
@@ -132,12 +142,12 @@ public class Customer {
         this.username = username;
     }
 
-    public Integer getPhoneNumber()
+    public String getPhoneNumber()
     {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber)
+    public void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
     }

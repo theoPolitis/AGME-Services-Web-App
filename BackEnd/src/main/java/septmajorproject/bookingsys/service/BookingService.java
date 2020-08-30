@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.repository.BookingRepository;
 
+import java.util.List;
+
 @Service
 public class BookingService {
     @Autowired
@@ -12,7 +14,11 @@ public class BookingService {
 
     //Add in addition/modification/retrieval logic
 
-    public Booking saveOrUpdateEmployee(Booking booking){
+    public Booking saveOrUpdateBooking(Booking booking){
         return bookingRepository.save(booking);
     }
+
+//    public List<Booking> getAll(){
+//        return bookingRepository.findAll();
+//    }
 }
