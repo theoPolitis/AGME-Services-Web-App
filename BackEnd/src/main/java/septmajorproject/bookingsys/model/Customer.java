@@ -16,8 +16,10 @@ public class Customer {
     @Column(name = "customer_id")
     private Integer id;
     //Password will be stored as an encrypted string
+    @NotBlank(message = "Please enter a password")
     private String password;
     //Email will be checked using a regular expression prior to being stored in the table
+    @NotBlank(message = "Please enter an email address")
     private String email;
     //Firstname will be checked against a regular expression prior to being stored in the database,
     //the @Size tag is used to ensure the firstname field is atleast 1 character long
@@ -27,6 +29,7 @@ public class Customer {
     @Size(min=1,max = Integer.MAX_VALUE,message = "Please enter a last name of at least 1 character length")
     private String lastName;
     //Address will be checked against a regular expression
+    @NotBlank(message = "Please enter an address")
     private String address;
     //Phone number is of type Integer as the primative int type cannot be used.
     private Integer phoneNumber;
@@ -59,6 +62,19 @@ public class Customer {
     public Customer()
     {
     }
+
+    public Customer(String firstName, String lastName, String email, String address, String username,
+                    int phoneNumber, String password)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+    }
+
 
     //Below are just a series of basic setters/getters.
     public Date getCreatedDate() {
