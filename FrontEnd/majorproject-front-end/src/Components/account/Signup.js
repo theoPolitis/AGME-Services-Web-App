@@ -3,11 +3,38 @@ import '../homepage/HomePage.css';
 import './Account.css';
 
 class Signup extends Component {
-    handleSubmit(event) {
+    constructor(props){
+        super(props);
+        this.state = {
+            indentificationNumber: "",
+            firstName: "",
+            lastName: "",
+            email: "",
+            address: "",
+            phoneNumber: null,
+            userName: "",
+            password: "",
+            confirmPassword: ""
+        }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
 
     }
 
-    
+
+    handleSubmit(event) { 
+        console.log("Form Submitted");
+
+        event.preventDefault();
+    }
+
+    handleChange(event) {
+        this.setState({
+            [event.target.name]:[event.target.value]
+        })
+        }
+
     render() {
         return (
                 
@@ -23,7 +50,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="firstname"/>
+                            <input type="text" name="firstName" placeHolder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -34,7 +61,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="lastname"/>
+                            <input type="text" name="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -45,7 +72,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="email"/>
+                            <input type="text" name="email" placeHolder="Email" value={this.state.email} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -56,7 +83,18 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="address"/>
+                            <input type="text" name="address" placeholder="Address" value={this.state.address} onChange={this.handleChange} required/>
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-1">
+                            <label>
+                                Phone Number:
+                            </label>
+                        </div>
+                        <div className="col-2">
+                            <input type="text" name="phoneNumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -67,7 +105,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="username"/>
+                            <input type="text" name="userName" placeHolder="Username" value={this.state.userName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -78,7 +116,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="password" name="password"/>
+                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -89,11 +127,11 @@ class Signup extends Component {
                         </label>
                     </div>
                     <div className="col-2">
-                        <input type="password" name="confirm-password"/>
+                        <input type="password" name="confirmPassword" placeholder="Confrim Password" value={this.state.confirmPassword} onChange={this.handleChange} required/>
                     </div>
                 </div>
 
-                    <input type="submit" value="Submit"/>
+                    <button type="submit" value="Submit">Register</button>
                 </form>
             </div>
 
