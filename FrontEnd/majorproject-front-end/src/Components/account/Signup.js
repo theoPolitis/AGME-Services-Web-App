@@ -1,39 +1,65 @@
 import React, { Component } from 'react'
+import { v4 as uuidv4 } from 'uuid';
 import '../homepage/HomePage.css';
 import './Account.css';
 
 class Signup extends Component {
+    id = uuidv4();
     constructor(props){
         super(props);
+
         this.state = {
-            indentificationNumber: "",
+            personIdentifier: "",
             firstName: "",
             lastName: "",
             email: "",
+            phoneNumber: "",
             address: "",
-            phoneNumber: null,
             userName: "",
             password: "",
-            confirmPassword: ""
+            confirmPassword: "",
+            errors: ""
+
         }
 
-        this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
+
 
     }
 
-
-    handleSubmit(event) { 
-        console.log("Form Submitted");
-
+    handleSubmit = (event) => { 
         event.preventDefault();
+        if(this.validate(this.state.password, this.state.confirmPassword) === true){
+            const newCustomer = {
+                personIdentifier: this.id,
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                phoneNumber: this.state.phoneNumber,
+                email: this.state.email,
+                address: this.state.address,
+                userName: this.state.userName,
+                password: this.state.password
+            }
+
+            console.log(newCustomer);
+            console.log("form Submitted");
+        }else{
+            alert("Passwords do not match");
+        }
     }
 
-    handleChange(event) {
-        this.setState({
-            [event.target.name]:[event.target.value]
-        })
+    handleChange = (event) => {
+        this.setState({[event.target.name]: event.target.value});
+
         }
+
+    validate(password, confirmPassword){
+        if(password === confirmPassword){
+            return true;
+        }else{
+            return false;
+       }
+
+    }
 
     render() {
         return (
@@ -50,7 +76,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="firstName" placeHolder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
+                            <input type="text" name="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -72,7 +98,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="email" placeHolder="Email" value={this.state.email} onChange={this.handleChange} required/>
+                            <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -105,7 +131,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="userName" placeHolder="Username" value={this.state.userName} onChange={this.handleChange} required/>
+                            <input type="text" name="userName" placeholder="Username" value={this.state.userName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 

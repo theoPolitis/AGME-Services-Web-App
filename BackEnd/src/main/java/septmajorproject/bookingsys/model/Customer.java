@@ -15,6 +15,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Integer id;
+
+    @NotBlank(message="Identification number cannot be blank")
+    @Column(updatable = false, unique = true)
+    private String identificationNumber;
     //Password will be stored as an encrypted string
     private String password;
     //Email will be checked using a regular expression prior to being stored in the table
@@ -158,5 +162,13 @@ public class Customer {
 
     public List<Booking> getCustomerList() {
         return customerList;
+    }
+
+    public String getIdentificationNumber() {
+        return identificationNumber;
+    }
+
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
     }
 }
