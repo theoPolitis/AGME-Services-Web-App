@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import septmajorproject.bookingsys.model.Customer;
+import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.service.CustomerService;
 import septmajorproject.bookingsys.service.MapValidationErrorService;
 
@@ -31,6 +32,13 @@ public class CustomerController {
         Customer newEmployee = customerService.saveOrUpdateCustomer(customer);
 
         return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
+    }
+
+    @GetMapping("{username}/{password}")
+    public ResponseEntity<?> getPersonByUsernameAndPassword(@PathVariable String username, @PathVariable String password){
+        Customer customer = customerService.findByUsernameAndPassword(username, password);
+
+        return new ResponseEntity<Customer>(customer, HttpStatus.OK);
     }
 
 }

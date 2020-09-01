@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import './Account.css';
+import Axios from 'axios';
 
 class Login extends Component {
 
@@ -8,17 +9,32 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            loginErrors: ""
+            loginErrors: "",
+            loggedInUser: {}
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(e) {
-        console.log("form submitted");
-        e.preventDefault();
+    toggeleGet=(username, password)=> {
+        Axios.get("http://localhost:8080/api/customer/" + username + "/" + password, {
+        })
+        .then(res => {
+            this.setState({
+                loggedInUser: res.data
+            })
+            console.log(this.state.loggedInUser);
+        }).catch(e => {
+            if(e.response.status === 400){
+                alert("Username or password is incorrect");
+            }
+        })
+    }
 
+    handleSubmit(e) {
+        this.toggeleGet(this.state.username, this.state.password);
+        e.preventDefault();
     }
 
     handleChange(e) {

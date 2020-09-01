@@ -57,4 +57,14 @@ public class CustomerService {
 
         return found;
     }
+
+    public Customer findByUsernameAndPassword(String username, String password){
+        Customer found = customerRepository.findByUsernameAndPassword(username, password);
+
+        if(found == null){
+            throw new CustomerException("Customer does not exist");
+        }
+
+        return found;
+    }
 }
