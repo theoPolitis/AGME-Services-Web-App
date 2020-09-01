@@ -73,7 +73,7 @@ public class Customer {
     }
 
     public Customer(String firstName, String lastName, String email, String address, String username,
-                    String phoneNumber, String password)
+                    String phoneNumber, String password, String id)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -82,6 +82,7 @@ public class Customer {
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.password = password;
+        this.identificationNumber = id;
     }
 
 
