@@ -13,6 +13,8 @@ public class ServiceType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "service_id")
+    private Long id;
 
     @Size(min=1, max= Integer.MAX_VALUE , message="Enter a Valid service number that is greater than one character.")
     @NotBlank(message="Please Enter a service number.")
@@ -29,10 +31,20 @@ public class ServiceType {
     @JsonFormat(pattern="yyyy-mm-dd")
     private Date updatedDate;
 
+
+    //default constructor
     public ServiceType()
     {
+    }
+
+    //simple constructor for ServiceType
+    public ServiceType( String serviceNo, String serviceName) {
+        this.serviceNo = serviceNo;
+        this.serviceName = serviceName;
 
     }
+
+
     //updates the date variables automatically with annotations
     @PrePersist
     protected void onCreate(){

@@ -21,4 +21,8 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
 
     //finds customer by the identification number
     Customer findByIdentificationNumber(String id);
+
+    //Further table functionality will be entered as needed
+    Customer findByFirstName(String firstName);
+
 }
