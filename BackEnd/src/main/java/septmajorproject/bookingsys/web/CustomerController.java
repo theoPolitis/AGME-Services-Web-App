@@ -11,7 +11,7 @@ import septmajorproject.bookingsys.service.MapValidationErrorService;
 
 import javax.validation.Valid;
 @RestController
-@RequestMapping("/api/Customer")
+@RequestMapping("/api/customer")
 @CrossOrigin
 public class CustomerController {
     @Autowired

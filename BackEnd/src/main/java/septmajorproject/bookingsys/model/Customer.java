@@ -28,17 +28,21 @@ public class Customer {
     //Firstname will be checked against a regular expression prior to being stored in the database,
     //the @Size tag is used to ensure the firstname field is atleast 1 character long
     @Size(min=1, max = Integer.MAX_VALUE, message = "Please enter a first name of at least 1 character length")
+    @NotBlank(message = "First Name can not be Blank")
     private String firstName;
     //Similarly to the firstname, lastname will also being enforced as being atleast one character long
     @Size(min=1,max = Integer.MAX_VALUE,message = "Please enter a last name of at least 1 character length")
+    @NotBlank(message = " Last name can not blank")
     private String lastName;
     //Address will be checked against a regular expression
     @NotBlank(message = "Please enter an address")
     private String address;
     //Phone number is of type Integer as the primative int type cannot be used.
-    private Integer phoneNumber;
+    @NotBlank(message = "Phone Number can not be blank")
+    private String phoneNumber;
     //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
+    @NotBlank(message = "userName cannot be blank")
     private String username;
     //Created date will be forced into the corresponding Json format
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -68,7 +72,7 @@ public class Customer {
     }
 
     public Customer(String firstName, String lastName, String email, String address, String username,
-                    int phoneNumber, String password)
+                    String phoneNumber, String password)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -152,12 +156,12 @@ public class Customer {
         this.username = username;
     }
 
-    public Integer getPhoneNumber()
+    public String getPhoneNumber()
     {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber)
+    public void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
     }
