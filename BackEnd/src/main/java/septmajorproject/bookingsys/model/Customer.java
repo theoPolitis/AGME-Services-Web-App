@@ -42,6 +42,7 @@ public class Customer {
     private String phoneNumber;
     //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
+    @Column(unique = true, updatable = false)
     @NotBlank(message = "userName cannot be blank")
     private String username;
     //Created date will be forced into the corresponding Json format

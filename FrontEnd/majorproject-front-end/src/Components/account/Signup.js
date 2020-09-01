@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
+import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
 import '../homepage/HomePage.css';
 import './Account.css';
+import { Redirect } from 'react-router-dom';
 
 class Signup extends Component {
     id = uuidv4();
@@ -18,29 +20,39 @@ class Signup extends Component {
             userName: "",
             password: "",
             confirmPassword: "",
-            errors: ""
+            errors: "",
+            isSignedUp: false
 
         }
-
-
 
     }
 
     handleSubmit = (event) => { 
         event.preventDefault();
-        if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            const newCustomer = {
-                personIdentifier: this.id,
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                phoneNumber: this.state.phoneNumber,
-                email: this.state.email,
-                address: this.state.address,
-                userName: this.state.userName,
-                password: this.state.password
-            }
 
-            console.log(newCustomer);
+        if(this.validate(this.state.password, this.state.confirmPassword) === true){
+            console.log(this.id)
+            axios.post("http://localhost:8080/api/customer", {
+                    identificationNumber: this.id,
+                    firstName: this.state.firstName,
+                    lastName: this.state.lastName,
+                    phoneNumber: this.state.phoneNumber,
+                    email: this.state.email,
+                    address: this.state.address,
+                    username: this.state.userName,
+                    password: this.state.password
+            }).then(res => {
+                console.log("register res ", res);
+
+                if(res.status === 201){
+                    this.setState({ isSignedUp: true });
+                }
+
+            }).catch(error => {
+                alert("Username already exists");
+                console.log(error);
+            })
+
             console.log("form Submitted");
         }else{
             alert("Passwords do not match");
@@ -62,6 +74,9 @@ class Signup extends Component {
     }
 
     render() {
+        if(this.state.isSignedUp === true){
+            return <Redirect to={{pathname: "/"}}/>;
+        }
         return (
                 
             <div className="container">
@@ -76,7 +91,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="firstName" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
+                            <input type="text" name="firstName" pattern="([A-Za-z])+([A-Za-z])+([A-Za-z])+" title="Three or more letter name" placeholder="First Name" value={this.state.firstName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -87,7 +102,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="lastName" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
+                            <input type="text" name="lastName" pattern="([A-Za-z])+([A-Za-z])+([A-Za-z])+" title="Three or more letter Last name" placeholder="Last Name" value={this.state.lastName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -98,7 +113,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
+                            <input type="email" name="email" placeholder="Email" value={this.state.email} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
@@ -131,7 +146,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="userName" placeholder="Username" value={this.state.userName} onChange={this.handleChange} required/>
+                            <input type="text" name="userName" pattern="([A-Z]|[a-z]|[0-9])+([A-Z]|[a-z]|[0-9])+([A-Z]|[a-z]|[0-9])+" title="Must be at least three charcters long and must only contain lowercase, upercase and numbers only" placeholder="Username" value={this.state.userName} onChange={this.handleChange} required/>
                         </div>
                     </div>
 
