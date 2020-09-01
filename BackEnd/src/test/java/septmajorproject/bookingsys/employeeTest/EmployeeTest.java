@@ -174,15 +174,6 @@ public class EmployeeTest {
     }
 
     @Test
-    public void insertIdentifierThatIsGreaterThanFiveCharacters_ThenReturnError(){
-        Employee newEmployee = new Employee("666666", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
-        Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
-
-        assertFalse(constraintViolations.size() == 0, " ");
-    }
-
-    @Test
     public void insertCorrectIdentifier_returnTrue(){
         Employee newEmployee = new Employee("6754", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
 

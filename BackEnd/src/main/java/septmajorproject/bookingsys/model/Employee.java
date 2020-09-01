@@ -19,7 +19,6 @@ public class Employee {
     //provides a unique id for each employee that is generated
     private long employeeId;
     @NotBlank(message = "Employee Identifier required")
-    @Size(min=4, max=5, message="please enter 4 to 5 characters")
     @Column(updatable = false, unique = true)
     private String employeeIdentifier;
     private boolean isAdmin;

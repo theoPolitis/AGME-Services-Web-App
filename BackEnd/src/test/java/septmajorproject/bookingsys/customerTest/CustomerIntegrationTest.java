@@ -48,6 +48,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("Testname","tester","s3788167@student.rmit.edu.au",
                 "123 abc street","username",0400000000,"password");
+        newCustomer.setIdentificationNumber("1A");
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertTrue(" ",constraintViolations.size()==0);
     }
@@ -66,6 +67,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
                 "123 abc street","username",0400000000,"password");
+        newCustomer.setIdentificationNumber("1B");
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertTrue(" ",constraintViolations.size()==0);
     }
@@ -93,6 +95,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
                 "123 abc street","betweenNumbers",0400000000,"password");
+        newCustomer.setIdentificationNumber("1D");
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertTrue(" ",constraintViolations.size()==0);
     }

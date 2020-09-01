@@ -32,12 +32,16 @@ public class CustomerRepositoryIntegrationTest {
     {
         Customer Customer1 = new Customer("John","Test","s3788167@student.rmit.edu.au",
                 "123 this street","johntest",0400000000,"password");
+        Customer1.setIdentificationNumber("1E");
         Customer Customer2 = new Customer("Jake","Smith","s3788168@student.rmit.edu.au",
                 "123 this street","jaketest",0400000000,"password");
+        Customer2.setIdentificationNumber("2E");
         Customer Customer3 = new Customer("Jess","Smith","s3788169@student.rmit.edu.au",
                 "123 this street","jesstest",0400000000,"password");
+        Customer3.setIdentificationNumber("3E");
         Customer Customer4 = new Customer("Jill","Smith","s3788168@student.rmit.edu.au",
                 "123 this street","jilltest",0400000000,"password");
+        Customer4.setIdentificationNumber("4E");
 
 
         entityManager.persist(Customer1);
