@@ -1,12 +1,12 @@
 package septmajorproject.bookingsys.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.exception.CustomerException;
 import septmajorproject.bookingsys.model.Customer;
-import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.repository.CustomerRepository;
+
+import java.util.List;
 
 @Service
 public class CustomerService {
@@ -30,7 +30,7 @@ public class CustomerService {
 
     public Customer findCustomerByIdentificatioNumber(String id){
         Customer found = customerRepository.findByIdentificationNumber(id);
-
+        System.out.println(id);
         if(found == null){
             throw new CustomerException("Customer: " + id + " does not exist");
         }
@@ -66,5 +66,18 @@ public class CustomerService {
         }
 
         return found;
+}
+    public List<Customer> findAllCustomers()
+    {
+        return customerRepository.findAll();
+    }
+
+    public void deleteCustomerByIdentifier(String customerId) {
+        Customer found = customerRepository.findByIdentificationNumber(customerId);
+        if(found == null)
+        {
+            throw new CustomerException("Customer Identifier " + customerId.toUpperCase() + "This Employee does not exist");
+        }
+        customerRepository.delete(found);
     }
 }

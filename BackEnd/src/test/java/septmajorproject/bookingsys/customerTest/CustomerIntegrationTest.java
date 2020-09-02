@@ -38,7 +38,9 @@ public class CustomerIntegrationTest {
     public void whenInsertCustomerWithBlankUsername_thenReturnFalse()
     {
         Customer newCustomer = new Customer("","tester","s3788167@student.rmit.edu.au",
+
                 "123 abc street","username","0400000000","password", "1E");
+
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertFalse(constraintViolations.size()==0,"Please enter a last name of at least 1 character length");
     }
@@ -48,6 +50,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("Testname","tester","s3788167@student.rmit.edu.au",
                 "123 abc street","username","0400000000","password", "1F");
+
         newCustomer.setIdentificationNumber("1A");
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertTrue(" ",constraintViolations.size()==0);
@@ -67,6 +70,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
                 "123 abc street","username","0400000000","password", "17");
+
         newCustomer.setIdentificationNumber("1B");
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertTrue(" ",constraintViolations.size()==0);
@@ -77,6 +81,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
                 "123 abc street","a","0400000000","password", "522");
+
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertFalse(constraintViolations.size()==0,"Please enter a username between 3-20 characters");
     }
@@ -94,6 +99,7 @@ public class CustomerIntegrationTest {
     public void whenInsertUsernameBetween3and20Characters_thenReturnTrue()
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
+
                 "123 abc street","betweenNumbers","0400000000","password", "rg87");
         newCustomer.setIdentificationNumber("1D");
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
@@ -104,7 +110,9 @@ public class CustomerIntegrationTest {
     public void whenInsertBlankEmail_thenReturnFalse()
     {
         Customer newCustomer = new Customer("tester","lastname","",
+
                 "123 abc street","username","0400000000","password", "7686");
+
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertFalse(constraintViolations.size()==0,"Please enter an email address");
     }
@@ -113,7 +121,9 @@ public class CustomerIntegrationTest {
     public void whenInsertBlankAddress_thenReturnFalse()
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
+
                 "","username","0400000000","password", "634764");
+
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertFalse(constraintViolations.size()==0,"Please enter an address");
     }
@@ -123,6 +133,7 @@ public class CustomerIntegrationTest {
     {
         Customer newCustomer = new Customer("tester","lastname","s3788167@student.rmit.edu.au",
                 "123 abc street","username","0400000000","", "76833");
+
         Set<ConstraintViolation<Customer>> constraintViolations = localValidatorFactory.validate(newCustomer);
         assertFalse(constraintViolations.size()==0,"Please enter a password");
     }
