@@ -1,5 +1,6 @@
 package septmajorproject.bookingsys.web;
 
+import org.hibernate.hql.internal.ast.tree.ResolvableNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +11,8 @@ import septmajorproject.bookingsys.service.CustomerService;
 import septmajorproject.bookingsys.service.MapValidationErrorService;
 
 import javax.validation.Valid;
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/customer")
 @CrossOrigin
@@ -33,5 +36,25 @@ public class CustomerController {
         return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
     }
 
+    @GetMapping("/all")
+    public List<Customer> getAllCustomers()
+    {
+        return customerService.findAllCustomers();
+    }
+
+    @GetMapping("/{customerId}")
+    public ResponseEntity<?> findEmployeeById(@PathVariable String customerId)
+    {
+        Customer customer = customerService.findCustomerByIdentificatioNumber(customerId);
+
+        return new ResponseEntity<Customer>(customer,HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{customerId}")
+    public ResponseEntity<?> deleteCustomerById(@PathVariable String customerId)
+    {
+        customerService.deleteCustomerByIdentifier(customerId);
+        return new ResponseEntity<String>("Customer with ID: " + customerId + " was deleted", HttpStatus.OK);
+    }
 }
 
