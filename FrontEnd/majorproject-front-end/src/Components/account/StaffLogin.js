@@ -10,7 +10,6 @@ class StaffLogin extends Component {
         this.state = {
             username: "",
             password: "",
-            loginErrors: "",
             loggedIn: false
         }
 
@@ -34,7 +33,6 @@ class StaffLogin extends Component {
 
     handleSubmit = (e) => {
         this.toggleGet(this.state.username, this.state.password);
-        console.log("form submitted");
         e.preventDefault();
     }
 

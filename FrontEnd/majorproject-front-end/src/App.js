@@ -10,6 +10,7 @@ import Signup from "./Components/account/Signup.js";
 import Login from "./Components/account/Login.js";
 import StaffLogin from "./Components/account/StaffLogin";
 import Booking from "./Components/booking/Booking";
+import AboutUs from "./Components/aboutUs/AboutUs"
 
 class App extends React.Component {
   constructor() {
@@ -55,7 +56,7 @@ class App extends React.Component {
           <Header toggleLogout={this.toggleLogout} 
                   customer={this.state.customer} 
                   employee={this.state.employee} 
-                  loggedInStatus={this.state.loggedInStatus} />
+                   />
 
           <Route
             exact
@@ -65,6 +66,8 @@ class App extends React.Component {
                         loggedInStatus={this.state.loggedInStatus} />
             )}
           />
+
+          <Route exact path="/aboutus" component={AboutUs}/>
 
           <Route
             path="/login"

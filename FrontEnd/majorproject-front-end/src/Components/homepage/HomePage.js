@@ -5,6 +5,15 @@ import './HomePage.css';
 class HomePage extends Component {
 
     render() {
+        if(this.props.loggedInStatus === "LOGGED_IN"){
+            return (
+                <div className='homepageStyle'>
+                     <section className="Phrase">Find a Service that suits you</section>
+                     <i className="Line"></i>
+                </div>
+             )
+        }
+
         return (
            <div className='homepageStyle'>
                 <section className="Phrase">Find a Service that suits you</section>

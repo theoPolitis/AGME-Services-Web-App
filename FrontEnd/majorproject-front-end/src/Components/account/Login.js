@@ -13,11 +13,11 @@ class Login extends Component {
             loggedIn: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
+    //handles GET Request
     toggeleGet=(username, password)=> {
+        //passes username and password the user entered and retreives a customer
         Axios.get("http://localhost:8080/api/customer/" + username + "/" + password, {
         })
         .then(res => {
@@ -25,20 +25,22 @@ class Login extends Component {
                 loggedIn: true
             })
 
+            //passers GET data to app.js
             this.props.customerAuth(res.data);
         }).catch(e => {
+            //if cant find customer then request is sent back a 400 error handles accordingly
             if(e.response.status === 400){
                 alert("Username or password incorrect");
             }
         })
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         this.toggeleGet(this.state.username, this.state.password);
         e.preventDefault();
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -46,6 +48,7 @@ class Login extends Component {
 
     
     render() {
+        //if customer exists redirect
         if(this.state.loggedIn === true){
             return <Redirect to={{pathname: "/"}}/>
         }
