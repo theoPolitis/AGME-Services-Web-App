@@ -14,12 +14,12 @@ import java.util.Date;
  */
 public class RosterPK implements Serializable {
 
-    @NotNull
+    @NotNull(message = "Date cannot be null")
     @JsonFormat(pattern = "yyyy-mm-dd")
     private Date rosterDate;
 
-    @NotNull
-    @JsonFormat(pattern = "HH:mm")
+    @NotNull(message = "Time cannot be null")
+    @JsonFormat(pattern = "HH:mm:ss")
     private Time rosterTime;
 
     /**
@@ -34,7 +34,7 @@ public class RosterPK implements Serializable {
      * @param rosterDate : date
      * @param rosterTime : time
      */
-    public RosterPK(@NotNull Date rosterDate, @NotNull Time rosterTime) {
+    public RosterPK(Date rosterDate, Time rosterTime) {
         this.rosterDate = rosterDate;
         this.rosterTime = rosterTime;
     }
