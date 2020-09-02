@@ -84,4 +84,14 @@ public class EmployeeService{
         employeeRepository.delete(found);
     }
 
+    public Employee findByUsernameAndPassword(String username, String password){
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        if(found == null){
+            throw new EmployeeException("Employee not found");
+        }
+
+        return found;
+    }
+
 }

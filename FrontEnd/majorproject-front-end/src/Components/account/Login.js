@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './Account.css';
 import Axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -9,8 +10,7 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            loginErrors: "",
-            loggedInUser: {}
+            loggedIn: false
         }
 
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -22,12 +22,13 @@ class Login extends Component {
         })
         .then(res => {
             this.setState({
-                loggedInUser: res.data
+                loggedIn: true
             })
-            console.log(this.state.loggedInUser);
+
+            this.props.customerAuth(res.data);
         }).catch(e => {
             if(e.response.status === 400){
-                alert("Username or password is incorrect");
+                alert("Username or password incorrect");
             }
         })
     }
@@ -45,10 +46,13 @@ class Login extends Component {
 
     
     render() {
+        if(this.state.loggedIn === true){
+            return <Redirect to={{pathname: "/"}}/>
+        }
+
         return (
                 
             <div className="container">
-                <h1>Logged in Status: {this.props.loggedInStatus} </h1>
                 <h1>LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
 

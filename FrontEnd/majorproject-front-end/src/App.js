@@ -18,36 +18,68 @@ class App extends React.Component {
       //this will boolean at some point but can change later
       loggedInStatus: "NOT_LOGGED_IN",
       employee: false,
-      customer: true,
+      customer: false,
       user: {},
     };
+  }
+
+  customerAuth = (data) => {
+    this.setState({
+      user: data,
+      customer: true,
+      loggedInStatus: "LOGGED_IN"
+    })
+  }
+
+  employeeAuth = (data) => {
+    this.setState({
+      user: data,
+      employee: true,
+      loggedInStatus: "LOGGED_IN"
+    })
+  }
+  
+  toggleLogout = () => {
+    this.setState({
+      loggedInStatus: "NOT_LOGGED_IN",
+      customer: false,
+      employee: false,
+      user: {}
+    })
   }
 
   render() {
     return (
       <Router>
         <div>
-          <Header loggedInStatus={this.state.loggedInStatus} />
+          <Header toggleLogout={this.toggleLogout} 
+                  customer={this.state.customer} 
+                  employee={this.state.employee} 
+                  loggedInStatus={this.state.loggedInStatus} />
 
           <Route
             exact
             path="/"
             render={(props) => (
-              <HomePage {...props} loggedInStatus={this.state.loggedInStatus} />
+              <HomePage {...props} 
+                        loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
           <Route
             path="/login"
             render={(props) => (
-              <Login {...props} loggedInStatus={this.state.loggedInStatus} />
+              <Login {...props} 
+                     customerAuth={this.customerAuth} 
+                     loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
           <Route
             path="/createAccount"
             render={(props) => (
-              <Signup {...props} loggedInStatus={this.state.loggedInStatus} />
+              <Signup {...props} 
+                      loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
@@ -57,6 +89,7 @@ class App extends React.Component {
               <StaffLogin
                 {...props}
                 loggedInStatus={this.state.loggedInStatus}
+                employeeAuth={this.employeeAuth}
               />
             )}
           />
@@ -64,21 +97,24 @@ class App extends React.Component {
           <Route
             path="/booking"
             render={(props) => (
-              <Booking {...props} loggedInStatus={this.state.loggedInStatus} />
+              <Booking {...props} 
+                       loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
           <Route
             path="/customer"
             render={(props) => (
-              <Customer {...props} loggedInStatus={this.state.loggedInStatus} />
+              <Customer {...props} 
+                        loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
           <Route
             path="/employee"
             render={(props) => (
-              <Employee {...props} loggedInStatus={this.state.loggedInStatus} />
+              <Employee {...props}
+                        loggedInStatus={this.state.loggedInStatus} />
             )}
           />
         </div>

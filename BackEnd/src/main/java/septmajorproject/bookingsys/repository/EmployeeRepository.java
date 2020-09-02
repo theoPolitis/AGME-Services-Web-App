@@ -17,6 +17,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     //returns employee by unique username
     Employee findByUserName(String userName);
 
+    //get employee using username and password
+    Employee findByUserNameAndPassword(String username, String password);
+
     //returns employee by there unique email
     Employee findByEmail(String email);
 

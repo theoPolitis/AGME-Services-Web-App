@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @GetMapping("{username}/{password}")
-    public ResponseEntity<?> getPersonByUsernameAndPassword(@PathVariable String username, @PathVariable String password){
+    public ResponseEntity<?> getPersonByUserNameAndPassword(@PathVariable String username, @PathVariable String password){
         Customer customer = customerService.findByUsernameAndPassword(username, password);
 
         return new ResponseEntity<Customer>(customer, HttpStatus.OK);
