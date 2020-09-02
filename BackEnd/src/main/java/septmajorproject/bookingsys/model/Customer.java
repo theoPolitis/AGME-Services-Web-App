@@ -42,6 +42,7 @@ public class Customer {
     private String phoneNumber;
     //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
+    @Column(unique = true, updatable = false)
     @NotBlank(message = "userName cannot be blank")
     private String username;
     //Created date will be forced into the corresponding Json format
@@ -72,7 +73,7 @@ public class Customer {
     }
 
     public Customer(String firstName, String lastName, String email, String address, String username,
-                    String phoneNumber, String password, String identificationNumber)
+                    String phoneNumber, String password, String id)
     {
         this.firstName = firstName;
         this.lastName = lastName;
@@ -81,7 +82,7 @@ public class Customer {
         this.username = username;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.identificationNumber = identificationNumber;
+        this.identificationNumber = id;
     }
 
 

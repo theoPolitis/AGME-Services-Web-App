@@ -14,11 +14,17 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     public Customer saveOrUpdateCustomer(Customer customer) {
+        try{
+            customer.setUsername(customer.getUsername());
+        }catch(Exception e){
+
+        }
+
         try {
             customer.setIdentificationNumber(customer.getIdentificationNumber().toUpperCase());
             return customerRepository.save(customer);
         } catch (Exception e) {
-            throw new CustomerException("Identification number: " + customer.getIdentificationNumber() + " already exists");
+            throw new CustomerException("Username: " + customer.getUsername() + " already exists");
         }
     }
 
@@ -52,6 +58,15 @@ public class CustomerService {
         return found;
     }
 
+    public Customer findByUsernameAndPassword(String username, String password){
+        Customer found = customerRepository.findByUsernameAndPassword(username, password);
+
+        if(found == null){
+            throw new CustomerException("Customer does not exist");
+        }
+
+        return found;
+}
     public List<Customer> findAllCustomers()
     {
         return customerRepository.findAll();

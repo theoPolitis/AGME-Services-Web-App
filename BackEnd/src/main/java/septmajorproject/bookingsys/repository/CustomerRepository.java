@@ -25,4 +25,6 @@ public interface CustomerRepository extends JpaRepository<Customer,Integer> {
     //Further table functionality will be entered as needed
     Customer findByFirstName(String firstName);
 
+    Customer findByUsernameAndPassword(String username, String password);
+
 }

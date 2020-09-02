@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import septmajorproject.bookingsys.model.Customer;
+import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.service.CustomerService;
 import septmajorproject.bookingsys.service.MapValidationErrorService;
 
@@ -36,6 +37,15 @@ public class CustomerController {
         return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
     }
 
+
+    @GetMapping("{username}/{password}")
+    public ResponseEntity<?> getPersonByUserNameAndPassword(@PathVariable String username, @PathVariable String password){
+        Customer customer = customerService.findByUsernameAndPassword(username, password);
+
+        return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+    }
+
+
     @GetMapping("/all")
     public List<Customer> getAllCustomers()
     {
@@ -56,5 +66,6 @@ public class CustomerController {
         customerService.deleteCustomerByIdentifier(customerId);
         return new ResponseEntity<String>("Customer with ID: " + customerId + " was deleted", HttpStatus.OK);
     }
+
 }
 
