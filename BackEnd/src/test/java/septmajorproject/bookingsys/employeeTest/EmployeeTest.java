@@ -37,7 +37,7 @@ public class EmployeeTest {
 
     }
 
-    //testing employee firstName with lest then three character
+    //testing employee firstName with less then three character
     @Test
     public void whenInsertEmployeeFirstNameWithWrongSize_thenReturnFalse(){
         Employee newEmployee = new Employee("2345", "A", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
