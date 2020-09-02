@@ -101,6 +101,8 @@ public class EmployeeRepositoryTest {
         assertThat(employeeList.size() == 4);
     }
 
+
+    //test if employee retreives with identifier
     @Test
     public void getEmployeeByValidIdentifier_thenReturnEmployee(){
         Employee found = employeeRepository.findByEmployeeIdentifier("1234");
@@ -108,6 +110,7 @@ public class EmployeeRepositoryTest {
         assertThat(found.getFirstName().equals("Alex"));
     }
 
+    //fail test for employee indentifier
     @Test
     public void getEmployeeWithInCorrectIdentifier_theReturnNull(){
         Employee found = employeeRepository.findByEmployeeIdentifier(("1111"));
@@ -115,5 +118,48 @@ public class EmployeeRepositoryTest {
         assertThat(found == null);
     }
 
+    //testing findByUserNameAndPassword should return an employee
+    @Test
+    public void getEmployeeByUsernameAndPassword_returnEmployee(){
+        String username = "s3661671";
+        String password = "password";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found.getUserName().equals(username) && found.getPassword().equals(password));
+    }
+
+    //Test when username and password does not match employee
+    @Test
+    public void getEmployeeByInvalidUsernameAndInvalidPassword_returnNull(){
+        String username = "null";
+        String password = "null";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found == null);
+    }
+
+    //Test when trying to find employee with invalid password but valid username
+    @Test
+    public void getEmployeeByValidUsernameAndInvalidPassword_returnNull(){
+        String username = "s3661671";
+        String password = "null";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found == null);
+    }
+
+    //Test when trying to find employee with valid password but invalid username
+    @Test
+    public void getEmployeeByInvalidUsernameAndValidPassword_returnNull(){
+        String username = "null";
+        String password = "password";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found == null);
+    }
 
 }
