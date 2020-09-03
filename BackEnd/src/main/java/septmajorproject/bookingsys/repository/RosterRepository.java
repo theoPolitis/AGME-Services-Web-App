@@ -22,7 +22,7 @@ public interface RosterRepository extends JpaRepository<Roster, RosterPK> {
     //returns all rosters
     List<Roster> findAll();
 
-    List<Roster> getAllByEmployeeId(String employeeId);
+//    List<Roster> getAllByEmployeeId(String employeeId);
 
 
 }
