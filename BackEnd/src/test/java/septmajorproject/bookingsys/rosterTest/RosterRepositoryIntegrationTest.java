@@ -11,13 +11,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.model.RosterPK;
+import septmajorproject.bookingsys.repository.EmployeeRepository;
 import septmajorproject.bookingsys.repository.RosterRepository;
-
-import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -32,6 +33,9 @@ public class RosterRepositoryIntegrationTest {
 
     @Autowired
     private RosterRepository rosterRepository;
+
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     //generate the test data in this part
     @Before
@@ -93,3 +97,4 @@ public class RosterRepositoryIntegrationTest {
     }
 
 }
+
