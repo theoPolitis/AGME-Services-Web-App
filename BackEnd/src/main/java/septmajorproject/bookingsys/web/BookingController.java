@@ -48,23 +48,22 @@ public class BookingController {
 
     @GetMapping("/all")
     public List<Booking> all() {
-
         return bookingService.getAll();
 
     }
 
     @GetMapping("/{bookingId}")
-    public ResponseEntity<?> findBookingById(@PathVariable Long bookingId) {
+    public ResponseEntity<?> findBookingById(@PathVariable String bookingId) {
         Booking booking = bookingService.findBookingByIdentificationNumber(bookingId);
 
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
-//    @DeleteMapping("/{bookingId}")
-//    public ResponseEntity<?> deleteBookingById(@PathVariable String bookingId) {
-//        bookingService.deleteBookingByIdentifier(bookingId);
-//        return new ResponseEntity<String>("Booking with ID: " + bookingId + " was deleted", HttpStatus.OK);
-//    }
+    @DeleteMapping("/{bookingId}")
+    public ResponseEntity<?> deleteBookingById(@PathVariable String bookingId) {
+        bookingService.deleteBookingByIdentifier(bookingId);
+        return new ResponseEntity<String>("Booking with ID: " + bookingId + " was deleted", HttpStatus.OK);
+    }
 
     @GetMapping("/tester")
     public Booking test() {
