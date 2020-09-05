@@ -6,13 +6,14 @@ import org.springframework.stereotype.Repository;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.Roster;
-import septmajorproject.bookingsys.model.RosterPK;
 
+import java.sql.Time;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface RosterRepository extends JpaRepository<Roster, RosterPK> {
+public interface RosterRepository extends JpaRepository<Roster, Long> {
 
 //    Employee employee = new Employee();
 
@@ -22,7 +23,14 @@ public interface RosterRepository extends JpaRepository<Roster, RosterPK> {
     //returns all rosters
     List<Roster> findAll();
 
-//    List<Roster> getAllByEmployeeId(String employeeId);
+//    @Override
+//    Roster findById(RosterPK rosterPK);
+
+//    public Roster findByDateAndTime(Date date, Time time);
+
+//    public Roster findByPK(RosterPK rosterPK);
+
+    //    List<Roster> getAllByEmployeeId(String employeeId);
 
 
 }

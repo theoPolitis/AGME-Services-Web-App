@@ -10,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.Roster;
-import septmajorproject.bookingsys.model.RosterPK;
 import septmajorproject.bookingsys.repository.EmployeeRepository;
 import septmajorproject.bookingsys.repository.RosterRepository;
 
@@ -41,11 +40,11 @@ public class RosterRepositoryIntegrationTest {
     @Before
     public  void setUp(){
 
-        Roster rosterOne = new Roster(employeeOne,(new RosterPK((new Date(2020,8,27)),(new Time(12,30,0)))));
-        Roster rosterTwo = new Roster(employeeOne,(new RosterPK((new Date(2020,8,28)),(new Time(12,30,0)))));
-        Roster rosterThree = new Roster(employeeOne,(new RosterPK((new Date(2020,8,29)),(new Time(12,30,0)))));
-        Roster rosterFour = new Roster(employeeTwo,(new RosterPK((new Date(2020,8,30)),(new Time(12,30,0)))));
-        Roster rosterFive = new Roster(employeeTwo,(new RosterPK((new Date(2020,8,31)),(new Time(12,30,0)))));
+        Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
+        Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
+        Roster rosterThree = new Roster(employeeOne,(new Date(2020,8,29)),(new Time(12,30,0)));
+        Roster rosterFour = new Roster(employeeTwo,(new Date(2020,8,30)),(new Time(12,30,0)));
+        Roster rosterFive = new Roster(employeeTwo,(new Date(2020,8,31)),(new Time(12,30,0)));
 
         testEntityManager.persist(employeeOne);
         testEntityManager.persist(rosterOne);
@@ -61,7 +60,7 @@ public class RosterRepositoryIntegrationTest {
 
         List<Roster> rosterList = rosterRepository.findAllByEmployee(employeeOne);
 
-        assertThat(rosterList.size() == 3);
+        assert(rosterList.size() == 3);
     }
 
     @Test
@@ -70,7 +69,7 @@ public class RosterRepositoryIntegrationTest {
 
         List<Roster> rosterList = rosterRepository.findAllByEmployee(employeeThree);
 
-        assertThat(rosterList.size() == 0);
+        assert(rosterList.size() == 0);
 
     }
 
@@ -79,7 +78,7 @@ public class RosterRepositoryIntegrationTest {
     {
         List<Roster> rosterList = rosterRepository.findAll();
 
-        assertThat(rosterList.size() == 5);
+        assert(rosterList.size() == 5);
     }
 
 //    @Test
