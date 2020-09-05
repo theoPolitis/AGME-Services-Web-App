@@ -1,8 +1,12 @@
 package septmajorproject.bookingsys.model;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Time;
+import java.util.Date;
 
 @Entity
 @Table(name = "BOOKING")
@@ -12,8 +16,13 @@ import javax.validation.constraints.NotNull;
  */
 public class Booking {
 
-    @EmbeddedId
-    private BookingPK bookingPK;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private long id;
+
+//    @EmbeddedId
+//    private BookingPK bookingPK;
 
     //many to one connection initialization for Employee table
     @ManyToOne
@@ -27,19 +36,37 @@ public class Booking {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
+    @NotNull(message = "Please attach a date")
+    @JsonFormat(pattern = "yyyy-mm-dd")
+    private Date rosterDate;
+
+    @NotNull(message = "Please attach a time")
+    @JsonFormat(pattern = "HH:mm")
+    private Time rosterTime;
+
     public Booking() {
     }
 
     /**
      * Constructor
-     * @param bookingPK : Composite key for booking table
+     * @param date : Date table entry
+     * @param time : Time table entry
      * @param employee : Employee table entry
      * @param customer : customer table entry
      */
-    public Booking(BookingPK bookingPK, Employee employee, Customer customer) {
-        this.bookingPK = bookingPK;
+    public Booking(Date date, Time time, Employee employee, Customer customer) {
         this.employee = employee;
         this.customer = customer;
+        this.rosterDate = date;
+        this.rosterTime = time;
+    }
+
+    /**
+     * get id
+     * @return id
+     */
+    public long getId() {
+        return id;
     }
 
     /**
@@ -59,6 +86,23 @@ public class Booking {
     }
 
     /**
+     * get rosterDate
+     * @return rosterDate
+     */
+    public Date getRosterDate() {
+        return rosterDate;
+    }
+
+    /**
+     * get rosterTIme
+     * @return rosterTIme
+     */
+    public Time getRosterTime() {
+        return rosterTime;
+    }
+
+
+    /**
      * set employee to the given object of employee
      * @param employee: employee object
      */
@@ -75,18 +119,34 @@ public class Booking {
     }
 
     /**
-     * Booking table composite key set function
-     * @param bookingPK: booking table composite key
+     * set roster date to the given date object
+     * @param rosterDate: customer object
      */
-    public void setBookingPK(BookingPK bookingPK) {
-        this.bookingPK = bookingPK;
+    public void setRosterDate(Date rosterDate) {
+        this.rosterDate = rosterDate;
     }
 
     /**
-     * get the booking table compostie key
-     * @return composite key
+     * set roster time to the given time object
+     * @param rosterTime: customer object
      */
-    public BookingPK getBookingPK() {
-        return bookingPK;
+    public void setRosterTime(Time rosterTime) {
+        this.rosterTime = rosterTime;
     }
+
+//    /**
+//     * Booking table composite key set function
+//     * @param bookingPK: booking table composite key
+//     */
+//    public void setBookingPK(BookingPK bookingPK) {
+//        this.bookingPK = bookingPK;
+//    }
+//
+//    /**
+//     * get the booking table compostie key
+//     * @return composite key
+//     */
+//    public BookingPK getBookingPK() {
+//        return bookingPK;
+//    }
 }

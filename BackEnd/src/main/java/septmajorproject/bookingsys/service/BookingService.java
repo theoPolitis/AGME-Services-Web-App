@@ -18,6 +18,10 @@ public class BookingService {
         return bookingRepository.save(booking);
     }
 
+    public Booking findBookingByIdentificationNumber(Long id) {
+        return bookingRepository.findBookingById(id);
+    }
+
     public List<Booking> getAll(){
         return bookingRepository.findAll();
     }

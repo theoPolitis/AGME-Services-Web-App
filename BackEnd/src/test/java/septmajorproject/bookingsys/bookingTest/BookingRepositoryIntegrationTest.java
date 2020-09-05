@@ -1,5 +1,6 @@
 package septmajorproject.bookingsys.bookingTest;
 
+import org.hibernate.validator.HibernateValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -9,7 +10,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import septmajorproject.bookingsys.model.Booking;
-import septmajorproject.bookingsys.model.BookingPK;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.repository.BookingRepository;
@@ -51,10 +51,6 @@ public class BookingRepositoryIntegrationTest {
     Time time3 = new Time(9,30,0);
     Date date3 = new Date(2020,9,17);
 
-    BookingPK pk = new BookingPK(date, time);
-    BookingPK pk2 = new BookingPK(date2, time2);
-    BookingPK pk3 = new BookingPK(date3, time3);
-
     Employee emp = new Employee("Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
     Employee emp2 = new Employee("Sarah", "Doe", "sarah@doe.com", 39593925, "123 street", "somethingHere", "test");
 
@@ -70,13 +66,24 @@ public class BookingRepositoryIntegrationTest {
         employeeRepository.save(emp);
         employeeRepository.save(emp2);
 
-        Booking booking = new Booking(pk, emp, cust);
-        Booking booking2 = new Booking(pk2, emp, cust);
-        Booking booking3 = new Booking(pk3, emp, cust);
+        Booking booking = new Booking(date, time, emp, cust);
+        Booking booking2 = new Booking(date2, time2, emp, cust);
+        Booking booking3 = new Booking(date3, time3, emp, cust);
 
-        bookingRepository.save(booking);
-        bookingRepository.save(booking2);
-        bookingRepository.save(booking3);
+//        bookingRepository.save(booking);
+//        bookingRepository.save(booking2);
+//        bookingRepository.save(booking3);
+
+        testManager.persist(booking);
+        testManager.persist(booking2);
+        testManager.persist(booking3);
+
+        testManager.flush();
+
+        localValidatorFactory = new LocalValidatorFactoryBean();
+        localValidatorFactory.setProviderClass(HibernateValidator.class);
+        localValidatorFactory.afterPropertiesSet();
+
     }
 
     // Testing find by employee method with a valid employee that has previously had a booking under their name

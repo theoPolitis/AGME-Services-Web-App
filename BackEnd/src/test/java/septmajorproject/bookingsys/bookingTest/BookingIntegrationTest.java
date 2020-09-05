@@ -9,7 +9,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import septmajorproject.bookingsys.model.Booking;
-import septmajorproject.bookingsys.model.BookingPK;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
 
@@ -33,7 +32,6 @@ public class BookingIntegrationTest {
     Time time = new Time(12,30,0);
     Date date = new Date(2020,8,27);
 
-    BookingPK pk = new BookingPK(date, time);
     Employee emp = new Employee("Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
     Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
 
@@ -48,10 +46,12 @@ public class BookingIntegrationTest {
     // Testing a bookingPK with no time specified
     @Test
     public void whenInsertBookingWithNoTime_thenReturnFalse() {
-        BookingPK nullTimePK = new BookingPK();
-        nullTimePK.setRosterDate(date);
+        Booking nullTime = new Booking();
+        nullTime.setRosterDate(date);
+        nullTime.setEmployee(emp);
+        nullTime.setCustomer(cust);
 
-        Set<ConstraintViolation<BookingPK>> constraintViolations = localValidatorFactory.validate(nullTimePK);
+        Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(nullTime);
 
         assertFalse(constraintViolations.size() == 0, "Booking must have a time attached");
     }
@@ -59,10 +59,12 @@ public class BookingIntegrationTest {
     // Testing a bookingPK with no date specified
     @Test
     public void whenInsertBookingWithNoDate_thenReturnFalse() {
-        BookingPK nullDatePK = new BookingPK();
-        nullDatePK.setRosterTime(time);
+        Booking nullDate = new Booking();
+        nullDate.setRosterTime(time);
+        nullDate.setEmployee(emp);
+        nullDate.setCustomer(cust);
 
-        Set<ConstraintViolation<BookingPK>> constraintViolations = localValidatorFactory.validate(nullDatePK);
+        Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(nullDate);
 
         assertFalse(constraintViolations.size() == 0, "Booking must have a date attached");
     }
@@ -71,7 +73,8 @@ public class BookingIntegrationTest {
     @Test
     public void whenInsertBookingWithNoCustomer_thenReturnFalse() {
         Booking booking = new Booking();
-        booking.setBookingPK(pk);
+        booking.setRosterDate(date);
+        booking.setRosterTime(time);
         booking.setEmployee(emp);
 
         Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
@@ -83,7 +86,8 @@ public class BookingIntegrationTest {
     @Test
     public void whenInsertBookingWithNoEmployee_thenReturnFalse() {
         Booking booking = new Booking();
-        booking.setBookingPK(pk);
+        booking.setRosterDate(date);
+        booking.setRosterTime(time);
         booking.setCustomer(cust);
 
         Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
@@ -94,7 +98,7 @@ public class BookingIntegrationTest {
     // Testing a booking with valid customer, employee and booking data
     @Test
     public void whenInsertBookingWithValidValues_thenReturnTrue() {
-        Booking booking = new Booking(pk, emp, cust);
+        Booking booking = new Booking(date, time, emp, cust);
 
         Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
 
