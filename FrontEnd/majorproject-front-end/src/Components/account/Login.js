@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import './Account.css';
+import Axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
 
@@ -8,20 +10,37 @@ class Login extends Component {
         this.state = {
             username: "",
             password: "",
-            loginErrors: ""
+            loggedIn: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(e) {
-        console.log("form submitted");
+    //handles GET Request
+    toggeleGet=(username, password)=> {
+        //passes username and password the user entered and retreives a customer
+        Axios.get("http://localhost:8080/api/customer/" + username + "/" + password, {
+        })
+        .then(res => {
+            this.setState({
+                loggedIn: true
+            })
+
+            //passers GET data to app.js
+            this.props.customerAuth(res.data);
+        }).catch(e => {
+            //if cant find customer then request is sent back a 400 error handles accordingly
+            if(e.response.status === 400){
+                alert("Username or password incorrect");
+            }
+        })
+    }
+
+    handleSubmit = (e) => {
+        this.toggeleGet(this.state.username, this.state.password);
         e.preventDefault();
-
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -29,10 +48,14 @@ class Login extends Component {
 
     
     render() {
+        //if customer exists redirect
+        if(this.state.loggedIn === true){
+            return <Redirect to={{pathname: "/"}}/>
+        }
+
         return (
                 
             <div className="container">
-                <h1>Logged in Status: {this.props.loggedInStatus} </h1>
                 <h1>LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
 

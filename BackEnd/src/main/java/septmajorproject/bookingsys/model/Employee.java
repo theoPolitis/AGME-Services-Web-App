@@ -17,7 +17,10 @@ public class Employee {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="employee_id")
     //provides a unique id for each employee that is generated
-    private long id;
+    private long employeeId;
+    @NotBlank(message = "Employee Identifier required")
+    @Column(updatable = false, unique = true)
+    private String employeeIdentifier;
     private boolean isAdmin;
     @Size(min=3, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than two character.")
     @NotBlank(message="Please Enter a First Name.")
@@ -54,7 +57,7 @@ public class Employee {
     }
 
     //simple constructor for employees
-    public Employee(String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password){
+    public Employee(String employeeIdentifier, String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password){
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -62,6 +65,7 @@ public class Employee {
         this.address = address;
         this.userName = userName;
         this.password = password;
+        this.employeeIdentifier = employeeIdentifier;
     }
 
     //updates the date variables automatically with annotations
@@ -77,6 +81,15 @@ public class Employee {
 
     //getters and setters
 
+
+    public String getEmployeeIdentifier() {
+        return employeeIdentifier;
+    }
+
+    public void setEmployeeIdentifier(String employeeIdentifier) {
+        this.employeeIdentifier = employeeIdentifier;
+    }
+
     public String getUserName() {
         return userName;
     }
@@ -85,12 +98,12 @@ public class Employee {
         this.userName = userName;
     }
 
-    public long getId() {
-        return id;
+    public long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setId(long id) {
-        this.id = id;
+    public void setEmployeeId(long employeeId) {
+        this.employeeId = employeeId;
     }
 
     public boolean isAdmin() {
