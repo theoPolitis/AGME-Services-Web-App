@@ -50,22 +50,16 @@ public class RosterServiceTest {
     public void setUp(){
 
         Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-        Employee employeeTwo = new Employee("5678", "Alma", "Tests", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-        Employee employeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", 0424735213, "Something", "s3661673", "password");
 
         Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
         Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
         Roster rosterThree = new Roster(employeeOne,(new Date(2020,8,29)),(new Time(12,30,0)));
-//        Roster rosterFour = new Roster(employeeTwo,(new Date(2020,8,30)),(new Time(12,30,0)));
-//        Roster rosterFive = new Roster(employeeTwo,(new Date(2020,8,31)),(new Time(12,30,0)));
 
         List<Roster> rosterListAll = new ArrayList<>();
 
         rosterListAll.add(rosterOne);
         rosterListAll.add(rosterTwo);
         rosterListAll.add(rosterThree);
-//        rosterListAll.add(rosterFour);
-//        rosterListAll.add(rosterFive);
 
         Mockito.when(rosterRepository.findAll()).thenReturn(rosterListAll);
         Mockito.when(rosterRepository.findAllByEmployee(employeeOne)).thenReturn(rosterListAll);
