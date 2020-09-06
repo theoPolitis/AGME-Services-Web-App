@@ -1,6 +1,7 @@
 package septmajorproject.bookingsys.rosterTest;
 
 
+import org.hibernate.validator.HibernateValidator;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -8,16 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.repository.EmployeeRepository;
 import septmajorproject.bookingsys.repository.RosterRepository;
 
+import javax.xml.validation.Validator;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -36,9 +39,16 @@ public class RosterRepositoryTest {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    private Validator validator;
+    private LocalValidatorFactoryBean localValidatorFactory;
+
     //generate the test data in this part
     @Before
     public  void setUp(){
+
+        employeeRepository.save(employeeOne);
+        employeeRepository.save(employeeTwo);
+        employeeRepository.save(employeeThree);
 
         Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
         Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
@@ -50,8 +60,14 @@ public class RosterRepositoryTest {
         testEntityManager.persist(rosterOne);
         testEntityManager.persist(rosterTwo);
         testEntityManager.persist(rosterThree);
+        testEntityManager.persist(rosterFour);
+        testEntityManager.persist(rosterFive);
 
         testEntityManager.flush();
+
+        localValidatorFactory = new LocalValidatorFactoryBean();
+        localValidatorFactory.setProviderClass(HibernateValidator.class);
+        localValidatorFactory.afterPropertiesSet();
 
     }
 
@@ -60,7 +76,7 @@ public class RosterRepositoryTest {
 
         List<Roster> rosterList = rosterRepository.findAllByEmployee(employeeOne);
 
-        assert(rosterList.size() == 3);
+        assertTrue(rosterList.size() == 3);
     }
 
     @Test
@@ -81,9 +97,16 @@ public class RosterRepositoryTest {
         assert(rosterList.size() == 5);
     }
 
+    @Test
+    public void findAllRostersOnTable_thenAssertTrue(){
+        List<Roster> rosterList = rosterRepository.findAll();
+
+        assertTrue(rosterList.size() == 5);
+    }
+
 //    @Test
 //    public void getAllRosterByEmployeeId_returnListOfRosters(){
-//        List<Roster> rosterList = rosterRepository.getAllByEmployeeId(employeeOne.getEmployeeIdentifier());
+//        List<Roster> rosterList = rosterRepository.);
 //
 //        assertThat(rosterList.size() == 3);
 //    }

@@ -20,4 +20,8 @@ public interface RosterRepository extends JpaRepository<Roster, Long> {
     List<Roster> findAllById(Iterable<Long> Ids);
 
     Roster findRosterById(String rosterId);
+
+//    Roster findRosterByEmployeeId(long employeeId);
+
+    //i want to have a method to find the roster using the employee id, i think it's be useful, but not sure how to do it
 }
