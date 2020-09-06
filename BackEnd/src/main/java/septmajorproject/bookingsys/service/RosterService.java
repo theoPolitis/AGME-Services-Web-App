@@ -10,11 +10,7 @@ import septmajorproject.bookingsys.repository.RosterRepository;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
-import javax.validation.constraints.NotNull;
-import java.sql.Time;
-import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class RosterService {
@@ -40,7 +36,7 @@ public class RosterService {
         EntityManager entityManager=entityManagerFactory.createEntityManager();
 
 
-        Roster rosterEntry = entityManager.find(Roster.class,roster.getRosterId());
+        Roster rosterEntry = entityManager.find(Roster.class,roster.getId());
 
         entityManager.remove(rosterEntry);
         entityManager.getTransaction().commit();

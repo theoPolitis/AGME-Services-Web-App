@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
-public class RosterRepositoryIntegrationTest {
+public class RosterRepositoryTest {
 
     Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
     Employee employeeTwo = new Employee("5678", "Alma", "Tests", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");

@@ -65,12 +65,24 @@ public class RosterIntegrationTest {
     @Test
     // testing when the entered roster Employee does not exist in the database
     public void whenInsertRosterWithNonExistingEmployee_thenReturnFalse(){
+        Roster invalidRoster = new Roster();
+        invalidRoster.setRosterDate(date);
+        invalidRoster.setRosterTime(time);
+
+        Set<ConstraintViolation<Roster>> constraintViolations = localValidatorFactoryBean.validate((invalidRoster));
+
+        assertFalse(constraintViolations.size() == 0,"Employee required");
 
     }
 
     @Test
     //
     public void whenInsertRosterWithExistingEmployee_thenReturnTrue(){
+        Roster validRoster = new Roster(employee,date,time);
+
+        Set<ConstraintViolation<Roster>> constraintViolations = localValidatorFactoryBean.validate((validRoster));
+
+        assertTrue(constraintViolations.size() == 0);
 
     }
 
