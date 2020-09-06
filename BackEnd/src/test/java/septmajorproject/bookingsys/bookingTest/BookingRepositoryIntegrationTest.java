@@ -54,8 +54,9 @@ public class BookingRepositoryIntegrationTest {
     Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
     Employee emp2 = new Employee("5678","Sarah", "Doe", "sarah@doe.com", 39593925, "123 street", "somethingHere", "test");
 
-    Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething","1E");
-    Customer cust2 = new Customer("test", "test@email.com", "Rufus", "Du Sol", "123 street", "04373847545", "Rufus","2E");
+    Customer cust = new Customer("Julz", "riz", "test@email.com","123 street","testSomething","04373847545","password","1E");
+    Customer cust2 = new Customer("Rufus", "Du Sol","test@email.com", "123 street",  "test", "04373847545", "password","2E");
+
 
 
     @Before
