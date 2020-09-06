@@ -53,8 +53,8 @@ public class BookingServiceTest {
         Time time3 = new Time(9,30,0);
         Date date3 = new Date(2020,9,17);
 
-        Employee emp = new Employee("Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
-        Employee emp2 = new Employee("Sarah", "Doe", "sarah@doe.com", 39593925, "123 street", "somethingHere", "test");
+        Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
+        Employee emp2 = new Employee("5678","Sarah", "Doe", "sarah@doe.com", 39593925, "123 street", "somethingHere", "test");
 
         Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
         Customer cust2 = new Customer("test", "test@email.com", "Rufus", "Du Sol", "123 street", "04373847545", "Rufus");
