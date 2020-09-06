@@ -115,7 +115,7 @@ public class Customer {
         this.updatedDate = updatedDate;
     }
 
-    public long getId()
+    public Integer getId()
     {
         return id;
     }
