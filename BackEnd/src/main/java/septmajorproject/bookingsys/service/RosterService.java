@@ -3,6 +3,7 @@ package septmajorproject.bookingsys.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import septmajorproject.bookingsys.exception.RosterException;
 import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.repository.RosterRepository;
 
@@ -12,6 +13,7 @@ import javax.persistence.Persistence;
 import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -44,6 +46,22 @@ public class RosterService {
         entityManager.getTransaction().commit();
         entityManagerFactory.close();
         entityManager.close();
+    }
+
+    public Roster findRosterByIdentificationNumber(String rosterId){
+
+        Roster rosterFound = rosterRepository.findRosterById(rosterId);
+
+        if(rosterFound == null){
+            throw new RosterException("Roster with the id " + rosterId + " does not exist");
+        }
+        else{
+            return rosterFound;
+        }
+    }
+
+    public List<Roster> getAll(){
+        return rosterRepository.findAll();
     }
 
 }

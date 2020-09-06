@@ -26,10 +26,11 @@ public class Roster {
     //provides a unique id for each roster that is generated
     private long rosterId;
 
-//    @NotBlank(message = "Roster Identifier required")
-//    @Size(min=4, max=5, message="please enter 4 to 5 characters")
-//    @Column(updatable = false, unique = true)
-//    private String rosterIdentifier;
+    //i personally don't think that this thing is needed but we'll see if we need it
+    @NotBlank(message = "Roster Identifier required")
+    @Size(min=4, max=5, message="please enter 4 to 5 characters")
+    @Column(updatable = false, unique = true)
+    private String rosterIdentifier;
 
     @NotNull(message = "Date cannot be null")
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -38,13 +39,6 @@ public class Roster {
     @NotNull(message = "Time cannot be null")
     @JsonFormat(pattern = "HH:mm:ss")
     private Time rosterTime;
-
-
-    //i personally don't think that this thing is needed but we'll see if we need it
-//    @NotBlank(message = "Roster Identifier required")
-//    @Size(min=4, max=5, message="please enter 4 to 5 characters")
-//    @Column(updatable = false, unique = true)
-//    private String rosterIdentifier;
 
     /**
      * Default constructor
@@ -61,6 +55,16 @@ public class Roster {
         this.employee = employee;
         this.rosterDate = rosterDate;
         this.rosterTime = rosterTime;
+    }
+
+
+
+    public String getRosterIdentifier() {
+        return rosterIdentifier;
+    }
+
+    public void setRosterIdentifier(String rosterIdentifier) {
+        this.rosterIdentifier = rosterIdentifier;
     }
 
     public long getRosterId() {
