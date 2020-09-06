@@ -6,7 +6,11 @@ import org.springframework.stereotype.Repository;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.BookingPK;
 
+import java.util.List;
+
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, BookingPK> {
     //Further table functionality will be entered as needed
+    List<Booking> findAll();
+
 }

@@ -37,7 +37,8 @@ public class Employee {
     private String password;
     @NotBlank(message = "UserName cannot be blank")
     private String userName;
-
+    @NotBlank(message = "serviceNo cannot be blank")
+    private String serviceNo;
     //created and modified date for records following format yyyy-mm-dd
     @JsonFormat(pattern="yyyy-mm-dd")
     private Date createdDate;
@@ -177,4 +178,8 @@ public class Employee {
     public List<Roster> getBookingList() {
         return bookingList;
     }
+
+    public void setServiceNo(String serviceNo) { this.serviceNo = serviceNo; }
+
+    public String getServiceNo(String serviceNo){return this.serviceNo;}
 }

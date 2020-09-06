@@ -65,4 +65,10 @@ public class EmployeeController {
 
         return new ResponseEntity<String>("Person with ID: " + employeeId + " was deleted", HttpStatus.OK);
     }
+
+    @GetMapping("/all/{serviceNo}")
+    public List<Employee> getEmployeesByServiceNo(@PathVariable String serviceNo)
+    {
+        return employeeService.findByServiceNo(serviceNo);
+    }
 }
