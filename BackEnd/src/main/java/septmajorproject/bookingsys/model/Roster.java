@@ -21,7 +21,7 @@ public class Roster {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="roster_id")
+    @Column(name="id")
     //provides a unique id for each roster that is generated
     private long id;
 
