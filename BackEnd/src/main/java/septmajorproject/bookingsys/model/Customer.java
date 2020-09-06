@@ -15,10 +15,10 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Integer id;
-
     @NotBlank(message="Identification number cannot be blank")
     @Column(updatable = false, unique = true)
     private String identificationNumber;
+
     //Password will be stored as an encrypted string
     @NotBlank(message = "Please enter a password")
     private String password;
@@ -39,6 +39,7 @@ public class Customer {
     private String address;
     //Phone number is of type Integer as the primative int type cannot be used.
     @NotBlank(message = "Phone Number can not be blank")
+
     private String phoneNumber;
     //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
@@ -71,6 +72,17 @@ public class Customer {
     public Customer()
     {
     }
+
+    public Customer(String password, String email, String firstName, String lastName, String address, String phoneNumber, String username) {
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+    }
+
 
     public Customer(String firstName, String lastName, String email, String address, String username,
                     String phoneNumber, String password, String id)

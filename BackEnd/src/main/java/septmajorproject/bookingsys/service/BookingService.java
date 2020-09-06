@@ -1,13 +1,11 @@
 package septmajorproject.bookingsys.service;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import septmajorproject.bookingsys.exception.BookingException;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.repository.BookingRepository;
 
-import java.awt.print.Book;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -15,22 +13,37 @@ public class BookingService {
     @Autowired
     private BookingRepository bookingRepository;
 
-    public List<Booking> getAllByBookingDate(Date date)
-    {
-        List<Booking> bookings = bookingRepository.findAll();
-        List<Booking> book;
+    //Add in addition/modification/retrieval logic
 
-        for(Booking booking : bookings)
-        {
-            booking.getBookingPK().getRosterDate().equals(date);
+    public Booking saveOrUpdateBooking(Booking booking){
+        return bookingRepository.save(booking);
+    }
+
+    public Booking findBookingByIdentificationNumber(String id) {
+        Booking found = bookingRepository.findBookingById(id);
+
+        if (found == null) {
+            throw new BookingException("Booking with ID: " + id + " does not exist");
+        } else {
+            return found;
         }
 
-        return bookings;
     }
 
     public List<Booking> getAll(){
         return bookingRepository.findAll();
     }
 
-    //Add in addition/modification/retrieval logic
+    public void deleteBookingByIdentifier(String id) {
+
+        Booking found = bookingRepository.findBookingById(id);
+
+        if (found == null) {
+            throw new BookingException("Booking with ID: " + id + " does not exist");
+        } else {
+            bookingRepository.delete(found);
+        }
+
+
+    }
 }
