@@ -4,8 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.exception.BookingException;
 import septmajorproject.bookingsys.model.Booking;
+import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.repository.BookingRepository;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -45,5 +47,10 @@ public class BookingService {
         }
 
 
+    }
+
+    public List<Booking> findAllByDateAndEmployee(Employee employee, Date date)
+    {
+        return bookingRepository.findAllByEmployeeAndRosterDate(employee,date);
     }
 }

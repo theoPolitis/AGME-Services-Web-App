@@ -17,6 +17,10 @@
     float: left;
 }
 
+.updateButton:disabled{
+    background-color: gray;
+}
+
 .container {
     width: 46%;
     /* background-color: white; */

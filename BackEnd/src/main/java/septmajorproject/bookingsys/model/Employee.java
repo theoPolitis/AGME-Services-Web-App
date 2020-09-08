@@ -1,5 +1,6 @@
 package septmajorproject.bookingsys.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
@@ -48,7 +49,7 @@ public class Employee {
     //foreign keys to other databses
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Roster> rosterList;
-
+    @JsonBackReference
     @OneToMany(mappedBy = "employee")
     private List<Roster> bookingList;
 

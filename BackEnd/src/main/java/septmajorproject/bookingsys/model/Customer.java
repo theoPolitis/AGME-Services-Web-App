@@ -55,6 +55,7 @@ public class Customer {
     private Date updatedDate;
     //The customer id will be used as a foreign key in the booking table, and has a one to many relationship
     //As many bookings can be made by the one Customer.
+    @JsonBackReference
     @OneToMany(mappedBy = "customer")
     private List<Booking> customerList;
     //When the Customer is created the createdDate object is created and corresponds to the current date.

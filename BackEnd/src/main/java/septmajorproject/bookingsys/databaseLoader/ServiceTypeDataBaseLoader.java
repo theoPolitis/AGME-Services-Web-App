@@ -24,7 +24,7 @@ public class ServiceTypeDataBaseLoader implements CommandLineRunner {
         ServiceType gym = new ServiceType("2E","Gainz");
         serviceTypeRepository.save(gym);
 
-        ServiceType barber = new ServiceType("3E","bahbah");
+        ServiceType barber = new ServiceType("3E","barber");
         serviceTypeRepository.save(barber);
     }
 }

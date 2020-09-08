@@ -6,6 +6,7 @@ import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
 
+import java.util.Date;
 import java.util.List;
 
 @Repository
@@ -22,4 +23,6 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
     List<Booking> findAll();
 
     Booking findBookingById(String id);
+
+    List<Booking> findAllByEmployeeAndRosterDate(Employee employee, Date rosterDate);
 }

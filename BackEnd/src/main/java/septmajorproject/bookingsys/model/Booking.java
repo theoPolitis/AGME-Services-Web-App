@@ -1,7 +1,8 @@
 package septmajorproject.bookingsys.model;
 
-
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -25,12 +26,14 @@ public class Booking {
 //    private BookingPK bookingPK;
 
     //many to one connection initialization for Employee table
+    @JsonManagedReference
     @ManyToOne
     @NotNull(message = "Employee required")
     @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
 
     //many to one connection initialization for Customer table
+    @JsonManagedReference
     @ManyToOne
     @NotNull(message = "Customer required")
     @JoinColumn(name = "customer_id", nullable = false)
@@ -41,7 +44,7 @@ public class Booking {
     private Date rosterDate;
 
     @NotNull(message = "Please attach a time")
-    @JsonFormat(pattern = "HH:mm")
+    @JsonFormat(pattern = "HH:mm:ss")
     private Time rosterTime;
 
     public Booking() {
