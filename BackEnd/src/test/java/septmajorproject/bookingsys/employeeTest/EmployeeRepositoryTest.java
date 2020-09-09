@@ -49,7 +49,7 @@ public class EmployeeRepositoryTest {
         Employee foundEmployee = employeeRepository.findByEmail("s3661671@student.rmit.edu.au");
 
 
-        assertThat(foundEmployee.getFirstName().equals("Alex"));
+        assert(foundEmployee.getFirstName().equals("Alex"));
     }
 
     //find employee by email FAIL
@@ -57,7 +57,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithIncorrectEmail_thenReturnNull(){
         Employee foundEmployee = employeeRepository.findByEmail("NO_EMAIL");
 
-        assertThat(foundEmployee == null);
+        assert(foundEmployee == null);
     }
 
     //find employee by phone number PASS
@@ -65,7 +65,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithPhoneNumber(){
         Employee foundEmployee = employeeRepository.findByPhoneNumber(0424735215);
 
-        assertThat(foundEmployee.getFirstName().equals("Alex"));
+        assert(foundEmployee.getFirstName().equals("Alex"));
     }
 
     //find employee by phone number FAIL
@@ -73,7 +73,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithIncorrectPhoneNumber_thenReturnNull(){
         Employee foundEmployee = employeeRepository.findByPhoneNumber(7888);
 
-        assertThat(foundEmployee == null);
+        assert(foundEmployee == null);
     }
 
     //find employee by userName PASS
@@ -81,7 +81,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithUserName_thenReturnEmployee(){
         Employee foundEmployee = employeeRepository.findByUserName("s3661671");
 
-        assertThat(foundEmployee.getFirstName().equals("Alex"));
+        assert(foundEmployee.getFirstName().equals("Alex"));
     }
 
 
@@ -90,7 +90,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithIncorrectUserName_thenReturnNull(){
         Employee foundEmployee = employeeRepository.findByUserName("NO_USER");
 
-        assertThat(foundEmployee == null);
+        assert(foundEmployee == null);
     }
 
     //Return list of employees
@@ -98,21 +98,21 @@ public class EmployeeRepositoryTest {
     public void getAllEmployees_thenReturnListOfEmployees(){
         List<Employee> employeeList = employeeRepository.findAll();
 
-        assertThat(employeeList.size() == 4);
+        assert(employeeList.size() == 4);
     }
 
     @Test
     public void getEmployeeByValidIdentifier_thenReturnEmployee(){
         Employee found = employeeRepository.findByEmployeeIdentifier("1234");
 
-        assertThat(found.getFirstName().equals("Alex"));
+        assert(found.getFirstName().equals("Alex"));
     }
 
     @Test
     public void getEmployeeWithInCorrectIdentifier_theReturnNull(){
         Employee found = employeeRepository.findByEmployeeIdentifier(("1111"));
 
-        assertThat(found == null);
+        assert(found == null);
     }
 
 

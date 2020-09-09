@@ -17,6 +17,13 @@ jobs:
           key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
       
       - run: mvn dependency:go-offline
+
+      - run:
+          name: Install Docker Compose
+          command: |
+            set -x
+            curl -L https://github.com/docker/compose/releases/download/1.25.3/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+            chmod +x /usr/local/bin/docker-compose
       
       - save_cache:
           paths:
@@ -24,9 +31,18 @@ jobs:
           key: circleci-demo-java-spring-{{ checksum "pom.xml" }}
       
       - run: mvn package
-      
+
+      - run:
+          name: Save test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+
       - store_test_results:
-          path: target/surefire-reports
-      
+          path: ~/test-results
+
       - store_artifacts:
-          path: target/demo-java-spring-0.0.1-SNAPSHOT.jar
+          path: target/bookingsys-0.0.1.jar
+
+

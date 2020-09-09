@@ -62,7 +62,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findByEmployeeIdentifier(id);
 
-        assertThat(found.getEmployeeIdentifier().equals(id));
+        assert(found.getEmployeeIdentifier().equals(id));
     }
 
     @Test(expected = EmployeeException.class)
@@ -78,7 +78,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findByEmployeeUserName(userName);
 
-        assertThat(found.getUserName().equals(userName));
+        assert(found.getUserName().equals(userName));
     }
 
     @Test(expected = EmployeeException.class)
@@ -94,7 +94,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findByEmployeeEmail(email);
 
-        assertThat(found.getEmail().equals(email));
+        assert(found.getEmail().equals(email));
     }
 
     @Test(expected = EmployeeException.class)
@@ -109,7 +109,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findEmployeeByPhoneNumber(phoneNumber);
 
-        assertThat(found.getPhoneNumber() == phoneNumber);
+        assert(found.getPhoneNumber() == phoneNumber);
     }
 
     @Test(expected = EmployeeException.class)
@@ -121,7 +121,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void getAllEmployees_returnListOFEmployees(){
-        assertThat(employeeService.findAllEmployees().size() == 3);
+        assert(employeeService.findAllEmployees().size() == 3);
     }
 
 
