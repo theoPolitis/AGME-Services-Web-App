@@ -27,7 +27,8 @@ class Booking extends Component {
             res => {this.setState({services:res.data})
        }
         ).catch(error => {
-            console.log(error.res.data)
+            console.log(error.response.status)
+            alert("An error occured, it seems the backend cannot be reached or no services are present in our backend")
         })
     }
 
@@ -39,7 +40,12 @@ class Booking extends Component {
         console.log(this.props.user.identificationNumber)
         Axios.post("http://localhost:8080/api/booking/newBooking/"+this.state.selectedTime+"/"+this.state.selectedDate,
         postData).then(res =>
-            {alert(res.data)})
+            {alert(res.data)}).catch(error =>{
+                console.log(error.response.status)
+                alert("An error occured, you booking was not created")
+            }
+
+            )
             this.setState({employees: []})
             this.setState({employeeDisabled: true})
             this.setState({dateDisabled: true})
@@ -58,7 +64,10 @@ class Booking extends Component {
         if(event.target.value !== "none")
         {
             Axios.get("http://localhost:8080/api/employee/all/"+event.target.value,{}).then(
-            res => {this.setState({employees: res.data})
+            res => {
+                var employees = res.data
+                employees = employees.filter(emp => !(emp.admin))
+                this.setState({employees: employees})
                 this.setState({employeeDisabled: false})
                 this.setState({dateDisabled: true})
                 this.setState({bookingTimes: []})
@@ -66,7 +75,8 @@ class Booking extends Component {
                 this.setState({timeDisabled: true})
             }
             ).catch(error => {
-                alert("An error occured")
+                alert("An error occured, details : "+error.response.status)
+
             })
         }else{
             this.setState({employees: []})
