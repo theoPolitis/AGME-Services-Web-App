@@ -8,10 +8,12 @@
         <version>2.3.2.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
+
     <groupId>SEFMajorProject</groupId>
     <artifactId>bookingsys</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <name>bookingsys</name>
+    <version>0.0.1</version>
+    <name>BookingSys</name>
     <description>Booking System Major Project</description>
 
     <properties>
