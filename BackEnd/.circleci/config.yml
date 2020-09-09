@@ -37,7 +37,7 @@ jobs:
       - run: mvn package
       
       - store_test_results:
-          path: target/surefire-reports
+          path: test-results
       
       - store_artifacts:
           path: target/bookingsys-0.0.1.jar
