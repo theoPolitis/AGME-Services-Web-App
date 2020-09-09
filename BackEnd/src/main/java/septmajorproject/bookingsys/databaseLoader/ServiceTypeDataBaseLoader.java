@@ -18,13 +18,13 @@ public class ServiceTypeDataBaseLoader implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        ServiceType hairDresser = new ServiceType("1E","Phresh Cuts");
+        ServiceType hairDresser = new ServiceType("1E","Phresh Cutz");
         serviceTypeRepository.save(hairDresser);
 
-        ServiceType gym = new ServiceType("2E","Gainz");
+        ServiceType gym = new ServiceType("2E","Gym");
         serviceTypeRepository.save(gym);
 
-        ServiceType barber = new ServiceType("3E","barber");
+        ServiceType barber = new ServiceType("3E","Barber");
         serviceTypeRepository.save(barber);
     }
 }
