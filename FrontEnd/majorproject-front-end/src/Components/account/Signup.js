@@ -31,7 +31,6 @@ class Signup extends Component {
         event.preventDefault();
 
         if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            console.log(this.id)
             axios.post("http://localhost:8080/api/customer", {
                     identificationNumber: this.id,
                     firstName: this.state.firstName,

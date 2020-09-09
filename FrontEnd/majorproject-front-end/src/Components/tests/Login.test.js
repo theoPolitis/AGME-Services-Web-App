@@ -3,13 +3,25 @@ import Login from "../account/Login";
 import {shallow, mount} from "enzyme";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
+import renderer from "react-test-renderer";
 import axios from "axios";
+import renderWithRouter from './TestingRouter'
+import Homepage from "../homepage/HomePage"
+import { wait } from "@testing-library/react";
+
+
+
+
+jest.mock("axios");
 
 
 Enzyme.configure({ adapter: new Adapter() });
 jest.mock("axios");
 
-describe('<Login /> test for login conponent', () => {
+describe('<Login /> test for login component', () => {
+
+    
+
     test('Username check', () => {
         const wrapper = shallow(<Login />);
 
@@ -36,49 +48,49 @@ describe('<Login /> test for login conponent', () => {
         expect(wrapper.state('password')).toEqual('passwordCheck');
     })
 
-    // it('Returns data', () => {
-    //     const wrapper = shallow(<Login />);
-
-    //     wrapper.find('input[type="text"]').simulate('change', {
-    //         target: {
-    //             name: 'username',
-    //             value: 'Adam'
-    //         }
-    //     });
-
-    //     wrapper.find('input[type="password"]').simulate('change', {
-    //         target: {
-    //             name: 'password',
-    //             value: 'passwordCheck'
-    //         }
-    //     });
-
-    //     const data = {
-    //         username: "adam",
-    //         password: "passwordCheck"
-    //     }
+    it('toggleGet has been implemented', () => {
+        const wrapper = renderer.create(<Login />);
+        const instance = wrapper.getInstance();
         
-    //     wrapper.find('button').simulate('click');
 
-    //     axios.get.mockImplementation(() => Promise.resolve({data}));
+        expect(instance.toggeleGet("Theo", "theo")).toBeDefined();
+    });
 
-    //     expect(wrapper.state("loggedIn")).toBe(true);
-    // })
+    it('axios get request is successfull should set logged in state to true', async () => {
+        window.alert = jest.fn();
+        const wrapper = shallow(<Login />);
+        const instance = wrapper.instance();
+        const data = {
+            data: 200
+        }
 
-    // test('should fetch users', () => {
-    //     const wrapper = shallow(<Login />);
+        axios.get.mockImplementation(() => Promise.resolve({status: 200, data: {firstName: "Theo"}}))
 
-    //     const users = {
-    //         username: 'Bob',
-    //         password: "password"
-    // };
-    //     const resp = {data: users};
-    //     axios.get.mockResolvedValue(resp);
+        const result = await instance.toggeleGet("Theo", "theo");
+        expect(instance.state.loggedIn).toBe(true);
+    });
 
-    //     // or you could use the following depending on your use case:
-    //     // axios.get.mockImplementation(() => Promise.resolve(resp))
+    it("axios get request is unsucesful and loggedIn state is false", async () => {
+        const wrapper = shallow(<Login />);
+        const instance = wrapper.instance();
 
-    //     expect(wrapper.state("loggedIn")).toBe(true); 
-    // })
-    
+        axios.get.mockRejectedValue({error: "some error"});
+        await instance.toggeleGet("t", "t").catch(err => {
+            expect(err).toEqual({error: "some error"});
+        })
+
+        expect(instance.state.loggedIn).toBe(false);
+    })
+
+    it("Page redirects susccesfully after succesful axios request", async () => {
+        axios.get.mockImplementation(() => {
+            Promise.resolve({
+                data: {status: fail}
+            })
+        })
+
+        const { history } = renderWithRouter(<Homepage />);
+
+        expect(history.location.pathname).toEqual('/')
+    })
 })
