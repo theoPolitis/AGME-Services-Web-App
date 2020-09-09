@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Table(name = "CUSTOMER")
 public class Customer {
     //Customer ID is the primary key, it is just simply a unique integer used to identify each customer
@@ -55,7 +59,6 @@ public class Customer {
     private Date updatedDate;
     //The customer id will be used as a foreign key in the booking table, and has a one to many relationship
     //As many bookings can be made by the one Customer.
-    @JsonBackReference
     @OneToMany(mappedBy = "customer")
     private List<Booking> customerList;
     //When the Customer is created the createdDate object is created and corresponds to the current date.

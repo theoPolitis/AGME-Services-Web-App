@@ -45,7 +45,9 @@ public class RosterRepositoryTest {
     //generate the test data in this part
     @Before
     public  void setUp(){
-
+        employeeOne.setServiceNo("1E");
+        employeeTwo.setServiceNo("2E");
+        employeeThree.setServiceNo("3E");
         employeeRepository.save(employeeOne);
         employeeRepository.save(employeeTwo);
         employeeRepository.save(employeeThree);

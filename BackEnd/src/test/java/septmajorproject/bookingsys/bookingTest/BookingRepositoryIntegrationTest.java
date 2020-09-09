@@ -61,7 +61,8 @@ public class BookingRepositoryIntegrationTest {
 
     @Before
     public void setUp() {
-
+        emp.setServiceNo("1E");
+        emp2.setServiceNo("2E");
         customerRepository.save(cust);
         customerRepository.save(cust2);
         employeeRepository.save(emp);

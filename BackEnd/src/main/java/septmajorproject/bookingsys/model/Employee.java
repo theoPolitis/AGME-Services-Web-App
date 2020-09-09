@@ -1,7 +1,6 @@
 package septmajorproject.bookingsys.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -11,6 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "employeeId"
+)
 @Table(name="EMPLOYEE")
 public class Employee {
     //values that make up a person object and the sql table
@@ -49,7 +52,6 @@ public class Employee {
     //foreign keys to other databses
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Roster> rosterList;
-    @JsonBackReference
     @OneToMany(mappedBy = "employee")
     private List<Roster> bookingList;
 

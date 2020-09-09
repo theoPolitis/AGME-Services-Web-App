@@ -1,7 +1,6 @@
 package septmajorproject.bookingsys.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 
 
 import javax.persistence.*;
@@ -10,6 +9,10 @@ import java.sql.Time;
 import java.util.Date;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Table(name = "BOOKING")
 /**
  * Booking entity, has a connection between customer entity and employee entity, both
@@ -26,14 +29,12 @@ public class Booking {
 //    private BookingPK bookingPK;
 
     //many to one connection initialization for Employee table
-    @JsonManagedReference
     @ManyToOne
     @NotNull(message = "Employee required")
     @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
 
     //many to one connection initialization for Customer table
-    @JsonManagedReference
     @ManyToOne
     @NotNull(message = "Customer required")
     @JoinColumn(name = "customer_id", nullable = false)
