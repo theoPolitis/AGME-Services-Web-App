@@ -4,7 +4,10 @@ import {shallow, mount} from "enzyme";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import renderer from "react-test-renderer";
+import renderWithRouter from "./TestingRouter"
+import axios from "axios";
 
+jest.mock('axios');
 Enzyme.configure({ adapter: new Adapter() });
 
 describe('Signup page check fields', () => {
@@ -135,6 +138,73 @@ describe('Signup page check fields', () => {
 
         expect(inst.validate(data.password, data.confrimPassword)).toBe(false);
     })
-    
-
 })
+
+describe('Axios post request Sign up page', () => {
+    test('should succesfully perform a post request will set isSignedUp to true', async() => {
+        const wrapper = shallow(<Signup />);
+        const instance = wrapper.instance();
+        const event = { preventDefault: () => {} };
+        const data = {
+                    identificationNumber: "1E",
+                    firstName: "Theo",
+                    lastName: "Politis",
+                    phoneNumber: "888888888",
+                    email: "s3661671@student.rmit.edu.au",
+                    address: "something avenue",
+                    username: "Theo",
+                    password: "theo"
+        }
+
+        instance.setState({
+            password: "Theo",
+            confirmPassword: "Theo"
+        })
+
+        axios.post.mockImplementation(() => Promise.resolve( {status: 201, data}));
+
+        await instance.handleSubmit(event);
+        expect(instance.state.isSignedUp).toBe(true);
+
+    })
+    
+    test('should unSuccesfully perform a post request and isSignedUp Should Be false', async() => {
+        window.alert = jest.fn();
+        const wrapper = shallow(<Signup />);
+        const instance = wrapper.instance();
+        const event ={ preventDefault: () => {} };
+            instance.setState({
+            password: "Theo",
+            confirmPassword: "Theo"
+        })
+
+        axios.post.mockImplementation(() => Promise.reject( {error : "rejected"}));
+
+        await instance.handleSubmit(event);
+        expect(instance.state.isSignedUp).toBe(false);
+
+    })
+
+    test('should redirect page upon succesfull post request to homepage', () => {
+        axios.post.mockImplementation(() => {
+            Promise.resolve({
+                status: 201,
+                data: {}
+            })
+        })
+
+        const { history } = renderWithRouter(<Signup />);
+        expect(history.location.pathname).toEqual('/')
+    })
+
+//     test('should pass if handleSubmit is defined', () => {
+//         const event = {preventDefault: () => {} };
+//         const wrapper = shallow(<Signup />);
+//         const instance = wrapper.instance();
+
+//         expect(instance.handleSubmit(event)).toBeDefined();
+//     })
+    
+    
+ })
+

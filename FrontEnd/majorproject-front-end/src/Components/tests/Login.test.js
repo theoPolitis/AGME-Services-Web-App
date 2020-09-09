@@ -6,11 +6,6 @@ import Adapter from "enzyme-adapter-react-16";
 import renderer from "react-test-renderer";
 import axios from "axios";
 import renderWithRouter from './TestingRouter'
-import Homepage from "../homepage/HomePage"
-import { wait } from "@testing-library/react";
-
-
-
 
 jest.mock("axios");
 
@@ -89,7 +84,7 @@ describe('<Login /> test for login component', () => {
             })
         })
 
-        const { history } = renderWithRouter(<Homepage />);
+        const { history } = renderWithRouter(<Login />);
 
         expect(history.location.pathname).toEqual('/')
     })
