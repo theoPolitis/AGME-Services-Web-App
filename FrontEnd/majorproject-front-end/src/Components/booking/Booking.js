@@ -178,44 +178,60 @@ class Booking extends Component {
                     <form onSubmit={this.handleSubmit}>
 
                         <div className="row">
-                            <label className="col-1">
+                        <div className="col-1">
+                            <label>
                                 Service:
                             </label>
-                            <select className="col-2" name = "ServiceNo" value={this.state.value} onChange={this.handleServiceSelection}>
+                            </div>
+                            <div className="col-2">
+                            <select  name = "ServiceNo" value={this.state.value} onChange={this.handleServiceSelection}>
                                 <option value = "none">Select an option:</option>
                                 {this.state.services.map((service) => (<option value = {service.serviceNo}>{service.serviceName}</option>))}
                             </select>
-                        </div>
+                            </div>
+                        </div><br></br>
 
                         <div className="row">
-                            <label className="col-1">
+                            <div className="col-1">
+                            <label>
                                 Employee:
                             </label>
-                            <select className="col-2" name = "employeeNo" value={this.state.value} onChange={this.handleEmployeeSelection} disabled = {this.state.employeeDisabled}>
+                            </div>
+                            <div className="col-2">
+                            <select  name = "employeeNo" value={this.state.value} onChange={this.handleEmployeeSelection} disabled = {this.state.employeeDisabled}>
                                 <option value = "none">Select an option</option>
                                     {this.state.employees.map((employee) => (<option value = {employee.employeeIdentifier}>{employee.firstName}</option>))}
                             </select>
-                        </div>
+                            </div>
+                        </div><br></br>
 
                         <div className="row">
-                            <label className="col-1">
+                            <div className="col-1">
+                            <label>
                                 Booking Date:
                             </label>
-                            <input type="date" className="col-2" disabled = {this.state.dateDisabled} onChange={this.handleDateSelection}>
+                            </div>
+                            <div className="col-2" >
+                            <input type="date" disabled = {this.state.dateDisabled} onChange={this.handleDateSelection}></input>
+                            </div>
+                            
 
-                            </input>
-                        </div>
+                            
+                        </div><br></br>
 
                         <div className="row">
-                            <label className="col-1">
-                                Booking Time:
-                            </label>
-                            <select type="text" className="col-2" value = {this.state.value} onChange={this.handleTimeSelection}disabled = {this.state.timeDisabled}>
+                            <div className="col-1">
+                                <label>
+                                    Booking Time:
+                                </label>
+                            </div>
+                            <div className="col-2">
+                            <select type="text" value = {this.state.value} onChange={this.handleTimeSelection}disabled = {this.state.timeDisabled}>
                                 <option value = "none">Select an Option</option>
                                     {this.state.bookingTimes.map((time) => (<option value = {time}>{time}</option>))}
                             </select>
-                        </div>
-                        <div className="row"></div>
+                            </div>
+                        </div><br></br>
                         <input className="updateButton" type="submit" value="Submit" disabled = {this.state.buttonDisabled}/>
                         
                     </form>

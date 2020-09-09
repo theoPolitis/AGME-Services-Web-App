@@ -51,6 +51,10 @@ label {
     float: left;
 }
 
+.col-2 > select{
+    width: 100%;
+}
+
 .row:after {
     content: "";
     display: table;
@@ -64,4 +68,9 @@ label {
     background: #2197da;
     border-radius: 15px;
     cursor: pointer;
+}
+
+select {
+    height: 30px;
+    font-family: Lato;
 }
