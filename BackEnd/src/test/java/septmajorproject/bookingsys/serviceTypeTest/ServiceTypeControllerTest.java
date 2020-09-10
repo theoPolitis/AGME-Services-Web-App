@@ -23,14 +23,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.http.MediaType;
+import septmajorproject.bookingsys.web.ServiceTypeController;
+
 import java.util.Arrays;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(SpringRunner.class)
-@WebMvcTest(EmployeeController.class)
-
-
-
+@WebMvcTest(ServiceTypeController.class)
 public class ServiceTypeControllerTest {
     @Autowired
     private MockMvc mvc;
@@ -55,7 +54,7 @@ public class ServiceTypeControllerTest {
         mvc.perform(get("/api/serviceType/all").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(1)))
-                .andExpect(jsonPath("$[0].ServiceName", is(ServiceType1.getServiceName())));
+                .andExpect(jsonPath("$[0].serviceName", is(ServiceType1.getServiceName())));
 
     }
 
@@ -75,7 +74,7 @@ public class ServiceTypeControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(ServiceType1)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.firstName", is(ServiceType1.getServiceName())));
+                .andExpect(jsonPath("$.serviceName", is(ServiceType1.getServiceName())));
 
     }
 

@@ -2,10 +2,8 @@ package septmajorproject.bookingsys.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import septmajorproject.bookingsys.exception.CustomerException;
-import septmajorproject.bookingsys.exception.EmployeeException;
+
 import septmajorproject.bookingsys.exception.ServiceTypeException;
-import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.repository.ServiceTypeRepository;
 
@@ -53,7 +51,7 @@ public class ServiceTypeService {
     }
 
     //returns all serviceTypes to the database
-    public List<ServiceType> findAllServiceType(){
+    public List<ServiceType> findAllServiceType() {
         return serviceTypeRepository.findAll();
     }
 
