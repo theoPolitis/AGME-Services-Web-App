@@ -94,4 +94,7 @@ public class EmployeeService{
         return found;
     }
 
+    public List<Employee> findByServiceNo(String ServiceNo) {
+        return employeeRepository.findAllByServiceNo(ServiceNo);
+    }
 }

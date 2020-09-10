@@ -31,7 +31,10 @@ public class EmployeeRepositoryTest {
         Employee newEmployeeTwo = new Employee("2345", "Tom", "Anthony", "s36@student.rmit.edu.au", 0424735214, "Something", "s3661672", "password");
         Employee newEmployeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", 0424735213, "Something", "s3661673", "password");
         Employee newEmployeeFour = new Employee("4567", "Leigh", "Dean", "s36616@student.rmit.edu.au", 0424735211, "Something", "s3661674", "password");
-
+        newEmployeeOne.setServiceNo("1E");
+        newEmployeeTwo.setServiceNo("3E");
+        newEmployeeThree.setServiceNo("2E");
+        newEmployeeFour.setServiceNo("4E");
 
         testManager.persist(newEmployeeOne);
         testManager.persist(newEmployeeTwo);

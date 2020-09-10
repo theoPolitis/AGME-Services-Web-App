@@ -1,7 +1,7 @@
 package septmajorproject.bookingsys.model;
 
+import com.fasterxml.jackson.annotation.*;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,6 +9,10 @@ import java.sql.Time;
 import java.util.Date;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Table(name = "BOOKING")
 /**
  * Booking entity, has a connection between customer entity and employee entity, both
@@ -41,7 +45,7 @@ public class Booking {
     private Date rosterDate;
 
     @NotNull(message = "Please attach a time")
-    @JsonFormat(pattern = "HH:mm")
+    @JsonFormat(pattern = "HH:mm:ss")
     private Time rosterTime;
 
     public Booking() {

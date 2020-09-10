@@ -69,7 +69,7 @@ public class CustomerControllerTest {
     public void givenNewCustomer_whenPostNewCustomer_thenNewCustomerIsAdded() throws Exception {
         Customer cust1 = new Customer("John","Test","s3788167@student.rmit.edu.au",
                 "123 this street","johntest","0400000000","password","1");
-        mvc.perform(post("/api/customer/")
+        mvc.perform(post("/api/customer")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(cust1)))
                 .andExpect(status().isCreated())

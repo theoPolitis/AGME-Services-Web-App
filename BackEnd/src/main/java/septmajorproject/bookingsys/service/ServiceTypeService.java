@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.repository.ServiceTypeRepository;
 
+import java.util.List;
+
 @Service
 public class ServiceTypeService {
     @Autowired
@@ -14,5 +16,9 @@ public class ServiceTypeService {
         return serviceTypeRepository.save(serviceType);
     }
 
+
+    public List<ServiceType> findAllCustomers() {
+        return serviceTypeRepository.findAll();
+    }
 
 }

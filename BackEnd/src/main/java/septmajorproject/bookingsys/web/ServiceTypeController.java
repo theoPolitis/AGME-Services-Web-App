@@ -5,10 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.service.ServiceTypeService;
 
@@ -18,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/serviceType")
 public class ServiceTypeController {
     @Autowired
@@ -38,4 +36,11 @@ public class ServiceTypeController {
 
         return new ResponseEntity<ServiceType>(serviceType, HttpStatus.CREATED);
     }
+
+    @GetMapping("/all")
+    public List<ServiceType> getAllServices()
+    {
+        return (serviceTypeService.findAllCustomers());
+    }
+
 }

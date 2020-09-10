@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Table(name = "CUSTOMER")
 public class Customer {
     //Customer ID is the primary key, it is just simply a unique integer used to identify each customer
