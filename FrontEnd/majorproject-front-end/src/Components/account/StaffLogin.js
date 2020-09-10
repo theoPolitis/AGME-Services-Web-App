@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Axios from "axios";
+import axios from "axios";
 import './Account.css';
 import { Redirect } from 'react-router-dom';
 
@@ -15,20 +15,28 @@ class StaffLogin extends Component {
 
     }
 
-    toggleGet = (username, password) => {
-        Axios.get("http://localhost:8080/api/employee/" + username + "/" + password, {
-        })
-        .then(res => {
-            this.setState({
-                loggedIn: true
+    toggleGet = async (username, password) => {
+        try{
+            axios.get("http://localhost:8080/api/employee/" + username + "/" + password, {
             })
+            .then(res => {
+                this.setState({
+                    loggedIn: true
+                })
 
-            this.props.employeeAuth(res.data);
-        }).catch(e => {
-            if(e.response.status === 400){
-                alert("Username or password incorrect");
-            }
-        })
+                this.props.employeeAuth(res.data);
+            }).catch(e => {
+                this.setState({
+                    error: true
+                })
+
+                if(this.state.error === true){
+                    alert("Username or password incorrect");
+                }
+            })
+        }catch(e){
+
+        }
     }
 
     handleSubmit = (e) => {

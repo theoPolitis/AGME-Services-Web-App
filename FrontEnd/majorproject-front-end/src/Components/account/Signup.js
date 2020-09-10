@@ -29,9 +29,8 @@ class Signup extends Component {
 
     handleSubmit = (event) => { 
         event.preventDefault();
-
+        //console.log(this.state)
         if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            console.log(this.id)
             axios.post("http://localhost:8080/api/customer", {
                     identificationNumber: this.id,
                     firstName: this.state.firstName,
@@ -42,18 +41,16 @@ class Signup extends Component {
                     username: this.state.userName,
                     password: this.state.password
             }).then(res => {
-                console.log("register res ", res);
-
                 if(res.status === 201){
                     this.setState({ isSignedUp: true });
                 }
 
             }).catch(error => {
                 alert("Username already exists");
-                console.log(error);
+                //console.log(error);
             })
 
-            console.log("form Submitted");
+            //console.log("form Submitted");
         }else{
             alert("Passwords do not match");
         }

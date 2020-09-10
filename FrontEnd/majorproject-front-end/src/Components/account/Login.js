@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import './Account.css';
-import Axios from 'axios';
+import axios from 'axios';
 import { Redirect } from 'react-router-dom';
 
 class Login extends Component {
@@ -16,23 +16,30 @@ class Login extends Component {
     }
 
     //handles GET Request
-    toggeleGet=(username, password)=> {
+    toggeleGet = async(username, password)=> {
         //passes username and password the user entered and retreives a customer
-        Axios.get("http://localhost:8080/api/customer/" + username + "/" + password, {
-        })
-        .then(res => {
-            this.setState({
-                loggedIn: true
+        try{
+            axios.get("http://localhost:8080/api/customer/" + username + "/" + password, {
             })
+            .then(res => {
+                this.setState({
+                    loggedIn: true
+                })
 
-            //passers GET data to app.js
-            this.props.customerAuth(res.data);
-        }).catch(e => {
-            //if cant find customer then request is sent back a 400 error handles accordingly
-            if(e.response.status === 400){
-                alert("Username or password incorrect");
-            }
-        })
+                //passers GET data to app.js
+                this.props.customerAuth(res.data);
+            }).catch(e => {
+                this.setState({
+                    error: true
+                })
+                //if cant find customer then request is sent back a 400 error handles accordingly
+                if(this.state.error === true){
+                    alert("Username or password incorrect");
+                }
+            })
+     }catch(e){
+        
+        }
     }
 
     handleSubmit = (e) => {
