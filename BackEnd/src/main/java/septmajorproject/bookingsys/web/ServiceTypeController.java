@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
+@CrossOrigin
 @RequestMapping("/api/serviceType")
 @CrossOrigin
 public class ServiceTypeController {
@@ -68,7 +69,4 @@ public class ServiceTypeController {
         return new ResponseEntity<String>("service type with number: " + serviceTypeNo + " was deleted", HttpStatus.OK);
     }
 
-
-
-        }
-
+}

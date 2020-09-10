@@ -38,6 +38,8 @@ public class EmployeeControllerTest {
     @MockBean
     private MapValidationErrorService mapValidationErrorService;
 
+
+    //testing if the controller returns all employees
     @Test
     public void givenEmployees_whenGetEmployees_thenReturnJsonArray() throws Exception{
         Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
@@ -52,6 +54,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$[0].firstName", is(newEmployeeOne.getFirstName())));
     }
 
+    //testing to see if able to get an employee from API using Id
     @Test
     public void givenEmployeesId_whenGetEmployeesById_thenReturnEmployee() throws Exception{
         Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
@@ -64,6 +67,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$.firstName", is(newEmployeeOne.getFirstName())));
     }
 
+    //testing if able to delete an employee with given id
     @Test
     public void givenEmployeeId_whenDeleteEmployeeById_thenReturnDelete() throws Exception{
         Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
@@ -76,6 +80,7 @@ public class EmployeeControllerTest {
                 .andExpect(jsonPath("$", is(deleteString)));
     }
 
+    //testing if able to add an employee pass test
     @Test
     public void givenEmployee_whenAddingNewEmployee_thenSuccesfullPostRequest() throws Exception{
         Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
@@ -85,6 +90,20 @@ public class EmployeeControllerTest {
                 .content(objectMapper.writeValueAsString(newEmployeeOne)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.firstName", is(newEmployeeOne.getFirstName())));
+    }
+
+    //test if able to get Employee with username or password
+    @Test
+    public void getAllEmployeeWithUserNameAndPassword_thenSuccessfulGetRequest() throws Exception{
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+
+        given(employeeService.findByUsernameAndPassword(newEmployeeOne.getUserName(), newEmployeeOne.getPassword())).willReturn(newEmployeeOne);
+
+        mvc.perform(get("/api/employee/{username}/{password}", newEmployeeOne.getUserName(), newEmployeeOne.getPassword())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.userName", is(newEmployeeOne.getUserName())))
+                .andExpect(jsonPath("$.password", is(newEmployeeOne.getPassword())));
     }
 
 }

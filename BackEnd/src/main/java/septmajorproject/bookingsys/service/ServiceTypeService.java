@@ -70,4 +70,8 @@ public class ServiceTypeService {
 
 
 
+    public List<ServiceType> findAllCustomers() {
+        return serviceTypeRepository.findAll();
+    }
+
 }

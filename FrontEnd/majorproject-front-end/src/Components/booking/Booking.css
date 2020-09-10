@@ -17,6 +17,10 @@
     float: left;
 }
 
+.updateButton:disabled{
+    background-color: gray;
+}
+
 .container {
     width: 46%;
     /* background-color: white; */
@@ -43,7 +47,12 @@ label {
 
 .col-2 {
     width: 60%;
+    height: 5%;
     float: left;
+}
+
+.col-2 > select{
+    width: 100%;
 }
 
 .row:after {
@@ -53,7 +62,15 @@ label {
 }
 
 .updateButton {
+    width: 100px;
+    float:right;
+    font-family: Lato;
     background: #2197da;
     border-radius: 15px;
     cursor: pointer;
+}
+
+select {
+    height: 30px;
+    font-family: Lato;
 }

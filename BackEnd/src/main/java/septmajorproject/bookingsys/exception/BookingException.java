@@ -5,9 +5,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
-public class EmployeeException extends RuntimeException{
+public class BookingException extends RuntimeException{
 
-    public EmployeeException(String message){
+    public BookingException(String message){
         super(message);
     }
 }

@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
+import axios from "axios";
 import './Account.css';
+import { Redirect } from 'react-router-dom';
 
 class StaffLogin extends Component {
     constructor(props){
@@ -7,19 +9,42 @@ class StaffLogin extends Component {
 
         this.state = {
             username: "",
-            password: ""
+            password: "",
+            loggedIn: false
         }
 
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleChange = this.handleChange.bind(this);
     }
 
-    handleSubmit(e) {
-        console.log("form submitted");
+    toggleGet = async (username, password) => {
+        try{
+            axios.get("http://localhost:8080/api/employee/" + username + "/" + password, {
+            })
+            .then(res => {
+                this.setState({
+                    loggedIn: true
+                })
+
+                this.props.employeeAuth(res.data);
+            }).catch(e => {
+                this.setState({
+                    error: true
+                })
+
+                if(this.state.error === true){
+                    alert("Username or password incorrect");
+                }
+            })
+        }catch(e){
+
+        }
+    }
+
+    handleSubmit = (e) => {
+        this.toggleGet(this.state.username, this.state.password);
         e.preventDefault();
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         this.setState({
             [e.target.name]: e.target.value
         })
@@ -27,10 +52,13 @@ class StaffLogin extends Component {
 
     
     render() {
+        if(this.state.loggedIn === true){
+            return <Redirect to={{pathname: "/"}}/>
+        }
+
         return (
                 
             <div className="container">
-                <h1>Logged In Status: {this.props.loggedInStatus}</h1>
                 <h1>STAFF LOGIN</h1>
                 <form onSubmit={this.handleSubmit}>
 

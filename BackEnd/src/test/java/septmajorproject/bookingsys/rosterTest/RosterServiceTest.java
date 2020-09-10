@@ -28,7 +28,7 @@ import static org.junit.Assert.assertTrue;
 public class RosterServiceTest {
 
     @TestConfiguration
-    class RosterServiceContextConfig{
+    static class RosterServiceContextConfig{
         @Bean
         public RosterService rosterService(){
             return new RosterService();

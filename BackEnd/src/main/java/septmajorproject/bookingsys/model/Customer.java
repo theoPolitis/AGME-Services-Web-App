@@ -8,6 +8,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
+)
 @Table(name = "CUSTOMER")
 public class Customer {
     //Customer ID is the primary key, it is just simply a unique integer used to identify each customer
@@ -15,23 +19,36 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "customer_id")
     private Integer id;
+    @NotBlank(message="Identification number cannot be blank")
+    @Column(updatable = false, unique = true)
+    private String identificationNumber;
+
     //Password will be stored as an encrypted string
+    @NotBlank(message = "Please enter a password")
     private String password;
     //Email will be checked using a regular expression prior to being stored in the table
+    @NotBlank(message = "Please enter an email address")
     private String email;
     //Firstname will be checked against a regular expression prior to being stored in the database,
     //the @Size tag is used to ensure the firstname field is atleast 1 character long
     @Size(min=1, max = Integer.MAX_VALUE, message = "Please enter a first name of at least 1 character length")
+    @NotBlank(message = "First Name can not be Blank")
     private String firstName;
     //Similarly to the firstname, lastname will also being enforced as being atleast one character long
     @Size(min=1,max = Integer.MAX_VALUE,message = "Please enter a last name of at least 1 character length")
+    @NotBlank(message = " Last name can not blank")
     private String lastName;
     //Address will be checked against a regular expression
+    @NotBlank(message = "Please enter an address")
     private String address;
     //Phone number is of type Integer as the primative int type cannot be used.
-    private Integer phoneNumber;
+    @NotBlank(message = "Phone Number can not be blank")
+
+    private String phoneNumber;
     //Username will be forced into being between 3 and 20 characters, but will also be
     @Size(min=3, max = 20, message = "Please enter a username between 3-20 characters")
+    @Column(unique = true, updatable = false)
+    @NotBlank(message = "userName cannot be blank")
     private String username;
     //Created date will be forced into the corresponding Json format
     @JsonFormat(pattern = "yyyy-mm-dd")
@@ -59,6 +76,31 @@ public class Customer {
     public Customer()
     {
     }
+
+    public Customer(String password, String email, String firstName, String lastName, String address, String phoneNumber, String username) {
+        this.password = password;
+        this.email = email;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.username = username;
+    }
+
+
+    public Customer(String firstName, String lastName, String email, String address, String username,
+                    String phoneNumber, String password, String id)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.address = address;
+        this.username = username;
+        this.phoneNumber = phoneNumber;
+        this.password = password;
+        this.identificationNumber = id;
+    }
+
 
     //Below are just a series of basic setters/getters.
     public Date getCreatedDate() {
@@ -132,12 +174,12 @@ public class Customer {
         this.username = username;
     }
 
-    public Integer getPhoneNumber()
+    public String getPhoneNumber()
     {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(Integer phoneNumber)
+    public void setPhoneNumber(String phoneNumber)
     {
         this.phoneNumber = phoneNumber;
     }
@@ -158,5 +200,13 @@ public class Customer {
 
     public List<Booking> getCustomerList() {
         return customerList;
+    }
+
+    public String getIdentificationNumber() {
+        return identificationNumber;
+    }
+
+    public void setIdentificationNumber(String identificationNumber) {
+        this.identificationNumber = identificationNumber;
     }
 }

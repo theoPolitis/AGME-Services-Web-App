@@ -35,6 +35,35 @@ body {
   color: #61dafb;
 }
 
+.about_title{
+  padding-top: 60px;
+  padding-bottom: 20px;
+  text-align: center;
+  font-size: 40px;
+}
+
+.about_text{
+  color: white;
+  text-align: left;
+  font-size: 22px;
+  padding-left: 300px;
+  padding-right: 300px;
+}
+
+.about_sign_up{
+  width:187px;
+  height: 60px;
+  background-color: #2197DA;
+  color: white;
+  font-size: 27px;
+  float: right;
+  border: none;
+  border-radius: 17px;
+  margin-right: 320px;
+  margin-top: 20px;
+  cursor: pointer;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

@@ -37,7 +37,7 @@ public class EmployeeTest {
 
     }
 
-    //testing employee firstName with lest then three character
+    //testing employee firstName with less then three character
     @Test
     public void whenInsertEmployeeFirstNameWithWrongSize_thenReturnFalse(){
         Employee newEmployee = new Employee("2345", "A", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
@@ -51,7 +51,7 @@ public class EmployeeTest {
     @Test
     public void whenInsertFisrtNameGreaterThanThreeCharacter_thenReturnTrue(){
         Employee newEmployee = new Employee("3456","AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -69,7 +69,7 @@ public class EmployeeTest {
     @Test
     public void whenInsertLastnameGreaterThanThreeCharcters_thenReturnTrue(){
         Employee newEmployee = new Employee("5678", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -87,7 +87,7 @@ public class EmployeeTest {
     @Test
     public void insertLastNameThatIsBlank_theReturnTrue(){
         Employee newEmployee = new Employee("7890", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -105,7 +105,7 @@ public class EmployeeTest {
     @Test
     public void insertEmailThatIsNotBlank_thenReturnTrue(){
         Employee newEmployee = new Employee("7685", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -123,7 +123,7 @@ public class EmployeeTest {
     @Test
     public void insertAddressThatIsNotBlank_thenReturnTrue(){
         Employee newEmployee = new Employee("1010", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -141,7 +141,7 @@ public class EmployeeTest {
     @Test
     public void insertUserNameThatIsNotBlank_thenReturnTrue(){
         Employee newEmployee = new Employee("2222", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -159,7 +159,7 @@ public class EmployeeTest {
     @Test
     public void insertPasswordThatIsNotBlank_thenReturnTrue(){
         Employee newEmployee = new Employee("4444", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
         assertTrue( " ", constraintViolations.size() == 0);
     }
@@ -174,18 +174,9 @@ public class EmployeeTest {
     }
 
     @Test
-    public void insertIdentifierThatIsGreaterThanFiveCharacters_ThenReturnError(){
-        Employee newEmployee = new Employee("666666", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
-        Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
-
-        assertFalse(constraintViolations.size() == 0, " ");
-    }
-
-    @Test
     public void insertCorrectIdentifier_returnTrue(){
         Employee newEmployee = new Employee("6754", "AAA", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-
+        newEmployee.setServiceNo("1E");
         Set<ConstraintViolation<Employee>> constraintViolations = localValidatorFactory.validate(newEmployee);
 
         assertTrue(" ", constraintViolations.size() == 0);

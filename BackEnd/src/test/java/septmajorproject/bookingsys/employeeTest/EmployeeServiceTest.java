@@ -54,6 +54,7 @@ public class EmployeeServiceTest {
         Mockito.when(employeeRepository.findByPhoneNumber(newEmployeeOne.getPhoneNumber())).thenReturn(newEmployeeOne);
         Mockito.when(employeeRepository.findByUserName(newEmployeeOne.getUserName())).thenReturn(newEmployeeOne);
         Mockito.when(employeeRepository.findAll()).thenReturn(testList);
+        Mockito.when(employeeRepository.findByUserNameAndPassword(newEmployeeOne.getUserName(), newEmployeeOne.getPassword())).thenReturn(newEmployeeOne);
     }
 
     @Test
@@ -62,7 +63,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findByEmployeeIdentifier(id);
 
-        assertThat(found.getEmployeeIdentifier().equals(id));
+        assert(found.getEmployeeIdentifier().equals(id));
     }
 
     @Test(expected = EmployeeException.class)
@@ -78,7 +79,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findByEmployeeUserName(userName);
 
-        assertThat(found.getUserName().equals(userName));
+        assert(found.getUserName().equals(userName));
     }
 
     @Test(expected = EmployeeException.class)
@@ -94,7 +95,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findByEmployeeEmail(email);
 
-        assertThat(found.getEmail().equals(email));
+        assert(found.getEmail().equals(email));
     }
 
     @Test(expected = EmployeeException.class)
@@ -109,7 +110,7 @@ public class EmployeeServiceTest {
 
         Employee found = employeeService.findEmployeeByPhoneNumber(phoneNumber);
 
-        assertThat(found.getPhoneNumber() == phoneNumber);
+        assert(found.getPhoneNumber() == phoneNumber);
     }
 
     @Test(expected = EmployeeException.class)
@@ -119,9 +120,49 @@ public class EmployeeServiceTest {
         Employee found = employeeService.findEmployeeByPhoneNumber(phoneNumber);
     }
 
+
+    //test get all employees
     @Test
     public void getAllEmployees_returnListOFEmployees(){
-        assertThat(employeeService.findAllEmployees().size() == 3);
+        assert(employeeService.findAllEmployees().size() == 3);
+    }
+
+    //test finds employee by username and password succesful retrieval
+    @Test
+    public void getEmployeeUsingValidUsernameAndPassword_returnEmployee(){
+        String username = "s3661671";
+        String password = "password";
+
+        Employee found = employeeService.findByUsernameAndPassword(username, password);
+
+        assertThat(found.getUserName().equals(username) && found.getPassword().equals(password));
+    }
+
+    //Test trys to find employee that doesnt exist returns custom exception
+    @Test(expected = EmployeeException.class)
+    public void getEmployeeWithInvalidUsernameAndPassword_returnEmployeeException(){
+        String username = "null";
+        String password = "null";
+
+        Employee found = employeeService.findByUsernameAndPassword(username, password);
+    }
+
+    //Test when username is correct but password is incorrect should return exception
+    @Test(expected = EmployeeException.class)
+    public void getEmployeeWithValidUsernameAndInvalidPassword_returnEmployeeException(){
+        String username = "s3661671";
+        String password = "null";
+
+        Employee found = employeeService.findByUsernameAndPassword(username, password);
+    }
+
+    //test when username ius incorrect but password is correct
+    @Test(expected = EmployeeException.class)
+    public void getEmployeeWithInvalidUsernameAndValidPassword_returnEmployeeException(){
+        String username = "null";
+        String password = "password";
+
+        Employee found = employeeService.findByUsernameAndPassword(username, password);
     }
 
 

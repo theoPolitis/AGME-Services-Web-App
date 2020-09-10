@@ -52,10 +52,23 @@ public class EmployeeController {
         return employeeService.findAllEmployees();
     }
 
+    @GetMapping("/{username}/{password}")
+    public ResponseEntity<?> getbyUsernameAndPassword(@PathVariable String username, @PathVariable String password){
+        Employee employee = employeeService.findByUsernameAndPassword(username, password);
+
+        return new ResponseEntity<Employee>(employee, HttpStatus.OK);
+    }
+
     @DeleteMapping("/{employeeId}")
     public ResponseEntity<?> deleteEmployeeByIdentifier(@PathVariable String employeeId){
         employeeService.deleteEmployeeByIdentifier(employeeId);
 
         return new ResponseEntity<String>("Person with ID: " + employeeId + " was deleted", HttpStatus.OK);
+    }
+
+    @GetMapping("/all/{serviceNo}")
+    public List<Employee> getEmployeesByServiceNo(@PathVariable String serviceNo)
+    {
+        return employeeService.findByServiceNo(serviceNo);
     }
 }
