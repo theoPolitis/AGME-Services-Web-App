@@ -1,5 +1,33 @@
 version: 2
-jobs:
+stages:
+  build-front:
+    working_directory: ~/FrontEnd
+
+    docker:
+      - image: circleci/node:12.9.1-browsers
+
+    steps:
+      - checkout
+
+      - restore_cache:
+        keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          - v1-dependencies-
+
+      - run: npm install
+
+      - save_cache:
+        paths:
+          - node_modules
+          - ~/.npm
+          - ~/.cache
+
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run: npm test
+
+
+
   build:
     working_directory: ~/BackEnd/BackEnd
     docker:
@@ -8,7 +36,7 @@ jobs:
         environment:
           POSTGRES_USER: root
           POSTGRES_DB: circle_test
-
+          
     steps:
 
       - checkout:
