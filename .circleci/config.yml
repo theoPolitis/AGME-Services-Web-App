@@ -29,12 +29,19 @@ jobs:
           key: booking-sys-{{ checksum "~/BackEnd/BackEnd/pom.xml" }}
       
       - run: mvn package
-      
+
+      - run:
+          name: Store test results
+          command: |
+            mkdir -p ~/test-results/junit/
+            find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
+          when: always
+
       - store_test_results:
-          path: target/surefire-reports
+          path: ~/test-results
       
       - store_artifacts:
-          path: target/bookingsys-0.0.1.jar
+          path: ~/test-results/junit
 
       
   "Frontend":
@@ -63,8 +70,17 @@ jobs:
       
       - run: npm install
     
-      - run: npm test
+      - run:
+          name: Run tests
+          command: |
+            mkdir -p ./test-results/junit
+            npm test --ci --reporters=jest-junit
 
+      - store_artifacts:
+          path: ./test-results/junit
+
+      - store_test_results:
+          path: ./test-results
 
 
 workflows:
