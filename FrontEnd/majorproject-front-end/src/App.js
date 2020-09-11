@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
 import Employee from "./Components/employee/Employee";
-import Customer from "./Components/customer/Customer";
+//import Customer from "./Components/customer/Customer";
 import Header from "./Components/layout/Header.js";
 import HomePage from "./Components/homepage/HomePage";
 import Signup from "./Components/account/Signup.js";
@@ -11,6 +11,7 @@ import Login from "./Components/account/Login.js";
 import StaffLogin from "./Components/account/StaffLogin";
 import Booking from "./Components/booking/Booking";
 import AboutUs from "./Components/aboutUs/AboutUs"
+import Customer from "./Components/Customer/Customer"; 
 
 class App extends React.Component {
   constructor() {
