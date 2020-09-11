@@ -41,7 +41,7 @@ jobs:
     docker:
       - image: circleci/node:12.9.1-browsers
   
-    working_directory: ~/repo
+    working_directory: ../FrontEnd/majorproject-front-end
     steps:
       - checkout
       - save_cache:
@@ -57,7 +57,7 @@ jobs:
             - v1-dependencies-{{ checksum "package.json" }}
             - v1-dependencies-
       
-      - run: yarn install
+      - run: npm install
     
       - run: npm test
 
