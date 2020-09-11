@@ -47,5 +47,5 @@
   },
   "jest-junit":{
     "output": "./test-results/junit/results.xml"
-  },
+  }
 }
