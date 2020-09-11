@@ -75,7 +75,9 @@ jobs:
           command: |
             mkdir -p ./test-results/junit
             npm test --ci --reporters=jest-junit
-
+      - run: 
+          command: ls ./test-results/junit
+          
       - store_artifacts:
           path: ./test-results/junit
 
