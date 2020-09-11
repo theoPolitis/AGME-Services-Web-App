@@ -41,7 +41,7 @@ jobs:
     docker:
       - image: circleci/node:12.9.1-browsers
   
-    working_directory: ~/FrontEnd/FrontEnd/majorproject-front-end
+    working_directory: ~/FrontEnd/majorproject-front-end
     steps:
       - checkout
       - save_cache:
