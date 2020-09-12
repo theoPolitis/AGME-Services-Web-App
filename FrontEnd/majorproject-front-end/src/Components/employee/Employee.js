@@ -7,7 +7,7 @@ class Employee extends Component {
     constructor(props) {
         super(props);
         
-
+    
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
     }
@@ -20,24 +20,43 @@ class Employee extends Component {
         });
       }
     
-
+    
     render() {
-        var jobs = [
-            ["1", "Date: 20/10/2020", "- Time: 10.00am"],
-            ["1", "Date: 22/10/2020", "- Time: 12.00am"],
-            ["1", "Date: 24/10/2020", "- Time: 1.00pm"],
-            ["1", "Date: 25/10/2020", "- Time: 3.00pm"],
-            ["1", "Date: 26/10/2020", "- Time: 4.00pm"],
-            ["1", "Date: 27/10/2020", "- Time: 5.00pm"],
+            var jobs = [
+        //     ["1", "Date: 20/10/2020", "- Time: 10.00am"],
+        //     ["1", "Date: 22/10/2020", "- Time: 12.00am"],
+        //     ["1", "Date: 24/10/2020", "- Time: 1.00pm"],
+        //     ["1", "Date: 25/10/2020", "- Time: 3.00pm"],
+        //     ["1", "Date: 26/10/2020", "- Time: 4.00pm"],
+        //     ["1", "Date: 27/10/2020", "- Time: 5.00pm"],
           ];
       
+
+
           var jobsDisplayArray = jobs.map((index) => (
             <p>{index[1] + " " + index[2] + " "}</p>
           ));
 
 
+
+
+                    //still not listening ////////////
+                    // Add a "checked" symbol when clicking on a list item
+                    var list = document.querySelector('ul');
+                     if(list){
+                    list.addEventListener('click', function(ev) {
+                    if (ev.target.tagName === 'LI') {
+                        ev.target.classList.toggle('checked');
+                    }
+                    }, false);
+                }
+
+
+
+
         return (
-                
+           <body>
+               <main>
              <div className="container">
 
            <h1>Employee</h1>
@@ -45,15 +64,32 @@ class Employee extends Component {
        
 
          {/* the things should loop here but i have no idea how to do it */}
-           <ul className="Jobs">{jobsDisplayArray}</ul>
+          <ul className="Jobs">{jobsDisplayArray}
 
 
-           <button className="doneBtn" name="Done">
+          
+          
+                            <ul id="Jobs">
+                    <li>Date: 20/10/2020 - Time: 10.00am  </li>
+                    <li>Date: 22/10/2020 - Time: 12.00am</li>
+                    <li>Date: 24/10/2020 - Time: 1.00pm</li>
+                    <li class="checked">23/10/2020 - Time: 1.00pm</li>
+                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
+                    <li>Date: 26/10/2020 - Time: 4.00pm</li>
+                    <li>Date: 27/10/2020 - Time: 5.00pm</li>
+                    </ul>
+          
+          
+          </ul>
+           
+
+
+           <button onClick className="doneBtn" name="Done">
           Done
         </button>
 
         <p className="SpecialInstructions">
-          *select the job and then click on Done when you complete it 
+          *select the job and then click on Done when you complete it or want to remove it  
         </p> 
 
         <h1>Details</h1>
@@ -133,7 +169,8 @@ class Employee extends Component {
 
           
             </div>
-
+            </main>
+            </body>
         )
     }
 }
