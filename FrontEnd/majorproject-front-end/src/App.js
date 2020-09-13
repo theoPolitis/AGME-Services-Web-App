@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
 import Employee from "./Components/employee/Employee";
-import Customer from "./Components/Customer/Customer";
+import Customer from "./Components/customer/Customer";
 import Header from "./Components/layout/Header.js";
 import HomePage from "./Components/homepage/HomePage";
 import Signup from "./Components/account/Signup.js";
