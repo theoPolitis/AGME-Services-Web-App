@@ -28,4 +28,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     //Find by employeeIdentifier
     Employee findByEmployeeIdentifier(String id);
+
+    List<Employee> findAllByServiceNo(String ServiceNo);
 }

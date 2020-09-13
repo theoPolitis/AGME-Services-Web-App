@@ -100,7 +100,7 @@ class App extends React.Component {
             path="/booking"
             render={(props) => (
               <Booking {...props} 
-                       loggedInStatus={this.state.loggedInStatus} />
+                       loggedInStatus={this.state.loggedInStatus} user={this.state.user}/>
             )}
           />
 

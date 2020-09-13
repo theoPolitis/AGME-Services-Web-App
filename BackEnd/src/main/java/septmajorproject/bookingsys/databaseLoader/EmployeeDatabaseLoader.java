@@ -28,6 +28,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "Alex",
                 "alex");
         alex.setAdmin(false);
+        alex.setServiceNo("1E");
 
         Employee admin = new Employee(
                 "E2341",
@@ -39,7 +40,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "Admin",
                 "admin");
         admin.setAdmin(true);
-
+        admin.setServiceNo("2E");
         Employee sam = new Employee(
                 "E3456",
                 "Sam",
@@ -50,7 +51,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "Sam",
                 "sam");
         sam.setAdmin(false);
-
+        sam.setServiceNo("2E");
         Employee lucas = new Employee(
                 "E9876",
                 "Lucas",
@@ -61,7 +62,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "Lucas",
                 "lucas");
         lucas.setAdmin(false);
-
+        lucas.setServiceNo("3E");
         Employee massimo = new Employee(
                 "E7688",
                 "Massimo",
@@ -72,7 +73,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "Massimo",
                 "massimo");
         massimo.setAdmin(false);
-
+        massimo.setServiceNo("3E");
         employeeRepository.save(alex);
         employeeRepository.save(admin);
         employeeRepository.save(sam);

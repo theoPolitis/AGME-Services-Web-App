@@ -31,7 +31,10 @@ public class EmployeeRepositoryTest {
         Employee newEmployeeTwo = new Employee("2345", "Tom", "Anthony", "s36@student.rmit.edu.au", 0424735214, "Something", "s3661672", "password");
         Employee newEmployeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", 0424735213, "Something", "s3661673", "password");
         Employee newEmployeeFour = new Employee("4567", "Leigh", "Dean", "s36616@student.rmit.edu.au", 0424735211, "Something", "s3661674", "password");
-
+        newEmployeeOne.setServiceNo("1E");
+        newEmployeeTwo.setServiceNo("3E");
+        newEmployeeThree.setServiceNo("2E");
+        newEmployeeFour.setServiceNo("4E");
 
         testManager.persist(newEmployeeOne);
         testManager.persist(newEmployeeTwo);
@@ -49,7 +52,7 @@ public class EmployeeRepositoryTest {
         Employee foundEmployee = employeeRepository.findByEmail("s3661671@student.rmit.edu.au");
 
 
-        assertThat(foundEmployee.getFirstName().equals("Alex"));
+        assert(foundEmployee.getFirstName().equals("Alex"));
     }
 
     //find employee by email FAIL
@@ -57,7 +60,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithIncorrectEmail_thenReturnNull(){
         Employee foundEmployee = employeeRepository.findByEmail("NO_EMAIL");
 
-        assertThat(foundEmployee == null);
+        assert(foundEmployee == null);
     }
 
     //find employee by phone number PASS
@@ -65,7 +68,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithPhoneNumber(){
         Employee foundEmployee = employeeRepository.findByPhoneNumber(0424735215);
 
-        assertThat(foundEmployee.getFirstName().equals("Alex"));
+        assert(foundEmployee.getFirstName().equals("Alex"));
     }
 
     //find employee by phone number FAIL
@@ -73,7 +76,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithIncorrectPhoneNumber_thenReturnNull(){
         Employee foundEmployee = employeeRepository.findByPhoneNumber(7888);
 
-        assertThat(foundEmployee == null);
+        assert(foundEmployee == null);
     }
 
     //find employee by userName PASS
@@ -81,7 +84,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithUserName_thenReturnEmployee(){
         Employee foundEmployee = employeeRepository.findByUserName("s3661671");
 
-        assertThat(foundEmployee.getFirstName().equals("Alex"));
+        assert(foundEmployee.getFirstName().equals("Alex"));
     }
 
 
@@ -90,7 +93,7 @@ public class EmployeeRepositoryTest {
     public void findEmployeeWithIncorrectUserName_thenReturnNull(){
         Employee foundEmployee = employeeRepository.findByUserName("NO_USER");
 
-        assertThat(foundEmployee == null);
+        assert(foundEmployee == null);
     }
 
     //Return list of employees
@@ -98,22 +101,68 @@ public class EmployeeRepositoryTest {
     public void getAllEmployees_thenReturnListOfEmployees(){
         List<Employee> employeeList = employeeRepository.findAll();
 
-        assertThat(employeeList.size() == 4);
+        assert(employeeList.size() == 4);
     }
 
+
+    //test if employee retreives with identifier
     @Test
     public void getEmployeeByValidIdentifier_thenReturnEmployee(){
         Employee found = employeeRepository.findByEmployeeIdentifier("1234");
 
-        assertThat(found.getFirstName().equals("Alex"));
+        assert(found.getFirstName().equals("Alex"));
     }
 
+    //fail test for employee indentifier
     @Test
     public void getEmployeeWithInCorrectIdentifier_theReturnNull(){
         Employee found = employeeRepository.findByEmployeeIdentifier(("1111"));
 
+        assert(found == null);
+    }
+
+    //testing findByUserNameAndPassword should return an employee
+    @Test
+    public void getEmployeeByUsernameAndPassword_returnEmployee(){
+        String username = "s3661671";
+        String password = "password";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found.getUserName().equals(username) && found.getPassword().equals(password));
+    }
+
+    //Test when username and password does not match employee
+    @Test
+    public void getEmployeeByInvalidUsernameAndInvalidPassword_returnNull(){
+        String username = "null";
+        String password = "null";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
         assertThat(found == null);
     }
 
+    //Test when trying to find employee with invalid password but valid username
+    @Test
+    public void getEmployeeByValidUsernameAndInvalidPassword_returnNull(){
+        String username = "s3661671";
+        String password = "null";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found == null);
+    }
+
+    //Test when trying to find employee with valid password but invalid username
+    @Test
+    public void getEmployeeByInvalidUsernameAndValidPassword_returnNull(){
+        String username = "null";
+        String password = "password";
+
+        Employee found = employeeRepository.findByUserNameAndPassword(username, password);
+
+        assertThat(found == null);
+    }
 
 }

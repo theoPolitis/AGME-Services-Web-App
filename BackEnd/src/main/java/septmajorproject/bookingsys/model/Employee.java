@@ -1,6 +1,6 @@
 package septmajorproject.bookingsys.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -10,6 +10,10 @@ import java.util.Date;
 import java.util.List;
 
 @Entity
+@JsonIdentityInfo(
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "employeeId"
+)
 @Table(name="EMPLOYEE")
 public class Employee {
     //values that make up a person object and the sql table
@@ -37,7 +41,8 @@ public class Employee {
     private String password;
     @NotBlank(message = "UserName cannot be blank")
     private String userName;
-
+    @NotBlank(message = "serviceNo cannot be blank")
+    private String serviceNo;
     //created and modified date for records following format yyyy-mm-dd
     @JsonFormat(pattern="yyyy-mm-dd")
     private Date createdDate;
@@ -47,7 +52,6 @@ public class Employee {
     //foreign keys to other databses
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
     private List<Roster> rosterList;
-
     @OneToMany(mappedBy = "employee")
     private List<Roster> bookingList;
 
@@ -177,4 +181,8 @@ public class Employee {
     public List<Roster> getBookingList() {
         return bookingList;
     }
+
+    public void setServiceNo(String serviceNo) { this.serviceNo = serviceNo; }
+
+    public String getServiceNo(String serviceNo){return this.serviceNo;}
 }

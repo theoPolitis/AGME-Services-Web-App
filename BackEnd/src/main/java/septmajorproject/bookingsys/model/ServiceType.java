@@ -14,7 +14,7 @@ public class ServiceType {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "service_id")
-    private Long id;
+    private long id;
 
     @Size(min=1, max= Integer.MAX_VALUE , message="Enter a Valid service number that is greater than one character.")
     @NotBlank(message="Please Enter a service number.")
