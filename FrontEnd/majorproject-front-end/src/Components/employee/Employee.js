@@ -4,97 +4,182 @@ import '../account/Account.css'
 
 
 class Employee extends Component {
-    handleSubmit(event) {
-
+    constructor(props) {
+        super(props);
+        
+    
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     }
 
+    handleSubmit(event) {}
+
+    handleChange(event) {
+        this.setState({
+          [event.target.name]: event.target.value,
+        });
+      }
+    
     
     render() {
+            var jobs = [
+        //     ["1", "Date: 20/10/2020", "- Time: 10.00am"],
+        //     ["1", "Date: 22/10/2020", "- Time: 12.00am"],
+        //     ["1", "Date: 24/10/2020", "- Time: 1.00pm"],
+        //     ["1", "Date: 25/10/2020", "- Time: 3.00pm"],
+        //     ["1", "Date: 26/10/2020", "- Time: 4.00pm"],
+        //     ["1", "Date: 27/10/2020", "- Time: 5.00pm"],
+          ];
+      
+
+
+          var jobsDisplayArray = jobs.map((index) => (
+            <p>{index[1] + " " + index[2] + " "}</p>
+          ));
+
+
+
+
+                    //still not listening ////////////
+                    // Add a "checked" symbol when clicking on a list item
+                    var list = document.querySelector('ul');
+                     if(list){
+                    list.addEventListener('click', function(ev) {
+                    if (ev.target.tagName === 'LI') {
+                        ev.target.classList.toggle('checked');
+                    }
+                    }, false);
+                }
+
+
+
+        if(this.props.userAuth.admin === true){
+            return(
+                <body>
+                    <h1>TEST</h1>
+                </body>
+            )
+        }
         return (
-                
+           <body>
+               <main>
+             <div className="container">
 
-            <div className="container">
-            
-            <h1>Employee</h1>
-                
-                <h1>Details</h1>
+           <h1>Employee</h1>
+           <h1>Rosrer</h1>
+       
 
-                <form onSubmit={this.handleSubmit}>
+         {/* the things should loop here but i have no idea how to do it */}
+          <ul className="Jobs">{jobsDisplayArray}
 
-                    <div className="row">
-                        <div className="col-1">
-                            <label>
-                                First Name:
-                            </label>
-                        </div>
-                        <div className="col-2">
-                            <input type="text" name="firstname"/>
-                        </div>
-                    </div>
 
-                    <div className="row">
-                        <div className="col-1">
-                            <label>
-                                Last Name:
-                            </label>
-                        </div>
-                        <div className="col-2">
-                            <input type="text" name="lastname"/>
-                        </div>
-                    </div>
+          
+          
+                            <ul id="Jobs">
+                    <li>Date: 20/10/2020 - Time: 10.00am  </li>
+                    <li>Date: 22/10/2020 - Time: 12.00am</li>
+                    <li>Date: 24/10/2020 - Time: 1.00pm</li>
+                    <li className="checked">23/10/2020 - Time: 1.00pm</li>
+                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
+                    <li>Date: 26/10/2020 - Time: 4.00pm</li>
+                    <li>Date: 27/10/2020 - Time: 5.00pm</li>
+                    </ul>
+          
+          
+          </ul>
+           
 
-                    <div className="row">
-                        <div className="col-1">
-                            <label>
-                                Email:
-                            </label>
-                        </div>
-                        <div className="col-2">
-                            <input type="text" name="email"/>
-                        </div>
-                    </div>
 
-                    <div className="row">
-                        <div className="col-1">
-                            <label>
-                                Address:
-                            </label>
-                        </div>
-                        <div className="col-2">
-                            <input type="text" name="address"/>
-                        </div>
-                    </div>
+           <button onClick className="doneBtn" name="Done">
+          Done
+        </button>
 
-                    <div className="row">
-                        <div className="col-1">
-                            <label>
-                                Mobile Number:
-                            </label>
-                        </div>
-                        <div className="col-2">
-                            <input type="text" name="username"/>
-                        </div>
-                    </div>
+        <p className="SpecialInstructions">
+          *select the job and then click on Done when you complete it or want to remove it  
+        </p> 
 
-                    <div className="row">
-                        <div className="col-1">
-                            <label>
-                                Password:
-                            </label>
-                        </div>
-                        <div className="col-2">
-                            <input type="password" name="password"/>
-                        </div>
-                    </div>
+        <h1>Details</h1>
 
-                    
-        
-                    <input type="submit" value="Submit"/>
-                </form>
+<form onSubmit={this.handleSubmit}>
+
+    <div className="row">
+        <div className="col-1">
+            <label>
+                First Name:
+            </label>
+        </div>
+        <div className="col-2">
+            <input type="text" name="firstname"/>
+        </div>
+    </div>
+
+    <div className="row">
+        <div className="col-1">
+            <label>
+                Last Name:
+            </label>
+        </div>
+        <div className="col-2">
+            <input type="text" name="lastname"/>
+        </div>
+    </div>
+
+    <div className="row">
+        <div className="col-1">
+            <label>
+                Email:
+            </label>
+        </div>
+        <div className="col-2">
+            <input type="text" name="email"/>
+        </div>
+    </div>
+
+    <div className="row">
+        <div className="col-1">
+            <label>
+                Address:
+            </label>
+        </div>
+        <div className="col-2">
+            <input type="text" name="address"/>
+        </div>
+    </div>
+
+    <div className="row">
+        <div className="col-1">
+            <label>
+                Mobile Number:
+            </label>
+        </div>
+        <div className="col-2">
+            <input type="text" name="username"/>
+        </div>
+    </div>
+
+    <div className="row">
+        <div className="col-1">
+            <label>
+                Password:
+            </label>
+        </div>
+        <div className="col-2">
+            <input type="password" name="password"/>
+        </div>
+    </div>
+
+    
+
+    <input type="submit" value="Submit"/>
+</form>
+
+          
             </div>
-
+            </main>
+            </body>
         )
     }
 }
+
 export default Employee;
 
