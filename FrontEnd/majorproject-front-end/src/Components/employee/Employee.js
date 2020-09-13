@@ -53,7 +53,13 @@ class Employee extends Component {
 
 
 
-
+        if(this.props.userAuth.admin === true){
+            return(
+                <body>
+                    <h1>TEST</h1>
+                </body>
+            )
+        }
         return (
            <body>
                <main>
@@ -73,7 +79,7 @@ class Employee extends Component {
                     <li>Date: 20/10/2020 - Time: 10.00am  </li>
                     <li>Date: 22/10/2020 - Time: 12.00am</li>
                     <li>Date: 24/10/2020 - Time: 1.00pm</li>
-                    <li class="checked">23/10/2020 - Time: 1.00pm</li>
+                    <li className="checked">23/10/2020 - Time: 1.00pm</li>
                     <li>Date: 25/10/2020 - Time: 3.00pm</li>
                     <li>Date: 26/10/2020 - Time: 4.00pm</li>
                     <li>Date: 27/10/2020 - Time: 5.00pm</li>
