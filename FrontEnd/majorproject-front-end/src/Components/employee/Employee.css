@@ -53,7 +53,7 @@ button[type="submit"] {
     clear: both;
 }
 .Jobs {
-    position: absolute;
+    /* position: absolute; */
     width: 957px;
     height: 126px;
     left: 228px;

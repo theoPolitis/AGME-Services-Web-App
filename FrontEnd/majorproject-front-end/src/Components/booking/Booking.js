@@ -34,12 +34,14 @@ class Booking extends Component {
 
     handleSubmit = (event) =>
     {
-        var postData = {}
-        postData["employeeId"] = this.state.selectedEmployee
-        postData["customerId"] = this.props.user.identificationNumber
-        console.log(this.props.user.identificationNumber)
-        Axios.post("http://localhost:8080/api/booking/newBooking/"+this.state.selectedTime+"/"+this.state.selectedDate,
-        postData).then(res =>
+        var postData = {
+            employeeIdentifier: this.state.selectedEmployee,
+            customerIdentifier: this.props.user.identificationNumber,
+            rosterDate: this.state.selectedDate,
+            rosterTime: this.state.selectedTime,
+            serviceNo: this.state.selectedService
+        };
+        Axios.post("http://localhost:8080/api/booking/newBooking", postData).then(res =>
             {alert(res.data)}).catch(error =>{
                 console.log(error.response.status)
                 alert("An error occured, you booking was not created")

@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Customer.css";
+import Axios from "axios";
 
 class Customer extends Component {
   constructor(props) {
@@ -14,13 +15,43 @@ class Customer extends Component {
       userName: "Dulshan",
       oldPassword: "",
       newPassword: "",
+      bookings: []
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
-  handleSubmit(event) {}
+  componentDidMount() {
+    this.reloadState();
+  }
+
+  reloadState() {
+    if (this.props.loggedInStatus == "LOGGED_IN") {
+      Axios.get(this.getMyBookingsUrl(), {})
+        .then(res => {
+          this.setState({ bookings: res.data })
+        }).catch(error => {
+          console.log(error)
+          alert("An error occured, it seems the backend cannot be reached or no services are present in our backend")
+        });
+    }
+  }
+
+  getMyBookingsUrl() {
+    return "http://localhost:8080/api/booking/customer/" + this.props.userAuth.id;
+  }
+
+  cancelBooking(bookingId) {
+    Axios.delete(`http://localhost:8080/api/booking/${bookingId}`).then(res => {
+      this.reloadState();
+    }).catch(error => {
+      console.log(error)
+      alert("An error occured, it seems the backend cannot be reached or no services are present in our backend")
+    })
+  }
+
+  handleSubmit(event) { }
 
   handleChange(event) {
     this.setState({
@@ -29,29 +60,39 @@ class Customer extends Component {
   }
 
   render() {
-    var bookings = [
-      ["1", "20/10/2020", "10.00am", "Hair cut"],
-      ["1", "20/10/2020", "11.00am", "Manicure"],
-      ["1", "20/10/2020", "12.00pm", "something else"],
-      ["1", "20/10/2020", "1.00pm", "something else"],
-      ["1", "20/10/2020", "2.00pm", "something else"],
-      ["1", "20/10/2020", "3.00pm", "something else"],
-    ];
+    var bookings = this.state.bookings;
 
     var bookingsDisplayArray = bookings.map((index) => (
       <p>{index[1] + " " + index[2] + " " + index[3] + " "}</p>
     ));
 
     return (
-      <div>
+      <div class="container">
         <h1 className="BookingsTitle"> My Bookings </h1>
 
         {/* the things should loop here but i have no idea how to do it */}
-        <ul className="Bookings">{bookingsDisplayArray}</ul>
 
-        <button className="cancelBtn" name="Cancel">
-          Cancel
-        </button>
+        <table class="bookings" id="bookings">
+          <thead>
+            <tr>
+              <td>Booking date</td>
+              <td>Service</td>
+              <td>Employee email</td>
+              <td>Customer email</td>
+              <td></td>
+            </tr>
+          </thead>
+          <tbody>
+            {bookings.map((booking) =>
+              <tr id={booking.id}>
+                <td>{booking.rosterDate} {booking.rosterTime}</td>
+                <td>{booking.serviceName}</td>
+                <td>{booking.employee.email}</td>
+                <td><span class="button" onClick={() => this.cancelBooking(booking.id)}>Cancel</span></td>
+              </tr>
+            )}
+          </tbody>
+        </table>
 
         <p className="SpecialInstructions">
           *select the booking and then click on cancel
