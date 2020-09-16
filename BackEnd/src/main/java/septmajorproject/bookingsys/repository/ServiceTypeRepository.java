@@ -1,9 +1,7 @@
 package septmajorproject.bookingsys.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.ServiceType;
 
 import java.util.List;
@@ -11,8 +9,9 @@ import java.util.List;
 @Repository
 public interface ServiceTypeRepository extends JpaRepository<ServiceType, Long> {
     @Override
-    //returns all serviceTypes
+        //returns all serviceTypes
     List<ServiceType> findAll();
+
     @Override
     List<ServiceType> findAllById(Iterable<Long> iterable);
 

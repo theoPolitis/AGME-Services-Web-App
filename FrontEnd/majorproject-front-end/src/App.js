@@ -3,7 +3,11 @@ import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 
 import Employee from "./Components/employee/Employee";
+<<<<<<< HEAD
 //import Customer from "./Components/customer/Customer";
+=======
+import Customer from "./Components/Customer/Customer";
+>>>>>>> 162bfa67d8ac9dc66b3202b77743fdb143df91e5
 import Header from "./Components/layout/Header.js";
 import HomePage from "./Components/homepage/HomePage";
 import Signup from "./Components/account/Signup.js";
