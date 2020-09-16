@@ -42,36 +42,12 @@ class Employee extends Component {
 
     changeServiceNo(serviceNo) {
         this.setState({
-<<<<<<< HEAD
-          [event.target.name]: event.target.value,
-        });
-      }
-    
-     //GET request determines which times the employee is already booked for on the day
-
-     
-
-
-
-
-    render() {
-            var jobs = [
-        //     ["1", "Date: 20/10/2020", "- Time: 10.00am"],
-        //     ["1", "Date: 22/10/2020", "- Time: 12.00am"],
-        //     ["1", "Date: 24/10/2020", "- Time: 1.00pm"],
-        //     ["1", "Date: 25/10/2020", "- Time: 3.00pm"],
-        //     ["1", "Date: 26/10/2020", "- Time: 4.00pm"],
-        //     ["1", "Date: 27/10/2020", "- Time: 5.00pm"],
-          ];
-      
-=======
             filters: {
                 ...this.state.filters,
                 serviceNo: serviceNo
             }
         }, () => this.reloadState());
     }
->>>>>>> 17691403fb5d008c415263d4bdce2949b5960bfc
 
     changeDateFilter(date) {
         if (date == null) {
@@ -132,39 +108,6 @@ class Employee extends Component {
         return this.props.userAuth.admin === true;
     }
 
-<<<<<<< HEAD
-        //admin page
-        if(this.props.userAuth.admin === true){
-            return(
-                <body>
-
-                    <div className="container">
-                    <h1>Bookings</h1>
-
-
-
-
-
-                    <ul id="Jobs">
-
-                    <li>Date: 20/10/2020 - Time: 10.00am  </li>
-                    <li className="checked">23/10/2020 - Time: 1.00pm</li>
-                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
-                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
-                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
-                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
-             
-                    </ul>
-
-                    <button onClick className="delBtn" name="Delet">
-          Delet
-        </button>
-
-
-
-
-
-=======
     render() {
         var jobs = this.state.bookings;
 
@@ -231,11 +174,9 @@ class Employee extends Component {
                                 )}
                             </tbody>
                         </table>
->>>>>>> 17691403fb5d008c415263d4bdce2949b5960bfc
 
                     </div>
                 </body>
-               
             )
         }
 
