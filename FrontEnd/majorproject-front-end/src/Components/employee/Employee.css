@@ -79,7 +79,16 @@ button[type="submit"] {
 
 
 
-
+  .delBtn {
+    position: relative;
+    width: 101px;
+    height: 39px;
+    left: 658px;
+    top: 110px;
+  
+    background: white;
+    border-radius: 15px;
+  }
 
   ul li:nth-child(odd) {
     background: #f9f9f9;

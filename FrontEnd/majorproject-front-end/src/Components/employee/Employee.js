@@ -20,7 +20,13 @@ class Employee extends Component {
         });
       }
     
-    
+     //GET request determines which times the employee is already booked for on the day
+
+     
+
+
+
+
     render() {
             var jobs = [
         //     ["1", "Date: 20/10/2020", "- Time: 10.00am"],
@@ -52,14 +58,45 @@ class Employee extends Component {
                 }
 
 
-
+        //admin page
         if(this.props.userAuth.admin === true){
             return(
                 <body>
-                    <h1>TEST</h1>
+
+                    <div className="container">
+                    <h1>Bookings</h1>
+
+
+
+
+
+                    <ul id="Jobs">
+
+                    <li>Date: 20/10/2020 - Time: 10.00am  </li>
+                    <li className="checked">23/10/2020 - Time: 1.00pm</li>
+                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
+                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
+                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
+                    <li>Date: 25/10/2020 - Time: 3.00pm</li>
+             
+                    </ul>
+
+                    <button onClick className="delBtn" name="Delet">
+          Delet
+        </button>
+
+
+
+
+
+
+                    </div>
                 </body>
+               
             )
         }
+
+        //employee page 
         return (
            <body>
                <main>

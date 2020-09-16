@@ -50,6 +50,9 @@ public class Roster {
         this.rosterTime = rosterTime;
     }
 
+
+
+
     public long getId() {
         return id;
     }
