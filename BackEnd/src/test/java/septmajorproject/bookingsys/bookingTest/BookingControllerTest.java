@@ -14,9 +14,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
+import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.service.BookingService;
 import septmajorproject.bookingsys.service.CustomerService;
 import septmajorproject.bookingsys.service.EmployeeService;
+import septmajorproject.bookingsys.service.ServiceTypeService;
 import septmajorproject.bookingsys.web.BookingController;
 
 import java.sql.Time;
@@ -49,9 +51,11 @@ public class BookingControllerTest {
     @MockBean
     private CustomerService customerService;
 
+    @MockBean
+    private ServiceTypeService serviceTypeService;
+
     @Autowired
     private ObjectMapper objectMapper;
-
 
     Time time = new Time(12,30,0);
     Date date = new Date(2020,8,27);
@@ -59,8 +63,9 @@ public class BookingControllerTest {
     Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
     Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
 
-    Booking booking = new Booking(date, time, emp, cust);
-    Booking booking2 = new Booking(date, time, emp, cust);
+    ServiceType serviceType = new ServiceType("1", "haircut");
+    Booking booking = new Booking(date, time, emp, cust, serviceType);
+    Booking booking2 = new Booking(date, time, emp, cust, serviceType);
 
     @Before
     public void setUp() {
@@ -71,7 +76,7 @@ public class BookingControllerTest {
     @Test
     public void givenBooking_whenGetBookingById_thenReturnBooking() throws Exception {
 
-        given(bookingService.findBookingByIdentificationNumber("1234")).willReturn(booking);
+        given(bookingService.findBookingByIdentificationNumber(1234L)).willReturn(booking);
 
         mvc.perform(get("/api/booking/{bookingId}", "1234").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -87,7 +92,7 @@ public class BookingControllerTest {
         allBookings.add(booking);
         allBookings.add(booking2);
 
-        given(bookingService.getAll()).willReturn(allBookings);
+        given(bookingService.getBookings(null, null)).willReturn(allBookings);
 
         mvc.perform(get("/api/booking/all").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
