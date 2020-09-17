@@ -87,4 +87,9 @@ input {
 .UpdateButton {
   background: #2197da;
   border-radius: 15px;
+  cursor: pointer;
+}
+
+.left {
+  margin-left: 10%;
 }

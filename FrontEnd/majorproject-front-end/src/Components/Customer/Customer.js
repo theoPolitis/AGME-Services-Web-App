@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./Customer.css";
+import { Link } from 'react-router-dom';
 
 class Customer extends Component {
   constructor(props) {
@@ -44,6 +45,7 @@ class Customer extends Component {
 
     return (
       <div>
+      <Link to='/customerEdit'>CustomerEdit</Link>
         <h1 className="BookingsTitle"> My Bookings </h1>
 
         {/* the things should loop here but i have no idea how to do it */}

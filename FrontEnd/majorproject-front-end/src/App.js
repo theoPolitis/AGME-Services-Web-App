@@ -10,7 +10,9 @@ import Login from "./Components/account/Login.js";
 import StaffLogin from "./Components/account/StaffLogin";
 import Booking from "./Components/booking/Booking";
 import AboutUs from "./Components/aboutUs/AboutUs"
-import Customer from "./Components/Customer/Customer";
+import Customer from "./Components/customer/Customer";
+import CustomerEdit from "./Components/customer/CustomerEdit";
+
 class App extends React.Component {
   constructor() {
     super();
@@ -109,6 +111,15 @@ class App extends React.Component {
             render={(props) => (
               <Customer {...props} 
                         loggedInStatus={this.state.loggedInStatus} />
+            )}
+          />
+
+          <Route
+            path="/CustomerEdit"
+            render={(props) => (
+              <CustomerEdit {...props} 
+                        loggedInStatus={this.state.loggedInStatus} 
+                        currentCustomer={this.state.user}/>
             )}
           />
 
