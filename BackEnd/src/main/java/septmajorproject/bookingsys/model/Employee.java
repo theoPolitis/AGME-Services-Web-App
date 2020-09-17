@@ -1,52 +1,62 @@
 package septmajorproject.bookingsys.model;
 
-import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
+import javax.persistence.Table;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
-import javax.xml.transform.Source;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @JsonIdentityInfo(
-        generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "employeeId"
+    generator = ObjectIdGenerators.PropertyGenerator.class,
+    property = "employeeId"
 )
-@Table(name="EMPLOYEE")
+@Table(name = "EMPLOYEE")
 public class Employee {
     //values that make up a person object and the sql table
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="employee_id")
+    @Column(name = "employee_id")
     //provides a unique id for each employee that is generated
     private long employeeId;
     @NotBlank(message = "Employee Identifier required")
     @Column(updatable = false, unique = true)
     private String employeeIdentifier;
     private boolean isAdmin;
-    @Size(min=3, max= Integer.MAX_VALUE , message="Enter a Valid first name that is greater than two character.")
-    @NotBlank(message="Please Enter a First Name.")
+    @Size(min = 3, max = Integer.MAX_VALUE, message = "Enter a Valid first name that is greater than two character.")
+    @NotBlank(message = "Please Enter a First Name.")
     private String firstName;
-    @Size(min=3, max=Integer.MAX_VALUE, message="Enter a Valid last name that is greater than 1 character")
-    @NotBlank(message="Please Enter a Last Name.")
+    @Size(min = 3, max = Integer.MAX_VALUE, message = "Enter a Valid last name that is greater than 1 character")
+    @NotBlank(message = "Please Enter a Last Name.")
     private String lastName;
-    @NotBlank(message="Please Enter an Address.")
+    @NotBlank(message = "Please Enter an Address.")
     private String address;
-    @NotBlank(message="Please Enter an Address.")
+    @NotBlank(message = "Please Enter an Address.")
     private String email;
     private int phoneNumber;
-    @NotBlank(message="Password cannot be blank")
+    @NotBlank(message = "Password cannot be blank")
     private String password;
     @NotBlank(message = "UserName cannot be blank")
     private String userName;
     @NotBlank(message = "serviceNo cannot be blank")
     private String serviceNo;
-    //created and modified date for records following format yyyy-mm-dd
-    @JsonFormat(pattern="yyyy-mm-dd")
+    //created and modified date for records following format yyyy-MM-dd
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createdDate;
-    @JsonFormat(pattern="yyyy-mm-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updatedDate;
 
     //foreign keys to other databses
@@ -56,16 +66,16 @@ public class Employee {
     private List<Roster> bookingList;
 
     //default constructor
-    public Employee(){
+    public Employee() {
 
     }
 
     //simple constructor for employees
-    public Employee(String employeeIdentifier, String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password){
+    public Employee(String employeeIdentifier, String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.phoneNumber =  phoneNumber;
+        this.phoneNumber = phoneNumber;
         this.address = address;
         this.userName = userName;
         this.password = password;
@@ -74,12 +84,12 @@ public class Employee {
 
     //updates the date variables automatically with annotations
     @PrePersist
-    protected void onCreate(){
+    protected void onCreate() {
         this.createdDate = new Date();
     }
 
     @PreUpdate
-    protected void onUpdate(){
+    protected void onUpdate() {
         this.updatedDate = new Date();
     }
 
@@ -182,7 +192,19 @@ public class Employee {
         return bookingList;
     }
 
-    public void setServiceNo(String serviceNo) { this.serviceNo = serviceNo; }
+    public void setServiceNo(String serviceNo) {
+        this.serviceNo = serviceNo;
+    }
 
-    public String getServiceNo(String serviceNo){return this.serviceNo;}
+    public String getServiceNo(String serviceNo) {
+        return this.serviceNo;
+    }
+
+    public Date getCreatedDate() {
+        return createdDate;
+    }
+
+    public Date getUpdatedDate() {
+        return updatedDate;
+    }
 }
