@@ -1,39 +1,47 @@
 import React, { Component } from "react";
-import { Redirect } from 'react-router-dom';
 import axios from "axios";
-
-import "./Customer.css";
 
 class CustomerEdit extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
-            currentCustomer: this.props.currentCustomer
+            identificationNumber: this.props.currentCustomer.identificationNumber,
+            firstName: this.props.currentCustomer.firstName,
+            lastName: this.props.currentCustomer.lastName,
+            address: this.props.currentCustomer.address,
+            phoneNumber: this.props.currentCustomer.phoneNumber,
+            email: this.props.currentCustomer.email
         }
     }
 
     handleChange = (event) => {
-        this.setState({currentCustomer: {[event.target.name]: event.target.value}});
+        this.setState({[event.target.name]: event.target.value});
     }
 
     handleSubmit = (event) => {
-        axios.post('http://localhost:8080/api/customer', {
-            identificationNumber: this.id,
-            firstName: this.state.firstName,
-            lastName: this.state.lastName,
-            email: this.state.email,
-            phoneNumber: this.state.phoneNumber,
-            address: this.state.address
-        }).then(res => {
-            if(res.status === 201){
-                return <Redirect to={{pathname: "/customer"}}/>;
-            }
+        var postData = {}
+        postData["firstName"] = this.state.firstName;
+        postData["lastName"] = this.state.lastName;
+        postData["address"] = this.state.address;
+        postData["phoneNumber"] = this.state.phoneNumber;
+        postData["email"] = this.state.email;
+
+        console.log(this.state.identificationNumber)
+
+        axios.put('http://localhost:8080/api/customer/'+this.state.identificationNumber, 
+        postData).then(res => {
+            if (res.status === 200){
+                alert("Details changed successfully")
+                this.props.history.push('/customer')
+            } 
 
         }).catch(error => {
-            alert("Username already exists");
+            alert("ERROR");
             console.log(error);
         })
+
+        event.preventDefault();
     }
 
     render() {
@@ -50,35 +58,35 @@ class CustomerEdit extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <label>First Name:</label>
                         <input
-                            value={this.state.currentCustomer.firstName}
+                            value={this.state.firstName}
                             type="text"
                             name="firstName"
                             onChange={this.handleChange}
                         />
                         <label>Last Name:</label>
                         <input
-                            value={this.state.currentCustomer.lastName}
+                            value={this.state.lastName}
                             type="text"
                             name="lastName"
                             onChange={this.handleChange}
                         />
                         <label>Email:</label>
                         <input
-                            value={this.state.currentCustomer.email}
+                            value={this.state.email}
                             type="text"
                             name="email"
                             onChange={this.handleChange}
                         />
                         <label>Phone Number:</label>
                         <input
-                            value={this.state.currentCustomer.phoneNumber}
+                            value={this.state.phoneNumber}
                             type="text"
                             name="phoneNumber"
                             onChange={this.handleChange}
                         />
                         <label>Address:</label>
                         <input
-                            value={this.state.currentCustomer.address}
+                            value={this.state.address}
                             type="text"
                             name="address"
                             onChange={this.handleChange}
