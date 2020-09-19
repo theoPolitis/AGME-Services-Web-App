@@ -18,9 +18,6 @@ class Customer extends Component {
       bookings: [],
       changedAnyFields: false,
     };
-
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -59,20 +56,6 @@ class Customer extends Component {
           "An error occured, it seems the backend cannot be reached or no services are present in our backend"
         );
       });
-  }
-
-  handleSubmit(event) {
-    // here i need to update the user info in the customer table
-    //need to check if the passwords are correct and update the password if the password was changed
-    console.log(this.state);
-    // if(this.props.userAuth.password == this.state.oldPassword){
-    // }
-  }
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
   }
 
   render() {
@@ -119,7 +102,6 @@ class Customer extends Component {
         <p className="SpecialInstructions">
           *choose a booking and then click on cancel
         </p>
-        {console.log(this.props)}
         <form className="FormAttribute" method="get">
           <label>
             First Name:
@@ -128,7 +110,7 @@ class Customer extends Component {
               type="text"
               name="firstName"
               size="100"
-              onChange={this.handleChange}
+              readOnly
               required
             />
           </label>
@@ -139,7 +121,7 @@ class Customer extends Component {
               type="text"
               name="lastName"
               size="100"
-              onChange={this.handleChange}
+              readOnly
               required
             />
           </label>
@@ -150,7 +132,7 @@ class Customer extends Component {
               type="text"
               name="address"
               size="100"
-              onChange={this.handleChange}
+              readOnly
               required
             />
           </label>
@@ -161,7 +143,7 @@ class Customer extends Component {
               type="text"
               name="email"
               size="100"
-              onChange={this.handleChange}
+              readOnly
               required
             />
           </label>
@@ -172,7 +154,7 @@ class Customer extends Component {
               type="text"
               name="mobileNumber"
               size="100"
-              onChange={this.handleChange}
+              readOnly
               required
             />
           </label>
@@ -183,40 +165,10 @@ class Customer extends Component {
               type="text"
               name="userName"
               size="100"
-              onChange={this.handleChange}
+              readOnly
               required
             />
           </label>
-          <label>
-            Old Password:
-            <input
-              value={this.state.oldPassword}
-              placeholder="Enter the old password"
-              type="text"
-              name="oldPassword"
-              size="100"
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <label>
-            New Password:
-            <input
-              value={this.state.newPassword}
-              placeholder="Enter the new password"
-              type="text"
-              name="newPassword"
-              size="100"
-              onChange={this.handleChange}
-              required
-            />
-          </label>
-          <input
-            className="UpdateButton"
-            type="submit"
-            value="Update"
-            onClick={this.handleSubmit}
-          />
         </form>
       </div>
     );
