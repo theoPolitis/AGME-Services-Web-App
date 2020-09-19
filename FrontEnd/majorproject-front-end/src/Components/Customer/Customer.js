@@ -7,12 +7,12 @@ class Customer extends Component {
     super(props);
 
     this.state = {
-      firstName: "Dulshan",
-      lastName: "Dulshan",
-      address: "Dulshan",
-      email: "Dulshan",
-      mobileNumber: "Dulshan",
-      userName: "Dulshan",
+      firstName: this.props.userAuth.firstName,
+      lastName: this.props.userAuth.lastName,
+      address: this.props.userAuth.address,
+      email: this.props.userAuth.email,
+      mobileNumber: this.props.userAuth.phoneNumber,
+      userName: this.props.userAuth.username,
       oldPassword: "",
       newPassword: "",
       bookings: [],
@@ -28,7 +28,7 @@ class Customer extends Component {
   }
 
   reloadState() {
-    if (this.props.loggedInStatus == "LOGGED_IN") {
+    if (this.props.loggedInStatus === "LOGGED_IN") {
       Axios.get(this.getMyBookingsUrl(), {})
         .then((res) => {
           this.setState({ bookings: res.data });
@@ -63,6 +63,10 @@ class Customer extends Component {
 
   handleSubmit(event) {
     // here i need to update the user info in the customer table
+    //need to check if the passwords are correct and update the password if the password was changed
+    console.log(this.state);
+    // if(this.props.userAuth.password == this.state.oldPassword){
+    // }
   }
 
   handleChange(event) {
@@ -115,13 +119,12 @@ class Customer extends Component {
         <p className="SpecialInstructions">
           *choose a booking and then click on cancel
         </p>
-        {/* the attribute value called dulshan should be changed into whatever is in the list/array */}
-        {console.log(this.state.changedAnyFields)}
+        {console.log(this.props)}
         <form className="FormAttribute" method="get">
           <label>
             First Name:
             <input
-              value={this.props.userAuth.firstName}
+              value={this.state.firstName}
               type="text"
               name="firstName"
               size="100"
@@ -132,7 +135,7 @@ class Customer extends Component {
           <label>
             Last Name:
             <input
-              value={this.props.userAuth.lastName}
+              value={this.state.lastName}
               type="text"
               name="lastName"
               size="100"
@@ -143,7 +146,7 @@ class Customer extends Component {
           <label>
             Address:
             <input
-              value={this.props.userAuth.address}
+              value={this.state.address}
               type="text"
               name="address"
               size="100"
@@ -154,7 +157,7 @@ class Customer extends Component {
           <label>
             Email:
             <input
-              value={this.props.userAuth.email}
+              value={this.state.email}
               type="text"
               name="email"
               size="100"
@@ -165,7 +168,7 @@ class Customer extends Component {
           <label>
             Mobile Number:
             <input
-              value={this.props.userAuth.mobileNumber}
+              value={this.state.mobileNumber}
               type="text"
               name="mobileNumber"
               size="100"
@@ -176,7 +179,7 @@ class Customer extends Component {
           <label>
             User Name:
             <input
-              value={this.props.userAuth.userName}
+              value={this.state.userName}
               type="text"
               name="userName"
               size="100"
@@ -187,7 +190,7 @@ class Customer extends Component {
           <label>
             Old Password:
             <input
-              value={this.props.userAuth.oldPassword}
+              value={this.state.oldPassword}
               placeholder="Enter the old password"
               type="text"
               name="oldPassword"
@@ -199,7 +202,7 @@ class Customer extends Component {
           <label>
             New Password:
             <input
-              value={this.props.userAuth.newPassword}
+              value={this.state.newPassword}
               placeholder="Enter the new password"
               type="text"
               name="newPassword"
@@ -208,7 +211,12 @@ class Customer extends Component {
               required
             />
           </label>
-          <input className="UpdateButton" type="submit" value="Update" />
+          <input
+            className="UpdateButton"
+            type="submit"
+            value="Update"
+            onClick={this.handleSubmit}
+          />
         </form>
       </div>
     );
