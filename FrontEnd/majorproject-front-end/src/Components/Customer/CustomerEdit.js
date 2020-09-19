@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { Redirect } from 'react-router-dom';
+import axios from "axios";
+
 import "./Customer.css";
 
 class CustomerEdit extends Component {
@@ -12,6 +15,25 @@ class CustomerEdit extends Component {
 
     handleChange = (event) => {
         this.setState({currentCustomer: {[event.target.name]: event.target.value}});
+    }
+
+    handleSubmit = (event) => {
+        axios.post('http://localhost:8080/api/customer', {
+            identificationNumber: this.id,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            address: this.state.address
+        }).then(res => {
+            if(res.status === 201){
+                return <Redirect to={{pathname: "/customer"}}/>;
+            }
+
+        }).catch(error => {
+            alert("Username already exists");
+            console.log(error);
+        })
     }
 
     render() {

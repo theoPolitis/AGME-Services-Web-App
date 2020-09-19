@@ -7,6 +7,7 @@ import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.repository.CustomerRepository;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class CustomerService {
@@ -25,6 +26,28 @@ public class CustomerService {
             return customerRepository.save(customer);
         } catch (Exception e) {
             throw new CustomerException("Username: " + customer.getUsername() + " already exists");
+        }
+    }
+
+    public Customer updateExistingCustomer(String id, Map<String, String> userDataMap) {
+
+        Customer existing = customerRepository.findByIdentificationNumber(id);
+
+        if (existing != null) {
+            if (userDataMap.containsKey("password")) {
+                existing.setPassword(userDataMap.get("password"));
+            } else {
+                existing.setFirstname(userDataMap.get("firstName"));
+                existing.setLastName(userDataMap.get("lastName"));
+                existing.setAddress(userDataMap.get("address"));
+                existing.setPhoneNumber(userDataMap.get("phoneNumber"));
+                existing.setEmail(userDataMap.get("email"));
+            }
+
+            customerRepository.save(existing);
+            return existing;
+        } else {
+            return null;
         }
     }
 
