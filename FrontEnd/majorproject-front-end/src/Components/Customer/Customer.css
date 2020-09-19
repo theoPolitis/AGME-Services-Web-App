@@ -30,7 +30,6 @@
   overflow: auto;
 }
 
-
 p {
   color: black;
 }
@@ -41,6 +40,7 @@ p {
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
+  text-align: center;
   /* identical to box height */
 
   color: #ffffff;
