@@ -23,6 +23,7 @@ class Booking extends Component {
             dateDisabled: true,
             timeDisabled:true,
         }
+        //retrieves all front end services
         Axios.get("http://localhost:8080/api/serviceType/all",{}).then(
             res => {this.setState({services:res.data})
        }
