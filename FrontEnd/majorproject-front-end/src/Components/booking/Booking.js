@@ -27,7 +27,7 @@ class Booking extends Component {
             res => {this.setState({services:res.data})
        }
         ).catch(error => {
-            console.log(error.response.status)
+            console.log(error)
             alert("An error occured, it seems the backend cannot be reached or no services are present in our backend")
         })
     }
