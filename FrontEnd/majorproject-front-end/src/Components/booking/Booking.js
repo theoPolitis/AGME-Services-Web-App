@@ -23,11 +23,12 @@ class Booking extends Component {
             dateDisabled: true,
             timeDisabled:true,
         }
+        //retrieves all front end services
         Axios.get("http://localhost:8080/api/serviceType/all",{}).then(
             res => {this.setState({services:res.data})
        }
         ).catch(error => {
-            console.log(error)
+            console.log(error.response.status)
             alert("An error occured, it seems the backend cannot be reached or no services are present in our backend")
         })
     }
