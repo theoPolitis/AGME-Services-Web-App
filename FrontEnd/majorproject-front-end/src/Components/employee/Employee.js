@@ -7,9 +7,6 @@ class Employee extends Component {
   constructor(props) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
     this.state = {
       bookings: [],
       services: [],
@@ -68,14 +65,6 @@ class Employee extends Component {
       },
       () => this.reloadState()
     );
-  }
-
-  handleSubmit(event) {}
-
-  handleChange(event) {
-    this.setState({
-      [event.target.name]: event.target.value,
-    });
   }
 
   markAsDone(bookingId) {
@@ -277,7 +266,7 @@ class Employee extends Component {
 
             <h1>Details</h1>
 
-            <form onSubmit={this.handleSubmit}>
+            <form>
               <div className="row">
                 <div className="col-1">
                   <label>First Name:</label>
@@ -287,6 +276,7 @@ class Employee extends Component {
                     type="text"
                     name="firstname"
                     value={this.props.userAuth.firstName}
+                    readOnly
                   />
                 </div>
               </div>
@@ -300,6 +290,7 @@ class Employee extends Component {
                     type="text"
                     name="lastname"
                     value={this.props.userAuth.lastName}
+                    readOnly
                   />
                 </div>
               </div>
@@ -313,6 +304,7 @@ class Employee extends Component {
                     type="text"
                     name="email"
                     value={this.props.userAuth.email}
+                    readOnly
                   />
                 </div>
               </div>
@@ -326,6 +318,7 @@ class Employee extends Component {
                     type="text"
                     name="address"
                     value={this.props.userAuth.address}
+                    readOnly
                   />
                 </div>
               </div>
@@ -339,24 +332,10 @@ class Employee extends Component {
                     type="text"
                     name="username"
                     value={this.props.userAuth.phoneNumber}
+                    readOnly
                   />
                 </div>
               </div>
-
-              <div className="row">
-                <div className="col-1">
-                  <label>Password:</label>
-                </div>
-                <div className="col-2">
-                  <input
-                    type="password"
-                    name="password"
-                    value={this.props.userAuth.password}
-                  />
-                </div>
-              </div>
-
-              <input type="submit" value="Submit" />
             </form>
           </div>
         </main>
