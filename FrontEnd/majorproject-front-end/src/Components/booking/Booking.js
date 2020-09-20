@@ -40,22 +40,11 @@ class Booking extends Component {
 
     handleSubmit = (event) =>
     {
-<<<<<<< HEAD
-        var postData = {
-            employeeIdentifier: this.state.selectedEmployee,
-            customerIdentifier: this.props.user.identificationNumber,
-            rosterDate: this.state.selectedDate,
-            rosterTime: this.state.selectedTime,
-            serviceNo: this.state.selectedService
-        };
-        Axios.post("http://localhost:8080/api/booking/newBooking", postData).then(res =>
-=======
         var postData = {}
         postData["employeeId"] = this.state.selectedEmployee
         postData["customerId"] = this.props.user.identificationNumber
         Axios.post("http://localhost:8080/api/booking/newBooking/"+this.state.selectedTime+"/"+this.state.selectedDate,
         postData).then(res =>
->>>>>>> developer
             {alert(res.data)}).catch(error =>{
                 console.log(error.response.status)
                 alert("An error occured, you booking was not created")
@@ -151,7 +140,7 @@ class Booking extends Component {
             Axios.get("http://localhost:8080/api/booking/"+formattedDate + "/" + this.state.selectedEmployee,{}).then(
                 res => {this.setState({alreadyBooked: res.data},
                     function () {var booked = res.data
-                        for(i = 0; i < booked.length; i++)
+                        for(let i = 0; i < booked.length; i++)
                         {
                             times = times.filter(item => item !== booked[i].time)
                         }

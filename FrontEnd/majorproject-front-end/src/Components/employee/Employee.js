@@ -26,7 +26,7 @@ class Employee extends Component {
       this.setState({ services: res.data });
     });
 
-    if (this.props.loggedInStatus == "LOGGED_IN") {
+    if (this.props.loggedInStatus === "LOGGED_IN") {
       Axios.get(this.getBookingUrl(), {})
         .then((res) => {
           this.setState({ bookings: res.data });

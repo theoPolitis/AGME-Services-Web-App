@@ -61,9 +61,9 @@ class Customer extends Component {
   render() {
     var bookings = this.state.bookings;
 
-    var bookingsDisplayArray = bookings.map((index) => (
-      <p key={index}>{index[1] + " " + index[2] + " " + index[3] + " "}</p>
-    ));
+    // var bookingsDisplayArray = bookings.map((index) => (
+    //   <p key={index}>{index[1] + " " + index[2] + " " + index[3] + " "}</p>
+    // ));
 
     return (
       <body>
