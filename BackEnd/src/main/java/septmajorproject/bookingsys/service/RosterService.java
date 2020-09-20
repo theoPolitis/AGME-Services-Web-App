@@ -4,13 +4,9 @@ package septmajorproject.bookingsys.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.exception.RosterException;
-import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.repository.RosterRepository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import java.util.List;
 
 @Service
@@ -20,7 +16,7 @@ public class RosterService {
     private RosterRepository rosterRepository;
 
 
-    public Roster createOrUpdateRosterEntry(Roster roster){
+    public Roster createOrUpdateRosterEntry(Roster roster) {
         return rosterRepository.save(roster);
     }
 
@@ -54,19 +50,18 @@ public class RosterService {
 
     }
 
-    public Roster findRosterByIdentificationNumber(String rosterId){
+    public Roster findRosterByIdentificationNumber(String rosterId) {
 
         Roster rosterFound = rosterRepository.findRosterById(rosterId);
 
-        if(rosterFound == null){
+        if (rosterFound == null) {
             throw new RosterException("Roster with the id " + rosterId + " does not exist");
-        }
-        else{
+        } else {
             return rosterFound;
         }
     }
 
-    public List<Roster> getAll(){
+    public List<Roster> getAll() {
         return rosterRepository.findAll();
     }
 

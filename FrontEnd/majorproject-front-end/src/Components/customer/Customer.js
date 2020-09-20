@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "./Customer.css";
-import { Link } from 'react-router-dom';
 import Axios from "axios";
+
 
 class Customer extends Component {
   constructor(props) {
@@ -176,6 +176,7 @@ class Customer extends Component {
           </div>
         </main>
       </body>
+
     );
   }
 }
