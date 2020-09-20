@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "./Customer.css";
 import Axios from "axios";
 
+
 class Customer extends Component {
   constructor(props) {
     super(props);
@@ -175,6 +176,7 @@ class Customer extends Component {
           </div>
         </main>
       </body>
+
     );
   }
 }
