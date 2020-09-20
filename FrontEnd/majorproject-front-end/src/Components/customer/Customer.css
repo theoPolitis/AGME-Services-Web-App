@@ -30,6 +30,7 @@
   overflow: auto;
 }
 
+
 .cancelBtn {
   position: relative;
   width: 101px;
@@ -69,6 +70,7 @@ p {
   left: 500px;
   top: 475px;
 
+
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
@@ -101,4 +103,5 @@ input {
 
 .left {
   margin-left: 10%;
+
 }
