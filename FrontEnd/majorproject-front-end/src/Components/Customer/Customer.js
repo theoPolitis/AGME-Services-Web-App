@@ -45,8 +45,8 @@ class Customer extends Component {
 
     return (
       <div>
-      <Link to='/editDetails'>Edit Details</Link>
-      <Link to='/changePassword'>Change Password</Link>
+      <Link to='/editDetails' className="UpdateButton">Edit Details</Link>
+      <Link to='/changePassword' className="UpdateButton">Change Password</Link>
         <h1 className="BookingsTitle"> My Bookings </h1>
 
         {/* the things should loop here but i have no idea how to do it */}
