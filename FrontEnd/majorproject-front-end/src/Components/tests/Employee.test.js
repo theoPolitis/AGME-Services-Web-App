@@ -7,7 +7,7 @@ import renderer from "react-test-renderer";
 import axios from "axios";
 import renderWithRouter from "./TestingRouter";
 import Booking from "../booking/Booking";
-import Employee from "../Employee/Employee";
+import Employee from "../employee/Employee";
 
 jest.mock("axios");
 
