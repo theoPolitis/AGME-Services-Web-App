@@ -14,10 +14,7 @@ import septmajorproject.bookingsys.exception.BookingException;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
-import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.repository.BookingRepository;
-import septmajorproject.bookingsys.repository.CustomerRepository;
-import septmajorproject.bookingsys.repository.EmployeeRepository;
 import septmajorproject.bookingsys.service.BookingService;
 
 import java.sql.Date;
@@ -32,16 +29,9 @@ public class BookingServiceTest {
 
     @TestConfiguration
     static class BookingServiceContextConfig {
-        @MockBean
-        private EmployeeRepository employeeRepository;
-        @MockBean
-        private CustomerRepository customerRepository;
-
         @Bean
-        public BookingService bookingService(BookingRepository bookingRepository,
-                                             EmployeeRepository employeeRepository,
-                                             CustomerRepository customerRepository) {
-            return new BookingService(bookingRepository, employeeRepository, customerRepository);
+        public BookingService bookingService() {
+            return new BookingService();
         }
     }
 
@@ -68,10 +58,10 @@ public class BookingServiceTest {
 
         Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
         Customer cust2 = new Customer("test", "test@email.com", "Rufus", "Du Sol", "123 street", "04373847545", "Rufus");
-        ServiceType serviceType = new ServiceType("1", "haircut");
-        Booking booking = new Booking(date, time, emp, cust, serviceType);
-        Booking booking2 = new Booking(date2, time2, emp, cust, serviceType);
-        Booking booking3 = new Booking(date3, time3, emp, cust, serviceType);
+
+        Booking booking = new Booking(date, time, emp, cust);
+        Booking booking2 = new Booking(date2, time2, emp, cust);
+        Booking booking3 = new Booking(date3, time3, emp, cust);
 
         List<Booking> bookingList = new ArrayList<>();
 
@@ -79,7 +69,7 @@ public class BookingServiceTest {
         bookingList.add(booking2);
         bookingList.add(booking3);
 
-        Mockito.when(bookingRepository.findBookingById(booking.getId())).thenReturn(booking);
+        Mockito.when(bookingRepository.findBookingById(String.valueOf(booking.getId()))).thenReturn(booking);
         Mockito.when(bookingRepository.findAllByCustomer(cust)).thenReturn(bookingList);
         Mockito.when(bookingRepository.findAllByEmployee(emp)).thenReturn(bookingList);
         Mockito.when(bookingRepository.findAll()).thenReturn(bookingList);
@@ -88,7 +78,7 @@ public class BookingServiceTest {
     // Test finding a booking with a valid id
     @Test
     public void whenGettingBookingWithValidIdentifier_ThenBookingShouldBeFound(){
-        Long id = 0L;
+        String id = "0";
 
         Booking found = bookingService.findBookingByIdentificationNumber(id);
 
@@ -98,7 +88,7 @@ public class BookingServiceTest {
     //Test finding a booking with an invalid id (does not exist)
     @Test(expected = BookingException.class)
     public void whenInvalidIdentifier_ThenThrowBookingException() {
-        Long id = 453L;
+        String id = "453";
 
         bookingService.findBookingByIdentificationNumber(id);
     }
@@ -112,7 +102,7 @@ public class BookingServiceTest {
     // Test deleting a booking with a valid id
     @Test
     public void whenDeletingBookingWithValidIdentifier_ThenSuccessfulDeleteRequest() {
-        Long id = 0L;
+        String id = "0";
 
         bookingService.deleteBookingByIdentifier(id);
     }
@@ -120,7 +110,7 @@ public class BookingServiceTest {
     // Test deleting a booking with an invalid id (does not exist)
     @Test(expected = BookingException.class)
     public void whenDeletingBookingWithInvalidIdentifier_ThenThrowBookingException() {
-        Long id = 453L;
+        String id = "453";
 
         bookingService.deleteBookingByIdentifier(id);
     }

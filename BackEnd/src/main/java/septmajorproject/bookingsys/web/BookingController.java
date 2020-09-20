@@ -1,56 +1,40 @@
 package septmajorproject.bookingsys.web;
 
-import lombok.RequiredArgsConstructor;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import septmajorproject.bookingsys.model.Booking;
-import septmajorproject.bookingsys.model.ServiceType;
-import septmajorproject.bookingsys.model.dto.BookingDto;
-import septmajorproject.bookingsys.model.dto.BookingMapper;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.service.BookingService;
 import septmajorproject.bookingsys.service.CustomerService;
 import septmajorproject.bookingsys.service.EmployeeService;
-import septmajorproject.bookingsys.service.ServiceTypeService;
-import septmajorproject.bookingsys.web.request.NewBookingCommand;
 
 import javax.validation.Valid;
 import java.sql.Time;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.toList;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
-@RequiredArgsConstructor
 @RestController
 @CrossOrigin
 @RequestMapping("/api/booking")
 public class BookingController {
     //TODO: Add functionality for communication between frontend and backend.
 
-    private final BookingService bookingService;
-    private final EmployeeService employeeService;
-    private final CustomerService customerService;
-    private final ServiceTypeService serviceTypeService;
+    @Autowired
+    private BookingService bookingService;
+    @Autowired
+    private EmployeeService employeeService;
+    @Autowired
+    private CustomerService customerService;
 
     @PostMapping("")
     public ResponseEntity<?> createNewBooking(@Valid @RequestBody Booking booking, BindingResult result) {
@@ -61,76 +45,82 @@ public class BookingController {
 
         Booking booking1 = bookingService.saveOrUpdateBooking(booking);
 
-        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        return new ResponseEntity<Booking>(booking, HttpStatus.CREATED);
+
     }
 
     @GetMapping("/all")
-    public List<BookingDto> all(
-        @RequestParam(name = "date", required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date date,
-        @RequestParam(name = "serviceNo", required = false) String serviceNo
-    ) {
-        return bookingService.getBookings(date, serviceNo).stream()
-            .map(BookingMapper.INSTANCE::bookingToBookingDto)
-            .collect(toList());
+    public List<Booking> all() {
+        return bookingService.getAll();
+
     }
 
     @GetMapping("/{bookingId}")
-    public ResponseEntity<?> findBookingById(@PathVariable Long bookingId) {
+    public ResponseEntity<?> findBookingById(@PathVariable String bookingId) {
         Booking booking = bookingService.findBookingByIdentificationNumber(bookingId);
 
         return new ResponseEntity<>(booking, HttpStatus.OK);
     }
 
     @DeleteMapping("/{bookingId}")
-    public ResponseEntity<?> deleteBookingById(@PathVariable Long bookingId) {
+    public ResponseEntity<?> deleteBookingById(@PathVariable String bookingId) {
         bookingService.deleteBookingByIdentifier(bookingId);
-        return new ResponseEntity<>("Booking with ID: " + bookingId + " was deleted", HttpStatus.OK);
+        return new ResponseEntity<String>("Booking with ID: " + bookingId + " was deleted", HttpStatus.OK);
     }
 
-    @PostMapping("/newBooking")
+    @GetMapping("/tester")
+    public Booking test() {
+        Time time = new Time(12,30,0);
+        Date date = new Date(2020,8,27);
+
+        Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
+        Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
+
+        Booking booking = new Booking(date, time, emp, cust);
+
+        customerService.saveOrUpdateCustomer(cust);
+        employeeService.saveOrUpdateEmployee(emp);
+        bookingService.saveOrUpdateBooking(booking);
+
+        return booking;
+
+    }
+
+    @PostMapping("/newBooking/{time}/{date}")
     @ResponseBody
-    public ResponseEntity<?> createNewBooking(@RequestBody NewBookingCommand booking) {
-        Employee emp = employeeService.findByEmployeeIdentifier(booking.getEmployeeIdentifier());
-        Customer cust = customerService.findCustomerByIdentificatioNumber(booking.getCustomerIdentifier());
-        ServiceType serviceType = serviceTypeService.findByServiceNo(booking.getServiceNo());
-        Booking newBooking = new Booking(booking.getRosterDate(), booking.getRosterTime(), emp, cust, serviceType);
+    public ResponseEntity<?> createNewBooking(@RequestBody Map<String, String> map,
+                                              @PathVariable @JsonFormat(pattern = "HH:mm:ss") Time time, @PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") Date date,
+                                              BindingResult result)
+    {
+        Map<String, String> errorMap = new HashMap<>();
+        for (FieldError error : result.getFieldErrors()) {
+            return new ResponseEntity<List<FieldError>>(result.getFieldErrors(), HttpStatus.BAD_REQUEST);
+        }
+        String employeeId = map.get("employeeId");
+        String customerId = map.get("customerId");
+        Employee emp= employeeService.findByEmployeeIdentifier(employeeId);
+        Customer cust = customerService.findCustomerByIdentificatioNumber(customerId);
+        Booking newBooking = new Booking(date, time, emp, cust);
         bookingService.saveOrUpdateBooking(newBooking);
-        return new ResponseEntity<>("New Booking Created", HttpStatus.OK);
+        return new ResponseEntity<String>("New Booking Created", HttpStatus.OK);
     }
 
     @GetMapping("/{date}/{employeeId}")
-    public List<Map<String, String>> getBookingsByTimesByDateAndEmployee(@PathVariable @DateTimeFormat(pattern = "yyyy-MM-dd") Date date, @PathVariable String employeeId) {
+    public List<Map<String,String>> getBookingsByTimesByDateAndEmployee(@PathVariable @DateTimeFormat(pattern = "yyyy-mm-dd") Date date, @PathVariable String employeeId)
+    {
         Employee emp = employeeService.findByEmployeeIdentifier(employeeId);
-        List<Booking> bookings = bookingService.findAllByDateAndEmployee(emp, date);
+        List<Booking> bookings = bookingService.findAllByDateAndEmployee(emp,date);
         List<Map<String, String>> bookingTimes = new ArrayList<Map<String, String>>();
-        for (Booking booking : bookings) {
-            Map<String, String> map = new HashMap<String, String>();
+        for(Booking booking: bookings)
+        {
+            Map<String, String> map = new HashMap<String,String>();
             Time time = booking.getRosterTime();
-            String format = time.getHours() + ":00";
-            map.put("time", format);
+            String format = time.getHours()+":00";
+            map.put("time",format);
             bookingTimes.add(map);
         }
         return bookingTimes;
-    }
 
-
-    @GetMapping("/employee/{employeeId}")
-    public List<BookingDto> getBookingsForEmployee(@PathVariable("employeeId") Long employeeId) {
-        return bookingService.getBookingsForEmployee(employeeId).stream()
-            .map(BookingMapper.INSTANCE::bookingToBookingDto)
-            .collect(toList());
-    }
-
-    @GetMapping("/customer/{customerId}")
-    public List<BookingDto> getBookingsForCustomer(@PathVariable("customerId") Long customerId) {
-        return bookingService.getBookingsForCustomer(customerId).stream()
-            .map(BookingMapper.INSTANCE::bookingToBookingDto)
-            .collect(toList());
-    }
-
-    @PostMapping("/{bookingId}/complete")
-    public void completeBooking(@PathVariable("bookingId") Long bookingId) {
-        bookingService.completeBooking(bookingId);
     }
 
 }

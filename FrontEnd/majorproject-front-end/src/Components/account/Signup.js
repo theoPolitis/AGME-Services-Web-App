@@ -131,7 +131,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="text" name="phoneNumber" pattern="[0-9]*" title="please only use numbers in the phonenumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
+                            <input type="text" name="phoneNumber" placeholder="Phone Number" value={this.state.phoneNumber} onChange={this.handleChange} required/>
                         </div>
                     </div>
 

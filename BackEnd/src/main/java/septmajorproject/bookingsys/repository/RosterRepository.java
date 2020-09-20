@@ -13,7 +13,7 @@ public interface RosterRepository extends JpaRepository<Roster, Long> {
     List<Roster> findAllByEmployee(Employee employee);
 
     @Override
-        //returns all rosters
+    //returns all rosters
     List<Roster> findAll();
 
     @Override

@@ -1,27 +1,17 @@
 package septmajorproject.bookingsys.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
-import lombok.Data;
+import com.fasterxml.jackson.annotation.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.util.Date;
 
-@Data
 @Entity
 @JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id"
+        generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id"
 )
 @Table(name = "BOOKING")
 /**
@@ -41,7 +31,7 @@ public class Booking {
     //many to one connection initialization for Employee table
     @ManyToOne
     @NotNull(message = "Employee required")
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
 
     //many to one connection initialization for Customer table
@@ -50,38 +40,117 @@ public class Booking {
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
 
-    @ManyToOne
-    @JoinColumn(name = "service_type_id", nullable = false)
-    private ServiceType serviceType;
-
     @NotNull(message = "Please attach a date")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date rosterDate;
 
     @NotNull(message = "Please attach a time")
     @JsonFormat(pattern = "HH:mm:ss")
     private Time rosterTime;
 
-    @Column(name = "completed", nullable = false)
-    private boolean completed = Boolean.FALSE;
-
     public Booking() {
     }
 
     /**
      * Constructor
-     *
-     * @param date     : Date table entry
-     * @param time     : Time table entry
+     * @param date : Date table entry
+     * @param time : Time table entry
      * @param employee : Employee table entry
      * @param customer : customer table entry
      */
-    public Booking(Date date, Time time, Employee employee, Customer customer, ServiceType serviceType) {
+    public Booking(Date date, Time time, Employee employee, Customer customer) {
         this.employee = employee;
         this.customer = customer;
         this.rosterDate = date;
         this.rosterTime = time;
-        this.serviceType = serviceType;
     }
 
+    /**
+     * get id
+     * @return id
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * get employee
+     * @return employee
+     */
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    /**
+     * get customer
+     * @return customer
+     */
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    /**
+     * get rosterDate
+     * @return rosterDate
+     */
+    public Date getRosterDate() {
+        return rosterDate;
+    }
+
+    /**
+     * get rosterTIme
+     * @return rosterTIme
+     */
+    public Time getRosterTime() {
+        return rosterTime;
+    }
+
+
+    /**
+     * set employee to the given object of employee
+     * @param employee: employee object
+     */
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    /**
+     * set customer to the given object of customer
+     * @param customer: customer object
+     */
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    /**
+     * set roster date to the given date object
+     * @param rosterDate: customer object
+     */
+    public void setRosterDate(Date rosterDate) {
+        this.rosterDate = rosterDate;
+    }
+
+    /**
+     * set roster time to the given time object
+     * @param rosterTime: customer object
+     */
+    public void setRosterTime(Time rosterTime) {
+        this.rosterTime = rosterTime;
+    }
+
+//    /**
+//     * Booking table composite key set function
+//     * @param bookingPK: booking table composite key
+//     */
+//    public void setBookingPK(BookingPK bookingPK) {
+//        this.bookingPK = bookingPK;
+//    }
+//
+//    /**
+//     * get the booking table compostie key
+//     * @return composite key
+//     */
+//    public BookingPK getBookingPK() {
+//        return bookingPK;
+//    }
 }

@@ -111,9 +111,7 @@ class App extends React.Component {
             path="/customer"
             render={(props) => (
               <Customer {...props} 
-                        loggedInStatus={this.state.loggedInStatus}
-                        userAuth={this.state.user} 
-                        customer={this.state.customer}/>
+                        loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
