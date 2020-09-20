@@ -38,13 +38,13 @@ class Booking extends Component {
 
   handleSubmit = (event) => {
     var postData = {};
-    postData["employeeId"] = this.state.selectedEmployee;
-    postData["customerId"] = this.props.user.identificationNumber;
+    postData["employeeIdentifier"] = this.state.selectedEmployee;
+    postData["customerIdentifier"] = this.props.user.identificationNumber;
+    postData["serviceNo"] = this.state.selectedService;
+    postData["rosterTime"] = this.state.selectedTime;
+    postData["rosterDate"] = this.state.selectedDate;
     Axios.post(
-      "http://localhost:8080/api/booking/newBooking/" +
-        this.state.selectedTime +
-        "/" +
-        this.state.selectedDate,
+      "http://localhost:8080/api/booking/newBooking",
       postData
     )
       .then((res) => {
