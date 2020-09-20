@@ -17,7 +17,7 @@ beforeEach(() => {
   axios.get.mockImplementation((url) => {
     var baseUrl = "http://localhost:8080/api";
     switch (url) {
-      case baseUrl + "/customer/1TP/":
+      case baseUrl + "/employee/E1234/":
         return Promise.resolve({
           data: [
             {
@@ -36,6 +36,11 @@ beforeEach(() => {
               bookingList: [],
               admin: false,
             },
+          ],
+        });
+      case baseUrl + "/employee/E2341/":
+        return Promise.resolve({
+          data: [
             {
               employeeId: 8,
               employeeIdentifier: "E2341",
@@ -55,5 +60,128 @@ beforeEach(() => {
           ],
         });
     }
+  });
+});
+
+describe("<Employee /> test for Employee.js and it's components", () => {
+  //do the employee testing here
+  it("Testing the firstName", async () => {
+    const auth = [
+      {
+        firstName: "Alex",
+        Address: "10 mongol street, eliot",
+        email: "alexchan@email.com",
+        lastName: "chan",
+        phoneNumber: "0405811815",
+        userName: "Alex",
+      },
+    ];
+
+    const wrapper = shallow(<Employee userAuth={auth} />);
+    const instance = wrapper.instance();
+
+    var data = await wrapper.instance().componentDidMount();
+    wrapper.find('input[name="firstname"]').equals("change", {
+      target: {
+        name: "firstname",
+        value: "Alex",
+      },
+    });
+  });
+
+  it("Testing the lastName", async () => {
+    const auth = [
+      {
+        firstName: "Alex",
+        Address: "10 mongol street, eliot",
+        email: "alexchan@email.com",
+        lastName: "chan",
+        phoneNumber: "0405811815",
+        userName: "Alex",
+      },
+    ];
+
+    const wrapper = shallow(<Employee userAuth={auth} />);
+    const instance = wrapper.instance();
+
+    var data = await wrapper.instance().componentDidMount();
+    wrapper.find('input[name="lastname"]').equals("change", {
+      target: {
+        name: "lastname",
+        value: "chan",
+      },
+    });
+  });
+
+  it("Testing the email", async () => {
+    const auth = [
+      {
+        firstName: "Alex",
+        Address: "10 mongol street, eliot",
+        email: "alexchan@email.com",
+        lastName: "chan",
+        phoneNumber: "0405811815",
+        userName: "Alex",
+      },
+    ];
+
+    const wrapper = shallow(<Employee userAuth={auth} />);
+    const instance = wrapper.instance();
+
+    var data = await wrapper.instance().componentDidMount();
+    wrapper.find('input[name="email"]').equals("change", {
+      target: {
+        name: "email",
+        value: "alexchan@email.com",
+      },
+    });
+  });
+
+  it("Testing the address", async () => {
+    const auth = [
+      {
+        firstName: "Alex",
+        Address: "10 mongol street, eliot",
+        email: "alexchan@email.com",
+        lastName: "chan",
+        phoneNumber: "0405811815",
+        userName: "Alex",
+      },
+    ];
+
+    const wrapper = shallow(<Employee userAuth={auth} />);
+    const instance = wrapper.instance();
+
+    var data = await wrapper.instance().componentDidMount();
+    wrapper.find('input[name="address"]').equals("change", {
+      target: {
+        name: "address",
+        value: "10 mongol street, eliot",
+      },
+    });
+  });
+
+  it("Testing the mobilenumber", async () => {
+    const auth = [
+      {
+        firstName: "Alex",
+        Address: "10 mongol street, eliot",
+        email: "alexchan@email.com",
+        lastName: "chan",
+        phoneNumber: "0405811815",
+        userName: "Alex",
+      },
+    ];
+
+    const wrapper = shallow(<Employee userAuth={auth} />);
+    const instance = wrapper.instance();
+
+    var data = await wrapper.instance().componentDidMount();
+    wrapper.find('input[name="mobilenumber"]').equals("change", {
+      target: {
+        name: "mobilenumber",
+        value: "0405811815",
+      },
+    });
   });
 });

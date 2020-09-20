@@ -22,11 +22,11 @@ class Employee extends Component {
   }
 
   reloadState() {
-    Axios.get("http://localhost:8080/api/serviceType/all", {}).then((res) => {
-      this.setState({ services: res.data });
-    });
-
     if (this.props.loggedInStatus === "LOGGED_IN") {
+      Axios.get("http://localhost:8080/api/serviceType/all", {}).then((res) => {
+        this.setState({ services: res.data });
+      });
+
       Axios.get(this.getBookingUrl(), {})
         .then((res) => {
           this.setState({ bookings: res.data });
@@ -330,7 +330,7 @@ class Employee extends Component {
                 <div className="col-2">
                   <input
                     type="text"
-                    name="username"
+                    name="mobilenumber"
                     value={this.props.userAuth.phoneNumber}
                     readOnly
                   />
