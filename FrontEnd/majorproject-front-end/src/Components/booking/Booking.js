@@ -23,6 +23,7 @@ class Booking extends Component {
             dateDisabled: true,
             timeDisabled:true,
         }
+        //retrieves all front end services
         Axios.get("http://localhost:8080/api/serviceType/all",{}).then(
             res => {this.setState({services:res.data})
        }
@@ -32,8 +33,14 @@ class Booking extends Component {
         })
     }
 
+    componentDidMount =  () => 
+    {
+
+    }
+
     handleSubmit = (event) =>
     {
+<<<<<<< HEAD
         var postData = {
             employeeIdentifier: this.state.selectedEmployee,
             customerIdentifier: this.props.user.identificationNumber,
@@ -42,6 +49,13 @@ class Booking extends Component {
             serviceNo: this.state.selectedService
         };
         Axios.post("http://localhost:8080/api/booking/newBooking", postData).then(res =>
+=======
+        var postData = {}
+        postData["employeeId"] = this.state.selectedEmployee
+        postData["customerId"] = this.props.user.identificationNumber
+        Axios.post("http://localhost:8080/api/booking/newBooking/"+this.state.selectedTime+"/"+this.state.selectedDate,
+        postData).then(res =>
+>>>>>>> developer
             {alert(res.data)}).catch(error =>{
                 console.log(error.response.status)
                 alert("An error occured, you booking was not created")
@@ -59,7 +73,6 @@ class Booking extends Component {
 
     handleServiceSelection = (event) =>
     {
-        console.log("props : " + this.props.user.identificationNumber)
         //Set the state of the service
         this.setState({selectedService: event.target.value})
         //Checking if the selected option is not the "none" attribute
@@ -94,7 +107,6 @@ class Booking extends Component {
     handleEmployeeSelection = (event) =>
     {
         this.setState({selectedEmployee: event.target.value})
-        console.log(event.target.value)
         if(event.target.value !== "none")
         {
             this.setState({dateDisabled: false})
@@ -119,7 +131,6 @@ class Booking extends Component {
             var year = ''+date.getFullYear();
             var month = '' + (date.getMonth() + 1);
             var day = ''+date.getDate();
-            console.log(month.length)
             if(month.length < 2)
             {
                 month = "0" + month
@@ -130,7 +141,6 @@ class Booking extends Component {
             }
             var formattedDate = year + "-" + month + "-"+day
             this.setState({selectedDate: formattedDate})
-            console.log(formattedDate)
             var startTime = 6
             var endTime = 18
             var times = []
@@ -141,11 +151,9 @@ class Booking extends Component {
             Axios.get("http://localhost:8080/api/booking/"+formattedDate + "/" + this.state.selectedEmployee,{}).then(
                 res => {this.setState({alreadyBooked: res.data},
                     function () {var booked = res.data
-                        console.log(booked.length)
                         for(i = 0; i < booked.length; i++)
                         {
                             times = times.filter(item => item !== booked[i].time)
-                            console.log(booked[i].time)
                         }
                         this.setState({bookingTimes: times})
                     }
@@ -168,7 +176,6 @@ class Booking extends Component {
 
     handleTimeSelection = (event) =>
     {
-        console.log(event.target.value)
         //Make sure the selected value is a relevant one
         if(event.target.value !== "none")
         {
@@ -180,7 +187,6 @@ class Booking extends Component {
     }
 
     render() {
-        console.log(this.props.loggedInStatus)
         if(this.props.loggedInStatus === "LOGGED_IN")
         {
             return (
@@ -196,7 +202,7 @@ class Booking extends Component {
                             </label>
                             </div>
                             <div className="col-2">
-                            <select  name = "ServiceNo" value={this.state.value} onChange={this.handleServiceSelection}>
+                            <select  name = "ServiceNo" className = "ServiceNo" value={this.state.value} onChange={this.handleServiceSelection}>
                                 <option value = "none">Select an option:</option>
                                 {this.state.services.map((service) => (<option value = {service.serviceNo}>{service.serviceName}</option>))}
                             </select>
@@ -210,7 +216,7 @@ class Booking extends Component {
                             </label>
                             </div>
                             <div className="col-2">
-                            <select  name = "employeeNo" value={this.state.value} onChange={this.handleEmployeeSelection} disabled = {this.state.employeeDisabled}>
+                            <select  name = "employeeNo" className = "employeeNo" value={this.state.value} onChange={this.handleEmployeeSelection} disabled = {this.state.employeeDisabled}>
                                 <option value = "none">Select an option</option>
                                     {this.state.employees.map((employee) => (<option value = {employee.employeeIdentifier}>{employee.firstName}</option>))}
                             </select>
@@ -224,7 +230,7 @@ class Booking extends Component {
                             </label>
                             </div>
                             <div className="col-2" >
-                            <input type="date" disabled = {this.state.dateDisabled} onChange={this.handleDateSelection}></input>
+                            <input type="date" className="date" disabled = {this.state.dateDisabled} onChange={this.handleDateSelection}></input>
                             </div>
                             
 
@@ -238,7 +244,7 @@ class Booking extends Component {
                                 </label>
                             </div>
                             <div className="col-2">
-                            <select type="text" value = {this.state.value} onChange={this.handleTimeSelection}disabled = {this.state.timeDisabled}>
+                            <select className="time" value = {this.state.value} onChange={this.handleTimeSelection}disabled = {this.state.timeDisabled}>
                                 <option value = "none">Select an Option</option>
                                     {this.state.bookingTimes.map((time) => (<option value = {time}>{time}</option>))}
                             </select>
