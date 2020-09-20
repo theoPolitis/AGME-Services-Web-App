@@ -76,28 +76,33 @@ beforeEach(() => {
   });
 });
 
-const auth = [
-  {
-    firstName: "Alocious",
-    Address: "20 mongol street, eliot",
-    email: "alichan@email.com",
-    lastName: "Kronos",
-    phoneNumber: "0405811816",
-    userName: "Alocious",
-  },
-];
+// const auth = [
+//   {
+//     firstName: "Alocious",
+//     Address: "20 mongol street, eliot",
+//     email: "alichan@email.com",
+//     lastName: "Kronos",
+//     phoneNumber: "0405811816",
+//     userName: "Alocious",
+//   },
+// ];
 
 describe("<Customer /> test for Customer.js and it's components", () => {
   it("Testing user firstName", async () => {
-    const wrapper = shallow(<Customer />);
-    wrapper.setProps({
-      loggedInStatus: "LOGGED_IN",
-      firstName: "Alocious",
-      userAuth: auth,
-    });
+    const auth = [{
+        firstName: "Alocious",
+        Address: "20 mongol street, eliot",
+        email: "alichan@email.com",
+        lastName: "Kronos",
+        phoneNumber: "0405811816",
+        userName: "Alocious",
+      }];
+
+    const wrapper = shallow(<Customer userAuth={auth}/>);
+    const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[type="text"]').equals("change", {
+    wrapper.find('input[name="firstName"]').equals("change", {
       target: {
         name: "firstName",
         value: "Alocious",
