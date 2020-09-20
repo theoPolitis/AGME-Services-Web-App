@@ -12,9 +12,11 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
+import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.repository.BookingRepository;
 import septmajorproject.bookingsys.repository.CustomerRepository;
 import septmajorproject.bookingsys.repository.EmployeeRepository;
+import septmajorproject.bookingsys.repository.ServiceTypeRepository;
 
 import javax.xml.validation.Validator;
 import java.sql.Time;
@@ -35,6 +37,9 @@ public class BookingRepositoryIntegrationTest {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private ServiceTypeRepository serviceTypeRepository;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -68,13 +73,11 @@ public class BookingRepositoryIntegrationTest {
         employeeRepository.save(emp);
         employeeRepository.save(emp2);
 
-        Booking booking = new Booking(date, time, emp, cust);
-        Booking booking2 = new Booking(date2, time2, emp, cust);
-        Booking booking3 = new Booking(date3, time3, emp, cust);
-
-//        bookingRepository.save(booking);
-//        bookingRepository.save(booking2);
-//        bookingRepository.save(booking3);
+        ServiceType serviceType = new ServiceType("1", "haircut");
+        serviceTypeRepository.save(serviceType);
+        Booking booking = new Booking(date, time, emp, cust, serviceType);
+        Booking booking2 = new Booking(date2, time2, emp, cust, serviceType);
+        Booking booking3 = new Booking(date3, time3, emp, cust, serviceType);
 
         testManager.persist(booking);
         testManager.persist(booking2);

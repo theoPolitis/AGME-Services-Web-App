@@ -11,6 +11,7 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import septmajorproject.bookingsys.model.Booking;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
+import septmajorproject.bookingsys.model.ServiceType;
 
 import javax.validation.ConstraintViolation;
 import javax.xml.validation.Validator;
@@ -98,7 +99,8 @@ public class BookingIntegrationTest {
     // Testing a booking with valid customer, employee and booking data
     @Test
     public void whenInsertBookingWithValidValues_thenReturnTrue() {
-        Booking booking = new Booking(date, time, emp, cust);
+        ServiceType serviceType = new ServiceType("1", "haircut");
+        Booking booking = new Booking(date, time, emp, cust, serviceType);
 
         Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
 
