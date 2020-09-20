@@ -10,7 +10,7 @@ import Login from "./Components/account/Login.js";
 import StaffLogin from "./Components/account/StaffLogin";
 import Booking from "./Components/booking/Booking";
 import AboutUs from "./Components/aboutUs/AboutUs"
-import Customer from "./Components/Customer/Customer";
+import Customer from "./Components/customer/Customer";
 class App extends React.Component {
   constructor() {
     super();
