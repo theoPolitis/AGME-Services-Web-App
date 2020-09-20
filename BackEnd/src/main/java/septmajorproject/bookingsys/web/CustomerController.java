@@ -18,10 +18,11 @@ import septmajorproject.bookingsys.service.MapValidationErrorService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
-@RequestMapping("/api/customer")
 @CrossOrigin
+@RequestMapping("/api/customer")
 public class CustomerController {
     @Autowired
     private CustomerService customerService;
@@ -40,6 +41,19 @@ public class CustomerController {
         Customer newEmployee = customerService.saveOrUpdateCustomer(customer);
 
         return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity<?> updateEmployee(@PathVariable String customerId, @RequestBody Map<String, String> userDataMap, BindingResult result) {
+        ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);
+
+        if(errorMap != null){
+            return errorMap;
+        }
+
+        customerService.updateExistingCustomer(customerId, userDataMap);
+
+        return new ResponseEntity<>(userDataMap,HttpStatus.OK);
     }
 
 

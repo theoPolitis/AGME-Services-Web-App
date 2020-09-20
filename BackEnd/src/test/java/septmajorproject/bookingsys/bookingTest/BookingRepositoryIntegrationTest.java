@@ -176,7 +176,7 @@ public class BookingRepositoryIntegrationTest {
 
         System.out.println(output.size());
 
-        assertThat(output.size() == 3);
+        assert(output.size() == 3);
 
     }
 }
