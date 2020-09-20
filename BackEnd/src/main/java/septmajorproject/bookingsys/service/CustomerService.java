@@ -14,9 +14,9 @@ public class CustomerService {
     private CustomerRepository customerRepository;
 
     public Customer saveOrUpdateCustomer(Customer customer) {
-        try {
+        try{
             customer.setUsername(customer.getUsername());
-        } catch (Exception e) {
+        }catch(Exception e){
 
         }
 
@@ -31,50 +31,51 @@ public class CustomerService {
     public Customer findCustomerByIdentificatioNumber(String id) {
         Customer found = customerRepository.findByIdentificationNumber(id);
         System.out.println(id);
-        if (found == null) {
+        if(found == null){
             throw new CustomerException("Customer: " + id + " does not exist");
         }
 
         return found;
     }
 
-    public Customer findCustomerByEmail(String email) {
+    public Customer findCustomerByEmail(String email){
         Customer found = customerRepository.findByEmail(email);
 
-        if (found == null) {
+        if(found == null){
             throw new CustomerException("Customer email: " + email + " does not exist");
         }
 
         return found;
     }
 
-    public Customer findCustomerByUserName(String username) {
+    public Customer findCustomerByUserName(String username){
         Customer found = customerRepository.findByUsername(username);
 
-        if (found == null) {
+        if(found == null){
             throw new CustomerException("Customer username: " + username + " does not exist");
         }
 
         return found;
     }
 
-    public Customer findByUsernameAndPassword(String username, String password) {
+    public Customer findByUsernameAndPassword(String username, String password){
         Customer found = customerRepository.findByUsernameAndPassword(username, password);
 
-        if (found == null) {
+        if(found == null){
             throw new CustomerException("Customer does not exist");
         }
 
         return found;
-    }
-
-    public List<Customer> findAllCustomers() {
+}
+    public List<Customer> findAllCustomers()
+    {
         return customerRepository.findAll();
     }
 
     public void deleteCustomerByIdentifier(String customerId) {
         Customer found = customerRepository.findByIdentificationNumber(customerId);
-        if (found == null) {
+        if(found == null)
+        {
             throw new CustomerException("Customer Identifier " + customerId.toUpperCase() + "This Employee does not exist");
         }
         customerRepository.delete(found);

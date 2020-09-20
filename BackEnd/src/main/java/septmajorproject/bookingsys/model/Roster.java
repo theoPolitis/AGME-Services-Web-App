@@ -2,20 +2,13 @@ package septmajorproject.bookingsys.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Time;
 import java.util.Date;
 
 @Entity
-@Table(name = "ROSTER")
+@Table(name="ROSTER")
 /**
  * Roster entity in the table
  */
@@ -23,17 +16,17 @@ public class Roster {
     //many to one connection initialization for Employee table
     @ManyToOne
     @NotNull(message = "Employee required")
-    @JoinColumn(name = "employee_id", nullable = false)
+    @JoinColumn(name="employee_id", nullable=false)
     private Employee employee;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name="id")
     //provides a unique id for each roster that is generated
     private long id;
 
     @NotNull(message = "Date cannot be null")
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-mm-dd")
     private Date rosterDate;
 
     @NotNull(message = "Time cannot be null")
@@ -43,13 +36,12 @@ public class Roster {
     /**
      * Default constructor
      */
-    public Roster() {
+    public Roster(){
 
     }
 
     /**
      * constructor
-     *
      * @param employee : employee
      */
     public Roster(Employee employee, Date rosterDate, Time rosterTime) {
@@ -57,7 +49,6 @@ public class Roster {
         this.rosterDate = rosterDate;
         this.rosterTime = rosterTime;
     }
-
 
     public long getId() {
         return id;
@@ -85,7 +76,6 @@ public class Roster {
 
     /**
      * set employee
-     *
      * @param employee : employee
      */
     public void setEmployee(Employee employee) {
@@ -94,7 +84,6 @@ public class Roster {
 
     /**
      * get employee
-     *
      * @return employee
      */
     public Employee getEmployee() {

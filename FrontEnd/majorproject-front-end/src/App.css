@@ -72,27 +72,3 @@ body {
     transform: rotate(360deg);
   }
 }
-
-
-table.bookings {
-  width: 100%;
-}
-
-table.bookings td {
-  padding: 5px 2px;
-}
-table.bookings thead tr td {
-  border-bottom: white 1px solid;
-}
-table.bookings tbody tr:hover {
-  background-color: #2197DA;
-}
-
-.bookings .button {
-  background-color: #2197DA;
-  padding: 5px 12px;
-}
-.bookings .button:hover {
-  cursor: pointer;
-  background-color: rgb(250, 34, 34);
-}

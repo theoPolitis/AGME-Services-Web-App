@@ -30,6 +30,18 @@
   overflow: auto;
 }
 
+
+.cancelBtn {
+  position: relative;
+  width: 101px;
+  height: 39px;
+  left: 658px;
+  top: 370px;
+
+  background: #2197da;
+  border-radius: 15px;
+}
+
 p {
   color: black;
 }
@@ -41,23 +53,22 @@ p {
   left: 554px;
   top: 400px;
 
-
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
   font-size: 18px;
   line-height: 22px;
-  text-align: center;
-
   /* identical to box height */
 
   color: #ffffff;
 }
 
 .FormAttribute {
-  margin: 5px auto;
+  position: relative;
   width: 400px;
   height: 22px;
+  left: 500px;
+  top: 475px;
 
 
   font-family: Lato;
@@ -78,4 +89,19 @@ input {
 .UpdateButton {
   background: #2197da;
   border-radius: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 20px;
+  padding: 10px 20px;
+  color: #fff;
+}
+
+.UpdateButton:hover {
+  background: #1770a3;
+  transition: 0.4s;
+}
+
+.left {
+  margin-left: 10%;
+
 }

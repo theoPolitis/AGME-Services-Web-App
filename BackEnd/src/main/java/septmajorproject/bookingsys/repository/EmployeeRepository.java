@@ -1,6 +1,7 @@
 package septmajorproject.bookingsys.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import septmajorproject.bookingsys.model.Employee;
 
@@ -10,7 +11,7 @@ import java.util.List;
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     @Override
-        //returns all employees
+    //returns all employees
     List<Employee> findAll();
 
     //returns employee by unique username

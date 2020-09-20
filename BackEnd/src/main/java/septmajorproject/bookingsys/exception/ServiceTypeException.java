@@ -5,9 +5,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 
-public class ServiceTypeException extends RuntimeException {
+public class ServiceTypeException extends RuntimeException{
 
-    public ServiceTypeException(String message) {
+    public ServiceTypeException(String message){
         super(message);
     }
 }
