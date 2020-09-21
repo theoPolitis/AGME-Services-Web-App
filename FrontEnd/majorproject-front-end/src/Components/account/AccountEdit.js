@@ -48,7 +48,7 @@ class AccountEdit extends Component {
         if (this.props.loggedInStatus === "NOT_LOGGED_IN") {
             return(
                 <div className="container">
-                    <h1>You must be logged in to use this feature</h1>
+                    <h1 name="noUser" className="noUser">You must be logged in to use this feature</h1>
                 </div>
             );
         } else {
