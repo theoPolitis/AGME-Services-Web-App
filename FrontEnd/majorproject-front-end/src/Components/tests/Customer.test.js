@@ -70,17 +70,6 @@ beforeEach(() => {
   });
 });
 
-// const auth = [
-//   {
-//     firstName: "Alocious",
-//     Address: "20 mongol street, eliot",
-//     email: "alichan@email.com",
-//     lastName: "Kronos",
-//     phoneNumber: "0405811816",
-//     userName: "Alocious",
-//   },
-// ];
-
 describe("<Customer /> test for Customer.js and it's components", () => {
   it("Testing user firstName", async () => {
     const auth = [
@@ -98,7 +87,8 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[name="firstName"]').equals("change", {
+
+    wrapper.find('label[name="firstName"]').equals("change", {
       target: {
         name: "firstName",
         value: "Alocious",
@@ -122,7 +112,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[name="lastName"]').equals("change", {
+    wrapper.find('label[name="lastName"]').equals("change", {
       target: {
         name: "lastName",
         value: "Kronos",
@@ -146,7 +136,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[name="address"]').equals("change", {
+    wrapper.find('label[name="address"]').equals("change", {
       target: {
         name: "address",
         value: "20 mongol street, eliot",
@@ -170,7 +160,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[name="email"]').equals("change", {
+    wrapper.find('label[name="email"]').equals("change", {
       target: {
         name: "email",
         value: "alichan@email.com",
@@ -194,7 +184,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[name="mobileNumber"]').equals("change", {
+    wrapper.find('label[name="mobileNumber"]').equals("change", {
       target: {
         name: "mobileNumber",
         value: "0405811816",
@@ -218,7 +208,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     const instance = wrapper.instance();
 
     var data = await wrapper.instance().componentDidMount();
-    wrapper.find('input[name="userName"]').equals("change", {
+    wrapper.find('label[name="userName"]').equals("change", {
       target: {
         name: "userName",
         value: "Alocious",

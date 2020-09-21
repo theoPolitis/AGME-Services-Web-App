@@ -27,6 +27,7 @@ class Customer extends Component {
     this.reloadState();
   }
 
+  //gets the data from the backend 
   reloadState() {
     if (this.props.loggedInStatus === "LOGGED_IN") {
       Axios.get(this.getMyBookingsUrl(), {})
@@ -42,12 +43,14 @@ class Customer extends Component {
     }
   }
 
+  //url for the api for retrivel from the backend
   getMyBookingsUrl() {
     return (
       "http://localhost:8080/api/booking/customer/" + this.props.userAuth.id
     );
   }
 
+  //handles the button data ehrn casncelling a booking
   cancelBooking(bookingId) {
     Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
       .then((res) => {
@@ -116,12 +119,12 @@ class Customer extends Component {
           <div className="container">
           <div className="detailsList">
                   <h1>{this.state.firstName}  {this.state.lastName}</h1>
-                  <span>First Name:  </span><p>{this.state.firstName}</p><br/><br/>
-                  <span>Last Name:  </span><p>{this.state.lastName}</p><br/><br/>
-                  <span>Username:  </span><p>{this.state.userName}</p><br/><br/>
-                  <span>Address:  </span><p>{this.state.address}</p><br/><br/>
-                  <span>Email:  </span><p>{this.state.email}</p><br/><br/>
-                  <span>Phone Number: </span><p>{this.state.mobileNumber}</p>
+                  <span>First Name:  </span><label name='firstName'>{this.state.firstName}</label><br/><br/>
+                  <span>Last Name:  </span><label name='lastName'>{this.state.lastName}</label><br/><br/>
+                  <span>Username:  </span><label name='userName'>{this.state.userName}</label><br/><br/>
+                  <span>Address:  </span><label name='address'>{this.state.address}</label><br/><br/>
+                  <span>Email:  </span><label name='email'>{this.state.email}</label><br/><br/>
+                  <span>Phone Number: </span><label name='mobileNumber'>{this.state.mobileNumber}</label>
             </div>
           </div>
         </main>
