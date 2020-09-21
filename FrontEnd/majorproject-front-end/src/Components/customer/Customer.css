@@ -1,26 +1,10 @@
 .BookingsTitle {
-  position: absolute;
-  width: 137px;
-  height: 29px;
-  left: 630px;
-  top: 178px;
-
-  font-family: Lato;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 24px;
-  line-height: 29px;
-  /* identical to box height */
 
   color: #ffffff;
 }
 
 .Bookings {
-  position: absolute;
-  width: 957px;
-  height: 126px;
-  left: 228px;
-  top: 261px;
+  
 
   /* background: #51778c; */
   background: white;
@@ -34,12 +18,17 @@ p {
   color: black;
 }
 
+.detailsList > span {
+  font-weight: bolder;
+  display: inline;
+}
+
+.detailsList > p {
+  color: #fff;
+  display: inline;
+}
+
 .SpecialInstructions {
-  position: relative;
-  width: 400px;
-  height: 22px;
-  left: 554px;
-  top: 400px;
 
 
   font-family: Lato;
