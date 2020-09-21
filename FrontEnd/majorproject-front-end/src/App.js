@@ -11,6 +11,9 @@ import StaffLogin from "./Components/account/StaffLogin";
 import Booking from "./Components/booking/Booking";
 import AboutUs from "./Components/aboutUs/AboutUs"
 import Customer from "./Components/customer/Customer";
+import AccountEdit from "./Components/account/AccountEdit"
+import PasswordChange from "./Components/account/PasswordChange"
+
 class App extends React.Component {
   constructor() {
     super();
@@ -113,6 +116,24 @@ class App extends React.Component {
                         customer={this.state.customer}/>
             )}
           />
+
+          <Route
+          path="/editDetails"
+          render={(props) => (
+            <AccountEdit {...props} 
+                      loggedInStatus={this.state.loggedInStatus} 
+                      currentCustomer={this.state.user}/>
+          )}
+        />
+
+        <Route
+        path="/changePassword"
+        render={(props) => (
+          <PasswordChange {...props} 
+                    loggedInStatus={this.state.loggedInStatus} 
+                    currentCustomer={this.state.user}/>
+        )}
+      />
 
           <Route
             path="/employee"

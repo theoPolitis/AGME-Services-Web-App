@@ -1,4 +1,6 @@
 import React, { Component } from "react";
+import { Link } from 'react-router-dom';
+
 import "./Customer.css";
 import Axios from "axios";
 
@@ -69,7 +71,11 @@ class Customer extends Component {
     return (
       <body>
         <main>
+          <Link to='/editDetails' className="accountButton">Edit Details</Link>
+          <Link to='/changePassword' className="accountButton">Change Password</Link>
+
           <div className="container">
+
             <h1 className="BookingsTitle"> My Bookings </h1>
             {/* the things should loop here but i have no idea how to do it */}
             <table className="bookings" id="bookings">

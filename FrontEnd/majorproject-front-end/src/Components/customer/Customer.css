@@ -79,3 +79,19 @@ input {
   background: #2197da;
   border-radius: 15px;
 }
+
+.accountButton {
+  background: #2197da;
+  border-radius: 15px;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 20px;
+  padding: 10px 20px;
+  color: #fff;
+  font-size: 18px;
+}
+
+.accountButton:hover {
+  background: #1770a3;
+  transition: 0.4s;
+}

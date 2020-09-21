@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +19,7 @@ import septmajorproject.bookingsys.service.MapValidationErrorService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/customer")
@@ -40,6 +42,19 @@ public class CustomerController {
         Customer newEmployee = customerService.saveOrUpdateCustomer(customer);
 
         return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{customerId}")
+    public ResponseEntity<?> updateEmployee(@PathVariable String customerId, @RequestBody Map<String, String> userDataMap, BindingResult result) {
+        ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);
+
+        if(errorMap != null){
+            return errorMap;
+        }
+
+        customerService.updateExistingCustomer(customerId, userDataMap);
+
+        return new ResponseEntity<>(userDataMap,HttpStatus.OK);
     }
 
 
