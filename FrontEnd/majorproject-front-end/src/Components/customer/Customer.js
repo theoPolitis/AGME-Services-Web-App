@@ -111,74 +111,18 @@ class Customer extends Component {
             <p className="SpecialInstructions">
               *choose a booking and then click on cancel
             </p>
-            <form className="FormAttribute" method="get">
-              <label>
-                First Name:
-                <input
-                  value={this.state.firstName}
-                  type="text"
-                  name="firstName"
-                  size="100"
-                  readOnly
-                  required
-                />
-              </label>
-              <label>
-                Last Name:
-                <input
-                  value={this.state.lastName}
-                  type="text"
-                  name="lastName"
-                  size="100"
-                  readOnly
-                  required
-                />
-              </label>
-              <label>
-                Address:
-                <input
-                  value={this.state.address}
-                  type="text"
-                  name="address"
-                  size="100"
-                  readOnly
-                  required
-                />
-              </label>
-              <label>
-                Email:
-                <input
-                  value={this.state.email}
-                  type="text"
-                  name="email"
-                  size="100"
-                  readOnly
-                  required
-                />
-              </label>
-              <label>
-                Mobile Number:
-                <input
-                  value={this.state.mobileNumber}
-                  type="text"
-                  name="mobileNumber"
-                  size="100"
-                  readOnly
-                  required
-                />
-              </label>
-              <label>
-                User Name:
-                <input
-                  value={this.state.userName}
-                  type="text"
-                  name="userName"
-                  size="100"
-                  readOnly
-                  required
-                />
-              </label>
-            </form>
+
+          </div>
+          <div className="container">
+          <div className="detailsList">
+                  <h1>{this.state.firstName}  {this.state.lastName}</h1>
+                  <span>First Name:  </span><p>{this.state.firstName}</p><br/><br/>
+                  <span>Last Name:  </span><p>{this.state.lastName}</p><br/><br/>
+                  <span>Username:  </span><p>{this.state.userName}</p><br/><br/>
+                  <span>Address:  </span><p>{this.state.address}</p><br/><br/>
+                  <span>Email:  </span><p>{this.state.email}</p><br/><br/>
+                  <span>Phone Number: </span><p>{this.state.mobileNumber}</p>
+            </div>
           </div>
         </main>
       </body>
