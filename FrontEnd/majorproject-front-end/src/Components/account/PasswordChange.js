@@ -13,14 +13,17 @@ class ChangePassword extends Component {
         }
     }
 
+    //Handles when the text fields change
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
     }
 
+    //when the form is submiotted handles the request to the backend
     handleSubmit = (event) => {
         var postData = {}
         postData["password"] = this.state.newPassword;
 
+        //checks the validate fields to make sure confirmPassword and password fields match
         if (this.validatePasswordFields() === "ok") {
             axios.put('http://localhost:8080/api/customer/'+this.state.identificationNumber, 
         postData).then(res => {
@@ -29,6 +32,7 @@ class ChangePassword extends Component {
                 this.props.history.push('/customer')
             } 
 
+            //if there is any error it is caught here
             }).catch(error => {
                 alert("ERROR");
                 console.log(error);
@@ -40,6 +44,7 @@ class ChangePassword extends Component {
         event.preventDefault();
     }
 
+    //metjod for validating the method feilds
     validatePasswordFields() {
         if (this.state.oldPassword === this.props.currentCustomer.password) {
             if (this.state.newPassword === this.state.confirmPassword) {
