@@ -95,4 +95,161 @@ describe("<AccountEdit /> test for AccountEdit.js and it's components", () => {
         expect(wrapper.containsMatchingElement(<h1 name="noUser" className="noUser">You must be logged in to use this feature</h1>)).toEqual(false);
         
     });
+
+    it('First Name change of state check', async () => {
+      let customer;
+      
+      customer = {
+        id: 1,
+        identificationNumber: "1TP",
+        password: "theo",
+        email: "s3661671@student.rmit.edu.au",
+        firstName: "Theo",
+        lastName: "Politis",
+        address: "Something",
+        phoneNumber: "4545574654",
+        username: "Theo",
+        createdDate: "2020-09-19",
+        updatedDate: null
+      }
+
+      const wrapper = shallow(<AccountEdit currentCustomer={customer} />);
+
+      expect(wrapper.state('firstName')).toEqual('Theo')
+  
+      wrapper.find('input[name="firstName"]').simulate('change', {
+          target: {
+              name: 'firstName',
+              value: 'Adam'
+          }
+      });
+  
+      expect(wrapper.state('firstName')).toEqual('Adam')
+  })
+
+  it('Last Name change of state check', async () => {
+    let customer;
+    
+    customer = {
+      id: 1,
+      identificationNumber: "1TP",
+      password: "theo",
+      email: "s3661671@student.rmit.edu.au",
+      firstName: "Theo",
+      lastName: "Politis",
+      address: "Something",
+      phoneNumber: "4545574654",
+      username: "Theo",
+      createdDate: "2020-09-19",
+      updatedDate: null
+    }
+
+    const wrapper = shallow(<AccountEdit currentCustomer={customer} />);
+
+    expect(wrapper.state('lastName')).toEqual('Politis')
+
+    wrapper.find('input[name="lastName"]').simulate('change', {
+        target: {
+            name: 'lastName',
+            value: 'Smith'
+        }
+    });
+
+    expect(wrapper.state('lastName')).toEqual('Smith')
+})
+
+it('Email change of state check', async () => {
+  let customer;
+  
+  customer = {
+    id: 1,
+    identificationNumber: "1TP",
+    password: "theo",
+    email: "s3661671@student.rmit.edu.au",
+    firstName: "Theo",
+    lastName: "Politis",
+    address: "Something",
+    phoneNumber: "4545574654",
+    username: "Theo",
+    createdDate: "2020-09-19",
+    updatedDate: null
+  }
+
+  const wrapper = shallow(<AccountEdit currentCustomer={customer} />);
+
+  expect(wrapper.state('email')).toEqual('s3661671@student.rmit.edu.au')
+
+  wrapper.find('input[name="email"]').simulate('change', {
+      target: {
+          name: 'email',
+          value: 'somethingElse@email.com'
+      }
+  });
+
+  expect(wrapper.state('email')).toEqual('somethingElse@email.com')
+})
+
+it('Phone Number change of state check', async () => {
+  let customer;
+  
+  customer = {
+    id: 1,
+    identificationNumber: "1TP",
+    password: "theo",
+    email: "s3661671@student.rmit.edu.au",
+    firstName: "Theo",
+    lastName: "Politis",
+    address: "Something",
+    phoneNumber: "4545574654",
+    username: "Theo",
+    createdDate: "2020-09-19",
+    updatedDate: null
+  }
+
+  const wrapper = shallow(<AccountEdit currentCustomer={customer} />);
+
+  expect(wrapper.state('phoneNumber')).toEqual('4545574654')
+
+  wrapper.find('input[name="phoneNumber"]').simulate('change', {
+      target: {
+          name: 'phoneNumber',
+          value: '0412112112'
+      }
+  });
+
+  expect(wrapper.state('phoneNumber')).toEqual('0412112112')
+})
+
+it('Address change of state check', async () => {
+  let customer;
+  
+  customer = {
+    id: 1,
+    identificationNumber: "1TP",
+    password: "theo",
+    email: "s3661671@student.rmit.edu.au",
+    firstName: "Theo",
+    lastName: "Politis",
+    address: "Something",
+    phoneNumber: "4545574654",
+    username: "Theo",
+    createdDate: "2020-09-19",
+    updatedDate: null
+  }
+
+  const wrapper = shallow(<AccountEdit currentCustomer={customer} />);
+
+  expect(wrapper.state('address')).toEqual('Something')
+
+  wrapper.find('input[name="address"]').simulate('change', {
+      target: {
+          name: 'address',
+          value: '123 No where street'
+      }
+  });
+
+  expect(wrapper.state('address')).toEqual('123 No where street')
+})
+
+
 });
