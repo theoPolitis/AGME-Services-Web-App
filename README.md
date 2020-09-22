@@ -1,6 +1,6 @@
 # RMIT SEPT 2020 Major Project
 
-# Group 00
+# Group 06
 
 ## Members
 * Politis, Theodore (s3661671)
