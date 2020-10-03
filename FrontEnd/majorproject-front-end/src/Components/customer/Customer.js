@@ -1,9 +1,8 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 import "./Customer.css";
 import Axios from "axios";
-
 
 class Customer extends Component {
   constructor(props) {
@@ -20,6 +19,7 @@ class Customer extends Component {
       newPassword: "",
       bookings: [],
       changedAnyFields: false,
+      cancellableBooking: true,
     };
   }
 
@@ -27,7 +27,7 @@ class Customer extends Component {
     this.reloadState();
   }
 
-  //gets the data from the backend 
+  //gets the data from the backend
   reloadState() {
     if (this.props.loggedInStatus === "LOGGED_IN") {
       Axios.get(this.getMyBookingsUrl(), {})
@@ -64,6 +64,35 @@ class Customer extends Component {
       });
   }
 
+  //only considers upto the month level when disabling the cancel
+  checkBookingStatus(booking) {
+    var currentDateTime = new Date();
+    //split date and time into year,month,day
+    var sqlDate = booking.rosterDate.split(/[- :]/);
+    var sqlTime = booking.rosterTime.split(/[ :]/);
+
+    var bookingDateTime = new Date(
+      sqlDate[0],
+      sqlDate[1], //there is a problem here when i have 10 it is november not october and so on
+      sqlDate[2],
+      sqlTime[0],
+      sqlTime[1],
+      sqlTime[2]
+    );
+
+    if (
+      Math.floor(
+        Math.abs(currentDateTime - bookingDateTime) / (60 * 60 * 24 * 1000)
+      ) > 2
+    ) {
+      this.state.cancellableBooking = true;
+      // this.setState({ cancellableBooking: true });
+    } else {
+      this.state.cancellableBooking = false;
+      // this.setState({ cancellableBooking: false });
+    }
+  }
+
   render() {
     var bookings = this.state.bookings;
 
@@ -74,11 +103,14 @@ class Customer extends Component {
     return (
       <body>
         <main>
-          <Link to='/editDetails' className="accountButton">Edit Details</Link>
-          <Link to='/changePassword' className="accountButton">Change Password</Link>
+          <Link to="/editDetails" className="accountButton">
+            Edit Details
+          </Link>
+          <Link to="/changePassword" className="accountButton">
+            Change Password
+          </Link>
 
           <div className="container">
-
             <h1 className="BookingsTitle"> My Bookings </h1>
             {/* the things should loop here but i have no idea how to do it */}
             <table className="bookings" id="bookings">
@@ -100,36 +132,55 @@ class Customer extends Component {
                     <td>{booking.serviceName}</td>
                     <td>{booking.employee.firstName}</td>
                     <td>
-                      <span
+                      {this.checkBookingStatus(booking)}
+                      <button
+                        disabled={!this.state.cancellableBooking}
                         className="button"
                         onClick={() => this.cancelBooking(booking.id)}
                       >
                         Cancel
-                      </span>
+                      </button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </table>
             <p className="SpecialInstructions">
-              *choose a booking and then click on cancel
+              *Choose a booking and then click on cancel <br />
+              **You can't cancel booking during the last 2 days
             </p>
-
           </div>
           <div className="container">
-          <div className="detailsList">
-                  <h1>{this.state.firstName}  {this.state.lastName}</h1>
-                  <span>First Name:  </span><label name='firstName'>{this.state.firstName}</label><br/><br/>
-                  <span>Last Name:  </span><label name='lastName'>{this.state.lastName}</label><br/><br/>
-                  <span>Username:  </span><label name='userName'>{this.state.userName}</label><br/><br/>
-                  <span>Address:  </span><label name='address'>{this.state.address}</label><br/><br/>
-                  <span>Email:  </span><label name='email'>{this.state.email}</label><br/><br/>
-                  <span>Phone Number: </span><label name='mobileNumber'>{this.state.mobileNumber}</label>
+            <div className="detailsList">
+              <h1>
+                {this.state.firstName} {this.state.lastName}
+              </h1>
+              <span>First Name: </span>
+              <label name="firstName">{this.state.firstName}</label>
+              <br />
+              <br />
+              <span>Last Name: </span>
+              <label name="lastName">{this.state.lastName}</label>
+              <br />
+              <br />
+              <span>Username: </span>
+              <label name="userName">{this.state.userName}</label>
+              <br />
+              <br />
+              <span>Address: </span>
+              <label name="address">{this.state.address}</label>
+              <br />
+              <br />
+              <span>Email: </span>
+              <label name="email">{this.state.email}</label>
+              <br />
+              <br />
+              <span>Phone Number: </span>
+              <label name="mobileNumber">{this.state.mobileNumber}</label>
             </div>
           </div>
         </main>
       </body>
-
     );
   }
 }
