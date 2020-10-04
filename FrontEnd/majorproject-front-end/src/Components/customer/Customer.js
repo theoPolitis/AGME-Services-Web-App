@@ -19,8 +19,9 @@ class Customer extends Component {
       newPassword: "",
       bookings: [],
       changedAnyFields: false,
-      cancellableBooking: true,
     };
+
+    this.cancellableBooking = true;
   }
 
   componentDidMount() {
@@ -37,7 +38,7 @@ class Customer extends Component {
         .catch((error) => {
           console.log(error);
           alert(
-            "An error occured, it seems the backend cannot be reached or no services are present in our backend"
+            "An error occured when getting the bookings from the database."
           );
         });
     }
@@ -52,19 +53,18 @@ class Customer extends Component {
 
   //handles the button data ehrn casncelling a booking
   cancelBooking(bookingId) {
+    console.log("button clicked");
     Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
       .then((res) => {
         this.reloadState();
       })
       .catch((error) => {
         console.log(error);
-        alert(
-          "An error occured, it seems the backend cannot be reached or no services are present in our backend"
-        );
+        alert("An error occurred when cancelling the booking.");
       });
   }
 
-  //only considers upto the month level when disabling the cancel
+  //enabling and disabling the cancel button for each booking
   checkBookingStatus(booking) {
     var currentDateTime = new Date();
     //split date and time into year,month,day
@@ -73,7 +73,7 @@ class Customer extends Component {
 
     var bookingDateTime = new Date(
       sqlDate[0],
-      sqlDate[1] - 1, //month is indexed differently
+      sqlDate[1] - 1, //month is indexed differently in Date()
       sqlDate[2],
       sqlTime[0],
       sqlTime[1],
@@ -85,20 +85,14 @@ class Customer extends Component {
         Math.abs(currentDateTime - bookingDateTime) / (60 * 60 * 24 * 1000)
       ) >= 2
     ) {
-      this.state.cancellableBooking = true;
-      // this.setState({ cancellableBooking: true });
+      this.cancellableBooking = true;
     } else {
-      this.state.cancellableBooking = false;
-      // this.setState({ cancellableBooking: false });
+      this.cancellableBooking = false;
     }
   }
 
   render() {
     var bookings = this.state.bookings;
-
-    // var bookingsDisplayArray = bookings.map((index) => (
-    //   <p key={index}>{index[1] + " " + index[2] + " " + index[3] + " "}</p>
-    // ));
 
     return (
       <body>
@@ -134,7 +128,7 @@ class Customer extends Component {
                     <td>
                       {this.checkBookingStatus(booking)}
                       <button
-                        disabled={!this.state.cancellableBooking}
+                        disabled={!this.cancellableBooking}
                         className="button"
                         onClick={() => this.cancelBooking(booking.id)}
                       >
