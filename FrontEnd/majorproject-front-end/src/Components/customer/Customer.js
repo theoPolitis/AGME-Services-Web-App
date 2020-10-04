@@ -73,7 +73,7 @@ class Customer extends Component {
 
     var bookingDateTime = new Date(
       sqlDate[0],
-      sqlDate[1], //there is a problem here when i have 10 it is november not october and so on
+      sqlDate[1] - 1, //month is indexed differently
       sqlDate[2],
       sqlTime[0],
       sqlTime[1],
@@ -83,7 +83,7 @@ class Customer extends Component {
     if (
       Math.floor(
         Math.abs(currentDateTime - bookingDateTime) / (60 * 60 * 24 * 1000)
-      ) > 2
+      ) >= 2
     ) {
       this.state.cancellableBooking = true;
       // this.setState({ cancellableBooking: true });
