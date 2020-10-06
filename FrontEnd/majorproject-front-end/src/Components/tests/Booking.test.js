@@ -54,7 +54,17 @@ beforeEach( () => {
                         userName: "Alex",
                         createdDate: "2020-10-12",
                         updatedDate: null,
-                        rosterList: [],
+                        roster: {
+                            "id": 25,
+                            "employee": 8,
+                            "sunday": true,
+                            "monday": true,
+                            "tuesday": true,
+                            "wednesday": true,
+                            "thursday": true,
+                            "friday": true,
+                            "saturday": true
+                        },
                         bookingList: [],
                         admin: false
                     }

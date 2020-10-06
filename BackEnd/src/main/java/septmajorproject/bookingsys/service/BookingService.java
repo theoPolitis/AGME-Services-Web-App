@@ -12,6 +12,7 @@ import septmajorproject.bookingsys.repository.CustomerRepository;
 import septmajorproject.bookingsys.repository.EmployeeRepository;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +61,17 @@ public class BookingService {
 
     @Transactional(readOnly = true)
     public List<Booking> findAllByDateAndEmployee(Employee employee, Date date) {
-        return bookingRepository.findAllByEmployeeAndRosterDate(employee, date);
+        List<Booking> bookings = bookingRepository.findAllByEmployee(employee);
+        List<Booking> returned = new ArrayList<Booking>();
+        for(Booking bk : bookings)
+        {
+            Date dt = bk.getRosterDate();
+            if(dt.getDate() == date.getDate() && dt.getMonth() == date.getMonth() && dt.getYear() == date.getYear())
+            {
+                returned.add(bk);
+            }
+        }
+        return returned;
     }
 
     @Transactional(readOnly = true)

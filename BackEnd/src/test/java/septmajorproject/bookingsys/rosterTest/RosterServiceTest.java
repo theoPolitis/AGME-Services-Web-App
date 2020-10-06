@@ -35,6 +35,8 @@ public class RosterServiceTest {
         }
     }
 
+    private long identifier;
+
     @Autowired
     private RosterService rosterService;
 
@@ -46,34 +48,33 @@ public class RosterServiceTest {
 
         Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
 
-        Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
-        Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
-        Roster rosterThree = new Roster(employeeOne,(new Date(2020,8,29)),(new Time(12,30,0)));
+        Roster rosterOne = new Roster(employeeOne);
+        Roster rosterTwo = new Roster(employeeOne);
+        Roster rosterThree = new Roster(employeeOne);
 
         List<Roster> rosterListAll = new ArrayList<>();
 
         rosterListAll.add(rosterOne);
         rosterListAll.add(rosterTwo);
         rosterListAll.add(rosterThree);
-
+        identifier = rosterOne.getId();
         Mockito.when(rosterRepository.findAll()).thenReturn(rosterListAll);
         Mockito.when(rosterRepository.findAllByEmployee(employeeOne)).thenReturn(rosterListAll);
-        Mockito.when(rosterRepository.findRosterById(String.valueOf(rosterOne.getId()))).thenReturn(rosterOne);
+        Mockito.when(rosterRepository.findRosterById(rosterOne.getId())).thenReturn(rosterOne);
 
     }
 
     @Test
     public void whenGettingRosterWithValidIdentifier_thenRosterShouldBeFound(){
-        String id = "0";
 
-        Roster rosterFound = rosterService.findRosterByIdentificationNumber(id);
+        Roster rosterFound = rosterService.findRosterByIdentificationNumber(identifier);
 
-        assertTrue(String.valueOf(rosterFound.getId()).equals(id));
+        assertTrue(rosterFound.getId() == identifier);
     }
 
     @Test(expected = RosterException.class)
     public void whenInvalidIdentifier_ThenThrowRosterException() {
-        String id = "453";
+        long id = 453;
 
         rosterService.findRosterByIdentificationNumber(id);
     }
@@ -85,7 +86,7 @@ public class RosterServiceTest {
 
     @Test
     public void whenDeletingRosterWithValidIdentifier_thenSuccessfulDeleteRequest(){
-        String id = "0";
+        long id = 0;
 
         rosterService.deleteRosterByIdentifier(id);
     }

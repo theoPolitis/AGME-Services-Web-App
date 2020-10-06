@@ -13,6 +13,7 @@ import AboutUs from "./Components/aboutUs/AboutUs"
 import Customer from "./Components/customer/Customer";
 import AccountEdit from "./Components/account/AccountEdit"
 import PasswordChange from "./Components/account/PasswordChange"
+import Roster from "./Components/roster/Roster";
 
 class App extends React.Component {
   constructor() {
@@ -70,6 +71,8 @@ class App extends React.Component {
           />
 
           <Route exact path="/aboutus" component={AboutUs}/>
+
+          <Route exact path="/roster" render={(props) =>(<Roster {...props} user={this.state.user} customerAuth={this.customerAuth} loggedInStatus = {this.state.loggedInStatus}/>)}></Route>
 
           <Route
             path="/login"

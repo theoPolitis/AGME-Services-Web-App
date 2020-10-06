@@ -4,8 +4,10 @@ package septmajorproject.bookingsys.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.exception.RosterException;
+import septmajorproject.bookingsys.model.Employee;
 import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.repository.RosterRepository;
+import septmajorproject.bookingsys.web.request.NewRosterCommand;
 
 import java.util.List;
 
@@ -20,24 +22,8 @@ public class RosterService {
         return rosterRepository.save(roster);
     }
 
-//    public void deleteRosterEntryByRoster(Roster roster){
-//
-////        final Roster rosterToDelete = rosterRepository.findByDateAndTime(date,time);
-////        rosterRepository.delete(rosterToDelete);
-//
-//        EntityManagerFactory entityManagerFactory= Persistence.createEntityManagerFactory("rosterDetails");
-//        EntityManager entityManager=entityManagerFactory.createEntityManager();
-//
-//
-//        Roster rosterEntry = entityManager.find(Roster.class,roster.getId());
-//
-//        entityManager.remove(rosterEntry);
-//        entityManager.getTransaction().commit();
-//        entityManagerFactory.close();
-//        entityManager.close();
-//    }
 
-    public void deleteRosterByIdentifier(String id) {
+    public void deleteRosterByIdentifier(long id) {
 
         Roster found = rosterRepository.findRosterById(id);
 
@@ -50,7 +36,7 @@ public class RosterService {
 
     }
 
-    public Roster findRosterByIdentificationNumber(String rosterId) {
+    public Roster findRosterByIdentificationNumber(long rosterId) {
 
         Roster rosterFound = rosterRepository.findRosterById(rosterId);
 
@@ -65,4 +51,40 @@ public class RosterService {
         return rosterRepository.findAll();
     }
 
+    public List<Roster> findRostersByEmployee(Employee employee)
+    {
+        List<Roster> roster = rosterRepository.findAllByEmployee(employee);
+        return roster;
+    }
+
+    public Roster updateExistingRoster(NewRosterCommand newRoster)
+    {
+        Roster rost = rosterRepository.findRosterById(newRoster.getId());
+        if(rost == null)
+        {
+            return null;
+        }
+        rost.setSunday(newRoster.getSunday());
+        rost.setMonday(newRoster.getMonday());
+        rost.setTuesday(newRoster.getTuesday());
+        rost.setWednesday(newRoster.getWednesday());
+        rost.setThursday(newRoster.getThursday());
+        rost.setFriday(newRoster.getFriday());
+        rost.setSaturday(newRoster.getSaturday());
+        rost.setRequestedSunday(newRoster.getRequestedSunday());
+        rost.setRequestedMonday(newRoster.getRequestedMonday());
+        rost.setRequestedTuesday(newRoster.getRequestedTuesday());
+        rost.setRequestedWednesday(newRoster.getRequestedWednesday());
+        rost.setRequestedThursday(newRoster.getRequestedThursday());
+        rost.setRequestedFriday(newRoster.getRequestedFriday());
+        rost.setRequestedSaturday(newRoster.getRequestedSaturday());
+        rost.setIsApproved(newRoster.getIsApproved());
+        rosterRepository.save(rost);
+        return rost;
+    }
+
+    public List<Roster> findRostersByApproval(boolean b) {
+        List<Roster> rosters = rosterRepository.findAllByIsApproved(b);
+        return rosters;
+    }
 }
