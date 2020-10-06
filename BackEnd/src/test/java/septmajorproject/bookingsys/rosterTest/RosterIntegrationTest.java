@@ -26,8 +26,6 @@ public class RosterIntegrationTest {
     private Validator validator;
     private LocalValidatorFactoryBean localValidatorFactoryBean;
 
-    Time time = new Time(12,30,0);
-    Date date = new Date(2020,8,27);
 
     Employee employee = new Employee("EmpIdentity", "Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
 
@@ -44,8 +42,6 @@ public class RosterIntegrationTest {
     //testing when the roster without time
     public void whenInsertRosterWithNoTime_thenReturnFalse() {
         Roster nullTimeRoster = new Roster();
-        nullTimeRoster.setRosterDate(date);
-
         Set<ConstraintViolation<Roster>> constraintViolations = localValidatorFactoryBean.validate(nullTimeRoster);
 
         assertFalse(constraintViolations.size() == 0, "Time cannot be null");
@@ -55,7 +51,6 @@ public class RosterIntegrationTest {
     //testing when the roster is without date
     public void whenInsertRosterWithNoDate_thenReturnFalse(){
         Roster nullDateRoster = new Roster();
-        nullDateRoster.setRosterDate(date);
 
         Set<ConstraintViolation<Roster>> constraintViolations = localValidatorFactoryBean.validate(nullDateRoster);
 
@@ -66,8 +61,6 @@ public class RosterIntegrationTest {
     // testing when the entered roster Employee does not exist in the database
     public void whenInsertRosterWithNonExistingEmployee_thenReturnFalse(){
         Roster invalidRoster = new Roster();
-        invalidRoster.setRosterDate(date);
-        invalidRoster.setRosterTime(time);
 
         Set<ConstraintViolation<Roster>> constraintViolations = localValidatorFactoryBean.validate((invalidRoster));
 
@@ -78,7 +71,7 @@ public class RosterIntegrationTest {
     @Test
     //
     public void whenInsertRosterWithExistingEmployee_thenReturnTrue(){
-        Roster validRoster = new Roster(employee,date,time);
+        Roster validRoster = new Roster(employee);
 
         Set<ConstraintViolation<Roster>> constraintViolations = localValidatorFactoryBean.validate((validRoster));
 

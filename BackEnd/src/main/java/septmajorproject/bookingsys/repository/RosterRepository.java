@@ -19,7 +19,9 @@ public interface RosterRepository extends JpaRepository<Roster, Long> {
     @Override
     List<Roster> findAllById(Iterable<Long> Ids);
 
-    Roster findRosterById(String rosterId);
+    Roster findRosterById(long rosterId);
+
+    List<Roster> findAllByIsApproved(boolean b);
 
 //    Roster findRosterByEmployeeId(long employeeId);
 

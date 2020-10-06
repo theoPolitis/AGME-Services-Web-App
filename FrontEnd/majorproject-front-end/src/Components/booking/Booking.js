@@ -34,7 +34,7 @@ class Booking extends Component {
       });
   }
 
-  componentDidMount = () => {};
+  componentDidMount = () => { };
 
   handleSubmit = (event) => {
     var postData = {};
@@ -112,53 +112,112 @@ class Booking extends Component {
   handleDateSelection = (event) => {
     var date = new Date(event.target.value);
     var today = new Date();
+    var nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+8);
     //If the selected date is in the future, proceed
-    if (today.getTime() < date.getTime()) {
-      //Formatting the date to the correct date
-      var year = "" + date.getFullYear();
-      var month = "" + (date.getMonth() + 1);
-      var day = "" + date.getDate();
-      if (month.length < 2) {
-        month = "0" + month;
+    if (today.getTime() < date.getTime() && date.getTime() < nextWeek.getTime()) {
+      var flag = true;
+      var weekDay = date.getDay();
+      var employee = this.state.employees.find(employee => { return employee.employeeIdentifier === this.state.selectedEmployee });
+      switch (weekDay) {
+        case 0:
+          if (!employee.roster.sunday) {
+            flag = false;
+          }
+          break;
+        case 1:
+          if (!employee.roster.monday) {
+            flag = false;
+          }
+          break;
+        case 2:
+          if (!employee.roster.tuesday) {
+            flag = false;
+          }
+          break;
+        case 3:
+          if (!employee.roster.wednesday) {
+            flag = false;
+          }
+          break;
+        case 4:
+          if (!employee.roster.thursday) {
+            flag = false;
+          }
+          break;
+        case 5:
+          if (!employee.roster.friday) {
+            flag = false;
+          }
+          break;
+        case 6:
+          if (!employee.roster.saturday) {
+            flag = false;
+          }
+          break;
+        default:
+          flag = true;
       }
-      if (day.length < 2) {
-        day = "0" + day;
-      }
-      var formattedDate = year + "-" + month + "-" + day;
-      this.setState({ selectedDate: formattedDate });
-      var startTime = 6;
-      var endTime = 18;
-      var times = [];
-      for (var i = startTime; i < endTime; i++) {
-        times.push(i + ":00");
-      }
-      //GET request determines which times the employee is already booked for on the day
-      Axios.get(
-        "http://localhost:8080/api/booking/" +
+      if (flag) {
+        //Formatting the date to the correct date
+        var year = "" + date.getFullYear();
+        var month = "" + (date.getMonth() + 1);
+        var day = "" + date.getDate();
+        if (month.length < 2) {
+          month = "0" + month;
+        }
+        if (day.length < 2) {
+          day = "0" + day;
+        }
+        var formattedDate = year + "-" + month + "-" + day;
+        this.setState({ selectedDate: formattedDate });
+        var startTime = 6;
+        var endTime = 18;
+        var times = [];
+        for (var i = startTime; i < endTime; i++) {
+          times.push(i + ":00");
+        }
+        //GET request determines which times the employee is already booked for on the day
+        Axios.get(
+          "http://localhost:8080/api/booking/" +
           formattedDate +
           "/" +
           this.state.selectedEmployee,
-        {}
-      )
-        .then((res) => {
-          this.setState({ alreadyBooked: res.data }, function () {
-            var booked = res.data;
-            for (i = 0; i < booked.length; i++) {
-              times = times.filter((item) => item !== booked[i].time);
-            }
-            this.setState({ bookingTimes: times });
-          });
-          this.setState({ timeDisabled: false });
-        })
-        .catch((e) => {
-          //If no booking times are detected, then no times are removed from the selection list.
-          if (e.response.status === 400) {
+          {}
+        )
+          .then((res) => {
+            this.setState({ alreadyBooked: res.data }, function () {
+              var booked = res.data;
+              for (i = 0; i < booked.length; i++) {
+                times = times.filter((item) => item !== booked[i].time);
+              }
+              this.setState({ bookingTimes: times });
+            });
             this.setState({ timeDisabled: false });
-            this.setState({ bookingTimes: times });
-          }
-        });
+          })
+          .catch((e) => {
+            //If no booking times are detected, then no times are removed from the selection list.
+            if (e.response.status === 400) {
+              this.setState({ timeDisabled: false });
+              this.setState({ bookingTimes: times });
+            }
+          });
+      }else {
+        this.setState({ bookingTimes: [] });
+        this.setState({ buttonDisabled: true });
+        this.setState({ timeDisabled: true });
+        alert("Employee is not working on this day");
+      }
+
     } else {
-      alert("Please Select a Date that is Not in the past!");
+      this.setState({ bookingTimes: [] });
+      this.setState({ buttonDisabled: true });
+      this.setState({ timeDisabled: true });
+      if(today.getTime() > date.getTime()){
+        alert("Please Select a Date that is Not in the past!");
+      }else{
+        alert("You can only select bookings withing the next 7 days");
+      }
+      
     }
   };
 

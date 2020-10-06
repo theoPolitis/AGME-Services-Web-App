@@ -52,11 +52,11 @@ public class RosterRepositoryTest {
         employeeRepository.save(employeeTwo);
         employeeRepository.save(employeeThree);
 
-        Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
-        Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
-        Roster rosterThree = new Roster(employeeOne,(new Date(2020,8,29)),(new Time(12,30,0)));
-        Roster rosterFour = new Roster(employeeTwo,(new Date(2020,8,30)),(new Time(12,30,0)));
-        Roster rosterFive = new Roster(employeeTwo,(new Date(2020,8,31)),(new Time(12,30,0)));
+        Roster rosterOne = new Roster(employeeOne);
+        Roster rosterTwo = new Roster(employeeOne);
+        Roster rosterThree = new Roster(employeeOne);
+        Roster rosterFour = new Roster(employeeTwo);
+        Roster rosterFive = new Roster(employeeTwo);
 
         testEntityManager.persist(employeeOne);
         testEntityManager.persist(rosterOne);

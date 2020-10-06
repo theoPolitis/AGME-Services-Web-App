@@ -1,13 +1,26 @@
 package septmajorproject.bookingsys.databaseLoader;
 
+import com.fasterxml.jackson.annotation.JacksonAnnotationsInside;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
+import septmajorproject.bookingsys.model.Employee;
+import septmajorproject.bookingsys.model.Roster;
+import septmajorproject.bookingsys.repository.EmployeeRepository;
 import septmajorproject.bookingsys.repository.RosterRepository;
 
+import java.sql.Time;
+import java.util.Date;
+import java.util.List;
+
 @Component
+@Order(4)
 public class RosterDatabaseLoader implements CommandLineRunner {
-    private final RosterRepository rosterRepository;
+    @Autowired
+    private RosterRepository rosterRepository;
+    @Autowired
+    private EmployeeRepository employeeRepository;
 
     @Autowired
     public RosterDatabaseLoader(RosterRepository rosterRepository) {
@@ -18,22 +31,14 @@ public class RosterDatabaseLoader implements CommandLineRunner {
     //loads rosters into the database
     @Override
     public void run(String... args) throws Exception {
-
-//        this.rosterRepository.save(new Roster(
-//
-//                "1234",
-//                "2020-8-27",
-//                "12:30:00"));
-
-
-//        Roster r1 = new Roster(
-//                "E1234",
-//                "2020-8-27",
-//                "12:30:00")),
-//
-//        rosterRepository.save(r1);
-//
-
+        List<Employee> employeeList = employeeRepository.findAll();
+        for(Employee emp : employeeList)
+        {
+            Roster rost = new Roster(emp);
+            rost.setIsApproved(true);
+            emp.setRoster(rost);
+            rosterRepository.save(rost);
+        }
 
     }
 }

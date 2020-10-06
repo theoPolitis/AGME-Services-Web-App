@@ -47,9 +47,9 @@ public class RosterControllerTest {
 
     Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
 
-    Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
-    Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
-    Roster rosterThree = new Roster(employeeOne,(new Date(2020,8,29)),(new Time(12,30,0)));
+    Roster rosterOne = new Roster(employeeOne);
+    Roster rosterTwo = new Roster(employeeOne);
+    Roster rosterThree = new Roster(employeeOne);
 
     @Before
     public void setUp(){
@@ -58,7 +58,7 @@ public class RosterControllerTest {
 
     @Test
     public void givenRoster_whenGetRosterById_thenReturnRoster() throws Exception {
-        given(rosterService.findRosterByIdentificationNumber("1234")).willReturn(rosterOne);
+        given(rosterService.findRosterByIdentificationNumber(1234)).willReturn(rosterOne);
 
         mockMVC.perform(get("/api/roster/{rosterId}", "1234").contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
