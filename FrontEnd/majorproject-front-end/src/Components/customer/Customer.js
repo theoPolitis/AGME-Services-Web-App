@@ -95,8 +95,8 @@ class Customer extends Component {
     var bookings = this.state.bookings;
 
     return (
-      <body>
-        <main>
+      <div>
+        <div>
           <Link to="/editDetails" className="accountButton">
             Edit Details
           </Link>
@@ -173,8 +173,8 @@ class Customer extends Component {
               <label name="mobileNumber">{this.state.mobileNumber}</label>
             </div>
           </div>
-        </main>
-      </body>
+        </div>
+      </div>
     );
   }
 }
