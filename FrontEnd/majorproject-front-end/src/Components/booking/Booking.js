@@ -20,6 +20,7 @@ class Booking extends Component {
       employeeDisabled: true,
       dateDisabled: true,
       timeDisabled: true,
+      serviceTypeDetails: [],
     };
     //retrieves all front end services
     Axios.get("http://localhost:8080/api/serviceType/all", {})
@@ -43,10 +44,7 @@ class Booking extends Component {
     postData["serviceNo"] = this.state.selectedService;
     postData["rosterTime"] = this.state.selectedTime;
     postData["rosterDate"] = this.state.selectedDate;
-    Axios.post(
-      "http://localhost:8080/api/booking/newBooking",
-      postData
-    )
+    Axios.post("http://localhost:8080/api/booking/newBooking", postData)
       .then((res) => {
         alert(res.data);
       })
@@ -84,6 +82,25 @@ class Booking extends Component {
         })
         .catch((error) => {
           alert("An error occured, details : " + error.response.status);
+        });
+
+      Axios.get(
+        "http://localhost:8080/api/serviceType/" + event.target.value,
+        {}
+      )
+        .then((res) => {
+          //passers GET data to app.js
+          this.setState({ serviceTypeDetails: res.data });
+        })
+        .catch((e) => {
+          this.setState({
+            error: true,
+          });
+          if (this.state.error === true) {
+            console.log(
+              "Something went wrong in booking.js in get handleServiceSelection, getting service details"
+            );
+          }
         });
     } else {
       this.setState({ employees: [] });
@@ -126,8 +143,8 @@ class Booking extends Component {
       }
       var formattedDate = year + "-" + month + "-" + day;
       this.setState({ selectedDate: formattedDate });
-      var startTime = 6;
-      var endTime = 18;
+      var startTime = parseInt(this.state.serviceTypeDetails.startTime);
+      var endTime = parseInt(this.state.serviceTypeDetails.endTime);
       var times = [];
       for (var i = startTime; i < endTime; i++) {
         times.push(i + ":00");

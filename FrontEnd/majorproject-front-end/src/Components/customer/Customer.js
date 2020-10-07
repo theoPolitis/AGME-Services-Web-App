@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 import "./Customer.css";
 import Axios from "axios";
@@ -94,88 +94,99 @@ class Customer extends Component {
   render() {
     var bookings = this.state.bookings;
 
-    return (
-      <div>
+    if (this.props.loggedInStatus === "NOT_LOGGED_IN") {
+      return (
+        // <div className="container">
+        //   <h1>You must be logged in to use this feature</h1>
+        // </div>
+        <Redirect
+          to={{ pathname: "/login", state: { from: this.props.location } }}
+        />
+      );
+    } else {
+      return (
         <div>
-          <Link to="/editDetails" className="accountButton">
-            Edit Details
-          </Link>
-          <Link to="/changePassword" className="accountButton">
-            Change Password
-          </Link>
+          <div>
+            <Link to="/editDetails" className="accountButton">
+              Edit Details
+            </Link>
+            <Link to="/changePassword" className="accountButton">
+              Change Password
+            </Link>
 
-          <div className="container">
-            <h1 className="BookingsTitle"> My Bookings </h1>
-            {/* the things should loop here but i have no idea how to do it */}
-            <table className="bookings" id="bookings">
-              <thead>
-                <tr>
-                  <td>Booking date</td>
-                  <td>Service</td>
-                  <td>Employee Name</td>
-                  <td>Cancel Booking</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                {bookings.map((booking) => (
-                  <tr id={booking.id} key={booking.id}>
-                    <td>
-                      {booking.rosterDate} {booking.rosterTime}
-                    </td>
-                    <td>{booking.serviceName}</td>
-                    <td>{booking.employee.firstName}</td>
-                    <td>
-                      {this.checkBookingStatus(booking)}
-                      <button
-                        disabled={!this.cancellableBooking}
-                        className="button"
-                        onClick={() => this.cancelBooking(booking.id)}
-                      >
-                        Cancel
-                      </button>
-                    </td>
+            <div className="container">
+              <h1 className="BookingsTitle"> My Bookings </h1>
+              {/* the things should loop here but i have no idea how to do it */}
+              <table className="bookings" id="bookings">
+                <thead>
+                  <tr>
+                    <td>Booking date</td>
+                    <td>Service</td>
+                    <td>Employee Name</td>
+                    <td>Cancel Booking</td>
+                    <td></td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-            <p className="SpecialInstructions">
-              *Choose a booking and then click on cancel <br />
-              **You can't cancel booking during the last 2 days
-            </p>
-          </div>
-          <div className="container">
-            <div className="detailsList">
-              <h1>
-                {this.state.firstName} {this.state.lastName}
-              </h1>
-              <span>First Name: </span>
-              <label name="firstName">{this.state.firstName}</label>
-              <br />
-              <br />
-              <span>Last Name: </span>
-              <label name="lastName">{this.state.lastName}</label>
-              <br />
-              <br />
-              <span>Username: </span>
-              <label name="userName">{this.state.userName}</label>
-              <br />
-              <br />
-              <span>Address: </span>
-              <label name="address">{this.state.address}</label>
-              <br />
-              <br />
-              <span>Email: </span>
-              <label name="email">{this.state.email}</label>
-              <br />
-              <br />
-              <span>Phone Number: </span>
-              <label name="mobileNumber">{this.state.mobileNumber}</label>
+                </thead>
+                <tbody>
+                  {bookings.map((booking) => (
+                    <tr id={booking.id} key={booking.id}>
+                      <td>
+                        {booking.rosterDate} {booking.rosterTime}
+                      </td>
+                      <td>{booking.serviceName}</td>
+                      <td>{booking.employee.firstName}</td>
+                      <td>
+                        {this.checkBookingStatus(booking)}
+                        <button
+                          disabled={!this.cancellableBooking}
+                          className="button"
+                          onClick={() => this.cancelBooking(booking.id)}
+                        >
+                          Cancel
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+              <p className="SpecialInstructions">
+                *Choose a booking and then click on cancel <br />
+                **You can't cancel booking during the last 2 days
+              </p>
+            </div>
+            <div className="container">
+              <div className="detailsList">
+                <h1>
+                  {this.state.firstName} {this.state.lastName}
+                </h1>
+                <span>First Name: </span>
+                <label name="firstName">{this.state.firstName}</label>
+                <br />
+                <br />
+                <span>Last Name: </span>
+                <label name="lastName">{this.state.lastName}</label>
+                <br />
+                <br />
+                <span>Username: </span>
+                <label name="userName">{this.state.userName}</label>
+                <br />
+                <br />
+                <span>Address: </span>
+                <label name="address">{this.state.address}</label>
+                <br />
+                <br />
+                <span>Email: </span>
+                <label name="email">{this.state.email}</label>
+                <br />
+                <br />
+                <span>Phone Number: </span>
+                <label name="mobileNumber">{this.state.mobileNumber}</label>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    );
+      );
+    }
   }
 }
 export default Customer;
