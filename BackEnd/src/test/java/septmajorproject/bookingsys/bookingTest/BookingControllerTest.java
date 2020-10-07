@@ -63,7 +63,7 @@ public class BookingControllerTest {
     Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
     Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
 
-    ServiceType serviceType = new ServiceType("1", "haircut");
+    ServiceType serviceType = new ServiceType("1", "haircut","08:00","20:00");
     Booking booking = new Booking(date, time, emp, cust, serviceType);
     Booking booking2 = new Booking(date, time, emp, cust, serviceType);
 

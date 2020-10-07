@@ -32,10 +32,10 @@ public class ServiceTypeRepositoryIntegrationTest {
     //generates test data and constructs testing objects
     @Before
     public void setup(){
-        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning");
-        ServiceType ServiceType2 = new ServiceType("HC02","House Cleaning");
-        ServiceType ServiceType3 = new ServiceType("CW01","Car Wash");
-        ServiceType ServiceType4 = new ServiceType("BS01","babysitter");
+        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning","08:00","20:00");
+        ServiceType ServiceType2 = new ServiceType("HC02","House Cleaning","08:00","20:00");
+        ServiceType ServiceType3 = new ServiceType("CW01","Car Wash","08:00","20:00");
+        ServiceType ServiceType4 = new ServiceType("BS01","babysitter","08:00","20:00");
 
         testManager.persist(ServiceType1);
         testManager.persist(ServiceType2);
@@ -67,7 +67,7 @@ public class ServiceTypeRepositoryIntegrationTest {
     //service type doesnt exist with provided service name
     @Test
     public void whenServiceTypeDoesntExistWithServiceName_thenReturnNull(){
-        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning");
+        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning","08:00","20:00");
         testManager.persist(ServiceType1);
 
 
