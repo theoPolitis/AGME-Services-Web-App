@@ -1,0 +1,88 @@
+- name: booking sys CD
+  hosts: all
+  vars:
+    aws_access_key_id: ""
+    aws_secret_access_key: ""
+    aws_session_token: ""
+  tasks:
+
+    #ensure latest version of linux is installed
+    - name: update AWS sli
+      shell: sudo yum update -y
+
+    #SETUP DOCKER AND MAKE SURE ITS INMSTALLED
+    - name: Install docker
+      shell: |
+        y |sudo amazon-linux-extras install docker
+
+    - name: start docker service
+      shell: sudo service docker start
+    
+    - name: user mod to EC2
+      shell: sudo usermod -a -G docker ec2-user
+
+    - name: give permisions for login
+      shell: "sudo chmod 666 /var/run/docker.sock"
+
+    #install pexpect
+    - name: download pip
+      shell: curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
+    
+    - name: install pip
+      shell: python get-pip.py
+
+    - name: install pexpect
+      shell:
+        cmd: sudo easy_install pexpect
+
+    #SETUP CREDENTIALS AND LOGIN
+    - name: AWS configure credentials
+      expect:
+        command: 'aws configure'
+        responses:
+          'AWS Access Key ID \[None\]:' : "{{ aws_access_key_id }}"
+          'AWS Secret Access Key \[None\]' : "{{ aws_secret_access_key }}"
+          'Default region name \[None\]' : 'us-east-1'
+          'Default output format \[None\]' : 'text'
+
+    - name: write credentials to file
+      shell:
+        cmd: |
+          cat > .aws/credentials << EOL
+          [default]
+          aws_access_key_id={{ aws_access_key_id }}
+          aws_secret_access_key={{ aws_secret_access_key }}
+          aws_session_token={{ aws_session_token }}
+          EOL
+
+    - name: login to AWS and docker
+      shell: "aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 228309231359.dkr.ecr.us-east-1.amazonaws.com"
+
+      #remove old containers from CLI to allow us to set up new containers
+    - name: Remove all docker containers
+      shell: "docker rm -vf $(docker ps -a -q)"
+      ignore_errors: yes
+    
+    - name: Remove all docker images
+      shell: "docker rmi -f $(docker images -a -q)"
+      ignore_errors: yes
+    
+    #pull and run or images from ECR that have been uploaded by circleCi
+    - name: Pull backend image from ECR
+      shell: "docker pull 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestbackend"
+    
+    - name: Pull front end from ECR
+      shell: "docker pull 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestfront"
+
+    - name: run the docker image for frontend
+      shell: "docker run -it --detach --name frontend -p 80:3000 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestfront"
+    
+    - name: run the docker image for the backend
+      shell: "docker run --publish 8080:8080 --detach --name backend 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestbackend"
+    
+    #reset the shell credentials 
+    - name: clear config file
+      shell: '> .aws/config'
+    
+    - name: clear credentials file
+      shell:  '> .aws/credentials'

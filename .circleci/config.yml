@@ -1,6 +1,11 @@
-version: 2
+orbs:
+  aws-ecr: circleci/aws-ecr@6.12.2
+  aws-ecs: circleci/aws-ecs@1.3.0
+
+version: 2.1
 
 jobs:
+#Runs tests for backed for CI
   "Backend":
     working_directory: ~/BackEnd/BackEnd
     docker:
@@ -11,7 +16,6 @@ jobs:
           POSTGRES_DB: circle_test
           
     steps:
-
       - checkout:
           path: ~/BackEnd
 
@@ -27,7 +31,7 @@ jobs:
           paths:
             - ~/.m2
           key: booking-sys-{{ checksum "~/BackEnd/BackEnd/pom.xml" }}
-      
+      #build our program
       - run: mvn package
 
       - run:
@@ -36,18 +40,17 @@ jobs:
             mkdir -p ~/test-results/junit/
             find . -type f -regex ".*/target/surefire-reports/.*xml" -exec cp {} ~/test-results/junit/ \;
           when: always
-
+    #save our test results
       - store_test_results:
           path: ~/test-results
       
       - store_artifacts:
           path: ~/test-results/junit
 
-      
+#runs tests for front end for CI
   "Frontend":
     docker:
-      - image: circleci/node:12.9.1-browsers
-  
+      - image: circleci/php:7.1-cli-node-browsers
     working_directory: ~/FrontEnd/FrontEnd/majorproject-front-end
     steps:
       - checkout:
@@ -69,7 +72,7 @@ jobs:
             - v1-dependencies-
       
       - run: npm install
-    
+    #run our tests
       - run:
           name: Run tests
           command: |
@@ -83,11 +86,171 @@ jobs:
 
       - store_test_results:
           path: ./test-results
+  
+    #sends front end cimage to ECR on AWS
+  "deliverFrontend":
+    docker:
+        - image: circleci/php:7.1-cli-node-browsers
+    environment: 
+          ECR_REPOSITORY_NAME: bookingsystem
+          FULL_IMAGE_NAME: 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latest
 
+    working_directory: ~/FrontEnd/FrontEnd/majorproject-front-end
+    steps:
+        - checkout:
+            path: ~/FrontEnd
+                
+        - setup_remote_docker
 
+        - run:
+            name: Setup common environment variables
+            command: |
+                echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
+                echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
+            #installs our dependancies so that we can log into AWS via our shell
+        - run:
+            name: install dependentcies for AWS
+            command: |
+                sudo apt-get update
+                sudo apt-get -y -qq install awscli
+                sudo apt-get install python3-pip
+                sudo pip3 install --upgrade awscli
+                
+        - run:
+            name: retreive authentication token
+            command: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 228309231359.dkr.ecr.us-east-1.amazonaws.com
+
+            #build our image with docker
+        - run:
+            name: build image
+            command: |
+                docker build -t bookingsysfront .
+           #tag image     
+        - run:
+            name: tag image
+            command: docker tag bookingsysfront:latest 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestfront
+            #push our newly created image to ECR on AWS
+        - run:
+            name: push to AWS
+            command: docker push 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestfront
+    #Deliver our backend image to ECR on AWS
+  "deliverBackend":
+    working_directory: ~/BackEnd/BackEnd
+    docker:
+        - image: circleci/openjdk:8-jdk-stretch
+        - image: circleci/postgres:9.6.3-alpine
+    environment:
+        ECR_REPOSITORY_NAME: bookingsystem
+        FULL_IMAGE_NAME: 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latest
+        POSTGRES_USER: root
+        POSTGRES_DB: circle_test
+            
+    steps:
+        - checkout:
+            path: ~/BackEnd
+
+        - setup_remote_docker
+
+        - run:
+            name: Setup common environment variables
+            command: |
+                echo 'export ECR_REPOSITORY_NAME="${AWS_RESOURCE_NAME_PREFIX}"' >> $BASH_ENV
+                echo 'export FULL_IMAGE_NAME="${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_DEFAULT_REGION}.amazonaws.com/${ECR_REPOSITORY_NAME}:latest"' >> $BASH_ENV
+        
+        - run: mvn package
+        #install our dependancies so that we can run aws commands on our shell
+        - run:
+            name: install dependentcies for AWS
+            command: |
+                sudo apt-get update
+                sudo apt-get -y -qq install awscli
+                sudo apt-get install python3-pip
+                sudo pip3 install --upgrade awscli
+        
+            #login to aws and docker
+        - run:
+            name: retreive authentication token
+            command: aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 228309231359.dkr.ecr.us-east-1.amazonaws.com
+        #build our docker image
+        - run:
+            name: build image
+            command: |
+                docker build -t bookingsysback .
+        #tage image so we know which one to use from our ECR repository
+        - run:
+            name: tag image
+            command: docker tag bookingsysback:latest 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestbackend
+        #push our newly created image for the backend to ECR repository
+        - run:
+            name: push to AWS
+            command: docker push 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestbackend
+    #Deploy our app to production and make the website "LIVE"
+  "liveDeploy":
+    #used a python image so that we had access to pip natively
+    docker:
+        - image: circleci/python:3.6.4  
+    working_directory: ~/deploy/deployement
+    steps:
+        - checkout:
+            path: ~/deploy
+            #DEBUG
+        - run:
+            name: test
+            command: echo ${AWS_SESSION_TOKEN}
+            #install ansible onto our shell
+        - run:
+            name: install dependancies
+            command: sudo pip install ansible
+            #add our ssh key to terminal via a fingerprint
+        - add_ssh_keys:
+            name: add ssh key to log into aws
+            fingerprints:
+                - "f6:6b:17:95:28:22:4d:25:0f:bb:75:0c:e3:fa:ef:32"
+          #run our ansible playbook          
+        - run:
+            name: run ansible commands
+            command: ansible-playbook -i anisble/inventory.yml -u ec2-user anisble/playbook.yml --ssh-common-args='-o StrictHostKeyChecking=no' -e aws_access_key_id=${AWS_ACCESS_KEY_ID} -e aws_secret_access_key=${AWS_SECRET_ACCESS_KEY} -e aws_session_token=${AWS_SESSION_TOKEN}
+            #debug
+        - run:
+            name: check working_directory
+            command: ls -a
+
+            
+            
+      
 workflows:
   version: 2
-  build:
+  build-and-deploy:
     jobs:
-      - "Backend"
       - "Frontend"
+      - "Backend"
+      #can only deliver images in the master branch and once frontend builds and backend
+      - "deliverFrontend":
+            requires:
+                - "Frontend"
+            filters:
+                branches:
+                    only: master
+      - "deliverBackend":
+            requires:
+                - "Backend"
+            filters:
+                branches:
+                    only: master
+        #Stage gate so when the rpoduct is delivered it need to be manually approved before entering production              
+      - StageGate:
+            type: approval
+            requires:
+                - "deliverBackend"
+                - "deliverFrontend"
+            filters:
+                branches:
+                    only: master
+        #if stage gate ios approved than our application is deployed to production only in master branch
+      - "liveDeploy":
+            requires:
+                - StageGate
+            filters:
+                branches:
+                    only: master
+            
