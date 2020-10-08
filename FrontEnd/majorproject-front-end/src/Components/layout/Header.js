@@ -30,6 +30,7 @@ class Header extends Component {
                         <Link to="/abooutus" style={linkStyle} >About us</Link>
                         <Link to='/employee' style={linkStyle}>Employee</Link>
                         <Link to="/roster" style={linkStyle}>Roster</Link>
+                        <Link to="/analytics" style={linkStyle}>Analytics</Link>
                         <Link to='/' style={linkStyle}><button onClick={this.props.toggleLogout.bind(this)} className="RegisterButton">Log Out</button></Link>
 
                     </div>

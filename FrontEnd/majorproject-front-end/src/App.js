@@ -14,6 +14,7 @@ import Customer from "./Components/customer/Customer";
 import AccountEdit from "./Components/account/AccountEdit"
 import PasswordChange from "./Components/account/PasswordChange"
 import Roster from "./Components/roster/Roster";
+import Analytics from "./Components/analytics/Analytics";
 
 class App extends React.Component {
   constructor() {
@@ -73,6 +74,8 @@ class App extends React.Component {
           <Route exact path="/aboutus" component={AboutUs}/>
 
           <Route exact path="/roster" render={(props) =>(<Roster {...props} user={this.state.user} customerAuth={this.customerAuth} loggedInStatus = {this.state.loggedInStatus}/>)}></Route>
+
+          <Route exact path="/analytics" render={(props) =>(<Analytics {...props} user={this.state.user} customerAuth={this.customerAuth} loggedInStatus = {this.state.loggedInStatus}/>)}></Route>
 
           <Route
             path="/login"
