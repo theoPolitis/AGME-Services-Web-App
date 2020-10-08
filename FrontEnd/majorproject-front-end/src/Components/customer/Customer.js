@@ -119,12 +119,12 @@ class Customer extends Component {
           <div className="container">
           <div className="detailsList">
                   <h1>{this.state.firstName}  {this.state.lastName}</h1>
-                  <span>First Name:  </span><label name='firstName'>{this.state.firstName}</label><br/><br/>
-                  <span>Last Name:  </span><label name='lastName'>{this.state.lastName}</label><br/><br/>
-                  <span>Username:  </span><label name='userName'>{this.state.userName}</label><br/><br/>
-                  <span>Address:  </span><label name='address'>{this.state.address}</label><br/><br/>
-                  <span>Email:  </span><label name='email'>{this.state.email}</label><br/><br/>
-                  <span>Phone Number: </span><label name='mobileNumber'>{this.state.mobileNumber}</label>
+                  <span>:First Name  </span><label name='firstName'>{this.state.firstName}</label><br/><br/>
+                  <span>:Last Name  </span><label name='lastName'>{this.state.lastName}</label><br/><br/>
+                  <span>:Username  </span><label name='userName'>{this.state.userName}</label><br/><br/>
+                  <span>:Address  </span><label name='address'>{this.state.address}</label><br/><br/>
+                  <span>:Email  </span><label name='email'>{this.state.email}</label><br/><br/>
+                  <span>:Phone Number </span><label name='mobileNumber'>{this.state.mobileNumber}</label>
             </div>
           </div>
         </main>
