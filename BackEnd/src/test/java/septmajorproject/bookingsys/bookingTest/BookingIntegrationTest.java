@@ -99,7 +99,7 @@ public class BookingIntegrationTest {
     // Testing a booking with valid customer, employee and booking data
     @Test
     public void whenInsertBookingWithValidValues_thenReturnTrue() {
-        ServiceType serviceType = new ServiceType("1", "haircut");
+        ServiceType serviceType = new ServiceType("1", "haircut","08:00","20:00");
         Booking booking = new Booking(date, time, emp, cust, serviceType);
 
         Set<ConstraintViolation<Booking>> constraintViolations = localValidatorFactory.validate(booking);
