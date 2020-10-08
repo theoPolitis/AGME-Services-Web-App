@@ -18,6 +18,7 @@ p {
 .detailsList > span {
   font-weight: bolder;
   display: inline;
+  float: left;
 }
 
 .detailsList > p {
@@ -87,7 +88,6 @@ input {
   cursor: pointer;
   margin-top: 17px;
   width: 100px;
-  float: right;
   height: 35px;
   border-radius: 12px;
 }
