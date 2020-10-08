@@ -31,17 +31,43 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
         alex.setAdmin(false);
         alex.setServiceNo("1E");
 
-        Employee admin = new Employee(
-            "E2341",
-            "Admin",
-            "Admin",
-            "admin@student.rmit.edu.au",
+        Employee adminGym = new Employee(
+            "E2351",
+            "AdminGym",
+            "AdminGym",
+            "AdminGym@student.rmit.edu.au",
             000,
             "admin",
-            "Admin",
-            "admin");
-        admin.setAdmin(true);
-        admin.setServiceNo("2E");
+            "AdminGym",
+            "adminGym");
+        adminGym.setAdmin(true);
+        adminGym.setServiceNo("2E");
+
+        Employee adminPhrezCut = new Employee(
+                "E2361",
+                "AdminPhrezCut",
+                "AdminPhrezCut",
+                "AdminPhrezCut@student.rmit.edu.au",
+                000,
+                "admin",
+                "AdminPhrezCut",
+                "adminPhrezCut");
+        adminPhrezCut.setAdmin(true);
+        adminPhrezCut.setServiceNo("1E");
+
+        Employee adminBarber = new Employee(
+                "E2371",
+                "AdminBarber",
+                "AdminBarber",
+                "AdminBarber@student.rmit.edu.au",
+                000,
+                "admin",
+                "AdminBarber",
+                "adminBarber");
+        adminBarber.setAdmin(true);
+        adminBarber.setServiceNo("3E");
+
+
         Employee sam = new Employee(
             "E3456",
             "Sam",
@@ -76,7 +102,9 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
         massimo.setAdmin(false);
         massimo.setServiceNo("3E");
         employeeRepository.save(alex);
-        employeeRepository.save(admin);
+        employeeRepository.save(adminBarber);
+        employeeRepository.save(adminGym);
+        employeeRepository.save(adminPhrezCut);
         employeeRepository.save(sam);
         employeeRepository.save(lucas);
         employeeRepository.save(massimo);

@@ -74,8 +74,16 @@ class BusinessWorkingHours extends Component {
     }
   };
 
+  setServiceNo() {
+    if (this.props.userAuth.admin === true) {
+      this.serviceNo = this.props.userAuth.serviceNo;
+    }
+  }
+
   render() {
-    this.serviceNo = "1E"; //need to set the correct service no here so that the correct information is shown here
+    // this.serviceNo = "1E"; //need to set the correct service no here so that the correct information is shown here
+    // console.log(this.props);
+    this.setServiceNo();
     if (this.props.loggedInStatus === "NOT_LOGGED_IN" && !this.isAdmin()) {
       return (
         <Redirect
