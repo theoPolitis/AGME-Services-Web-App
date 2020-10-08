@@ -177,7 +177,7 @@ public class Employee {
         this.serviceNo = serviceNo;
     }
 
-    public String getServiceNo(String serviceNo) {
+    public String getServiceNo() {
         return this.serviceNo;
     }
 

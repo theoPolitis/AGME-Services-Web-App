@@ -11,7 +11,7 @@ class Employee extends Component {
       bookings: [],
       services: [],
       filters: {
-        serviceNo: null,
+        serviceNo: this.props.userAuth.serviceNo,
         date: null,
       },
     };
@@ -38,18 +38,6 @@ class Employee extends Component {
           );
         });
     }
-  }
-
-  changeServiceNo(serviceNo) {
-    this.setState(
-      {
-        filters: {
-          ...this.state.filters,
-          serviceNo: serviceNo,
-        },
-      },
-      () => this.reloadState()
-    );
   }
 
   changeDateFilter(date) {
@@ -143,23 +131,14 @@ class Employee extends Component {
             <h1>Bookings</h1>
 
             <div className="row">
+            
               <div className="col-1">
-                <label>Service:</label>
+                <label>Service No:</label>
               </div>
               <div className="col-2">
-                <select
-                  name="ServiceNo"
-                  value={this.state.filters.serviceNo}
-                  onChange={(e) => this.changeServiceNo(e.target.value)}
-                >
-                  <option value="">Select an option:</option>
-                  {this.state.services.map((service) => (
-                    <option value={service.serviceNo}>
-                      {service.serviceName}
-                    </option>
-                  ))}
-                </select>
+                <label name="ServiceNo">{this.props.userAuth.serviceNo}</label>
               </div>
+       
               <div className="col-2">
                 <div>
                   <label>Booking Date:</label>
