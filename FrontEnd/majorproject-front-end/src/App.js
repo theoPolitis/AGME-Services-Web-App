@@ -70,7 +70,7 @@ class App extends React.Component {
             )}
           />
 
-          <Route exact path="/aboutus" component={AboutUs}/>
+          <Route exact path="/aboutus" render={(props) =>(<AboutUs {...props} loggedInStatus={this.state.loggedInStatus}/>)}></Route>
 
           <Route exact path="/roster" render={(props) =>(<Roster {...props} user={this.state.user} customerAuth={this.customerAuth} loggedInStatus = {this.state.loggedInStatus}/>)}></Route>
 

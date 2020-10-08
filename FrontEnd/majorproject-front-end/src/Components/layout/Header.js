@@ -27,7 +27,7 @@ class Header extends Component {
                     <h1 className='Logo'>AGMEServices</h1>
                     <div className='top-menu'>
                         <Link to="/" style={linkStyle} >Home</Link>
-                        <Link to="/abooutus" style={linkStyle} >About us</Link>
+                        <Link to="/aboutus" style={linkStyle} >About us</Link>
                         <Link to='/employee' style={linkStyle}>Employee</Link>
                         <Link to="/roster" style={linkStyle}>Roster</Link>
                         <Link to='/' style={linkStyle}><button onClick={this.props.toggleLogout.bind(this)} className="RegisterButton">Log Out</button></Link>
@@ -60,4 +60,4 @@ const linkStyle = {
     color: 'white'
 }
 
-export default Header;
+export default Header
