@@ -3,10 +3,12 @@ package septmajorproject.bookingsys.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.exception.ServiceTypeException;
+import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.ServiceType;
 import septmajorproject.bookingsys.repository.ServiceTypeRepository;
 
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class ServiceTypeService {
@@ -21,6 +23,22 @@ public class ServiceTypeService {
             return serviceTypeRepository.save(serviceType);
         } catch (Exception e) {
             throw new ServiceTypeException("Service type name: " + serviceType.getServiceName() + " already exists");
+        }
+    }
+
+    //update already existing service type
+    public ServiceType updateExistingServiceType(String serviceNo, Map<String, String> serviceTypeDataMap) {
+
+        ServiceType existing = serviceTypeRepository.findByServiceNo(serviceNo);
+
+        if (existing != null) {
+            existing.setStartTime(serviceTypeDataMap.get("startTime"));
+            existing.setEndTime(serviceTypeDataMap.get("endTime"));
+
+            serviceTypeRepository.save(existing);
+            return existing;
+        } else {
+            return null;
         }
     }
 

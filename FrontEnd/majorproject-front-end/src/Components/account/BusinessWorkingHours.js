@@ -36,7 +36,7 @@ class BusinessWorkingHours extends Component {
       .then((res) => {
         if (res.status === 200) {
           alert("Trading hours have been changed successfully");
-          this.props.history.push("/serviceType");
+          this.props.history.push("/employee");
         }
 
         //if there is any error it is caught here
@@ -102,7 +102,7 @@ class BusinessWorkingHours extends Component {
                 type="text"
                 name="startTime"
                 onChange={this.handleChange}
-                placeholder="Enter openning time as a 24hr form string(eg:hh.mm)"
+                placeholder="Enter openning time as a 24hr form string(eg:hh:mm)"
                 required
               />
               <label>End Time:</label>
@@ -111,7 +111,7 @@ class BusinessWorkingHours extends Component {
                 type="text"
                 name="endTime"
                 onChange={this.handleChange}
-                placeholder="Enter closing time as a 24hr form string(eg:hh.mm)"
+                placeholder="Enter closing time as a 24hr form string(eg:hh:mm)"
                 required
               />
               <input type="submit" className="UpdateButton" />
