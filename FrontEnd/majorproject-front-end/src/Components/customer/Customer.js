@@ -139,7 +139,7 @@ class Customer extends Component {
                         {this.checkBookingStatus(booking)}
                         <button
                           disabled={!this.cancellableBooking}
-                          className="button"
+                          className="cancelButton"
                           onClick={() => this.cancelBooking(booking.id)}
                         >
                           Cancel
