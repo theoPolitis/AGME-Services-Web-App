@@ -10,33 +10,61 @@ class Roster extends Component{
     constructor(props)
     {
         super(props);
-        this.state = props.user.roster;
-        console.log(props.user);
+        const { user } = props;
+        if (user.admin) {
+            this.state = {
+                roster: null,
+                loading: true
+            };
+        } else {
+            this.state = {
+                roster: user.roster
+            };
+        }
+    }
+
+    componentDidMount() {
+        if (this.props.user.admin) {
+            this.fetchEmployeeRoster();
+        }
+    }
+
+    hasChangeRequests = (roster) => {
+        var sunCheck = roster.sunday !== roster.requestedSunday;
+        var monCheck = roster.monday !== roster.requestedMonday;
+        var tuesCheck = roster.tuesday !== roster.requestedTuesday;
+        var wedCheck = roster.wednesday !== roster.requestedWednesday;
+        var thursCheck = roster.thursday !== roster.requestedThursday;
+        var friCheck = roster.friday !== roster.requestedFriday;
+        var satCheck = roster.saturday !== roster.requestedSaturday;
+
+        return (sunCheck || monCheck || tuesCheck || wedCheck || thursCheck || friCheck || satCheck)
+    }
+
+    fetchEmployeeRoster = () => {
+        Axios.get("http://localhost:8080/api/employee/all/" + this.props.user.serviceNo, {}).then(
+            (res) => {
+                const { roster } = res.data.filter(({ employeeId }) => employeeId !== this.props.user.employeeId)[0];
+                this.setState({ roster, loading: false });
+            }
+        ).catch(
+            (error) => {
+                console.log(error);
+                alert("An error occured");
+            }
+        );
     }
 
     submitData = () =>
     {
-        var sunCheck = this.state.sunday !== this.state.requestedSunday;
-        var monCheck = this.state.monday !== this.state.requestedMonday;
-        var tuesCheck = this.state.tuesday !== this.state.requestedTuesday;
-        var wedCheck = this.state.wednesday !== this.state.requestedWednesday;
-        var thursCheck = this.state.thursday !== this.state.requestedThursday;
-        var friCheck = this.state.friday !== this.state.requestedFriday;
-        var satCheck = this.state.saturday !== this.state.requestedSaturday;
-        if(sunCheck || monCheck || tuesCheck || wedCheck || thursCheck || friCheck || satCheck)
-        {
-            this.setState({isApproved : false}, this.sendRequest())
-        }else if(!this.state.isApproved){
-            this.setState({isApproved: true}, this.sendRequest())
-        }else{
-            alert("Roster already up to date.")
-        }
+        this.setState({roster: {...this.state.roster, isApproved : false}}, this.sendRequest())
     }
 
     sendRequest = () => 
     {
-        Axios.put("http://localhost:8080/api/roster/update",this.state).then((res) => {
-                if(this.state.isApproved)
+        Axios.put("http://localhost:8080/api/roster/update",this.state.roster).then((res) => {
+            
+                if(this.state.roster.isApproved)
                 {
                     alert("Your request has been removed, your roster is up to date.");
                 }else{
@@ -48,109 +76,169 @@ class Roster extends Component{
                 alert("An error occured, you could not request these changes");
               })
     }
-    
+
+    approveOrReject = (isApproved) => {
+        const newRoster = { ...this.state.roster, isApproved }
+        if (isApproved) {
+            newRoster.sunday = newRoster.requestedSunday
+            newRoster.monday = newRoster.requestedMonday
+            newRoster.tuesday = newRoster.requestedTuesday
+            newRoster.wednesday = newRoster.requestedWednesday
+            newRoster.thursday = newRoster.requestedThursday
+            newRoster.friday = newRoster.requestedFriday
+            newRoster.saturday = newRoster.requestedSaturday
+        }
+        this.setState({roster: newRoster}, () => {
+            Axios.put("http://localhost:8080/api/roster/update", this.state.roster).then((res) => {
+                    if(this.state.roster.isApproved)
+                    {
+                        alert("You approved, your roster is up to date.");
+                    }else{
+                        alert("You rejected.");
+                    }
+                    
+                  }).catch((error) => {
+                    console.log(error);
+                    alert("An error occured, you could not approve or reject");
+                  })
+        })
+    }
 
     render() 
     {
-        if (this.props.loggedInStatus === "LOGGED_IN")
+        const { roster, loading } = this.state;
+        if (this.props.loggedInStatus === "LOGGED_IN" )
         {
-            return (
-                <div className="container">
-                    <h1>Current Roster</h1>
-                    <div>
-                    <div className="row">
-                        <div className="day">
-                           <h2>Sunday:<span style={{color: "#2197DA", float:"right"}}>{this.state.sunday ? " Rostered" : " Not Rostered"}</span></h2>
+            if (this.props.user.admin) {
+                return !!roster && (
+                    <div className="container">
+                        <h1>Current Roster</h1>
+                        <div>
+                            {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(day => (
+                                <div className="row" key={day}>
+                                    <div className="day-admin">
+                                        <h2>{day}: </h2>
+                                        <span style={{color: "#2197DA"}}>{roster[day.toLowerCase()] ? " Rostered" : " Not Rostered"}</span>
+                                        {roster[day.toLowerCase()] !== roster['requested' + day] && (
+                                            <span style={{color: "#2197DA"}}>Request{roster['requested' + day] ? " Rostered" : " Not Rostered"}</span>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
                         </div>
-                        <button className="button" 
-                        style={ this.state.sunday === this.state.requestedSunday ? buttonMatchStyle : buttonNotMatchStyle}
-                        onClick = {() => {
-                            this.setState({requestedSunday: !this.state.requestedSunday})
-                        }}>
-                            {this.state.sunday === this.state.requestedSunday ? "Approved" : "Change Requested"}
-                        </button>
+                        {roster.isApproved || (
+                            <div>
+                                <button style={buttonMatchStyle} onClick={() => this.approveOrReject(true)}>
+                                    Approve
+                                </button>
+                                <button style={buttonNotMatchStyle} onClick={() => this.approveOrReject(false)}>
+                                    Reject
+                                </button>
+                            </div>
+                        )}
                     </div>
-
-                    <div className="row">
-                        <div className="day">
-                           <h2>Monday:<span style={{color: "#2197DA", float:"right"}}>{this.state.monday ? " Rostered" : " Not Rostered"}</span></h2>
-                        </div>
-
-                        <button className="button" style={ this.state.monday === this.state.requestedMonday ? buttonMatchStyle : buttonNotMatchStyle}
-                        onClick = {() => {
-                            this.setState({requestedMonday: !this.state.requestedMonday})
-                        }}>
-                            {this.state.monday === this.state.requestedMonday ? "Approved" : "Change Requested"}
-                        </button>
-                    </div>
-
-                    <div className="row">
-                        <div className="day">
-                           <h2>Tuesday:<span style={{color: "#2197DA", float:"right"}}>{this.state.tuesday ? " Rostered" : " Not Rostered"}</span></h2>
-                        </div>
-                        <button className="button" 
-                        style={ this.state.tuesday === this.state.requestedTuesday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
-                            this.setState({requestedTuesday: !this.state.requestedTuesday})
-                        }}>
-                            {this.state.tuesday === this.state.requestedTuesday ? "Approved" : "Change Requested"}
-                        </button>
-                    </div>
-
-                    <div className="row">
-                        <div className="day">
-                           <h2>Wednesday:<span style={{color: "#2197DA", float:"right"}}>{this.state.wednesday ? " Rostered" : " Not Rostered"}</span></h2>
-                        </div>
-
-                        <button className="button" 
-                        style={ this.state.wednesday === this.state.requestedWednesday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
-                            this.setState({requestedWednesday: !this.state.requestedWednesday})
-                        }}>
-                            {this.state.wednesday === this.state.requestedWednesday ? "Approved" : "Change Requested"}
-                        </button>
-                    </div>
-
-                    <div className="row">
-                        <div className="day">
-                           <h2>Thursday:<span style={{color: "#2197DA", float:"right"}}>{this.state.thursday ? " Rostered" : " Not Rostered"}</span></h2>
+                );
+            } else {
+                return (
+                    <div className="container">
+                        <h1>Current Roster</h1>
+                        <div>
+                        <div className="row">
+                            <div className="day">
+                            <h2>Sunday:<span style={{color: "#2197DA", float:"right"}}>{roster.sunday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
+                            <button className="button" 
+                            style={ roster.sunday === roster.requestedSunday ? buttonMatchStyle : buttonNotMatchStyle}
+                            onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedSunday: !roster.requestedSunday}})
+                            }}>
+                                {roster.sunday === roster.requestedSunday ? "Approved" : "Change Requested"}
+                            </button>
                         </div>
 
-                        <button className="button" 
-                        style={ this.state.thursday === this.state.requestedThursday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
-                            this.setState({requestedThursday: !this.state.requestedThursday})
-                        }}>
-                            {this.state.thursday === this.state.requestedThursday ? "Approved" : "Change Requested"}
-                        </button>
-                    </div>
+                        <div className="row">
+                            <div className="day">
+                            <h2>Monday:<span style={{color: "#2197DA", float:"right"}}>{roster.monday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
 
-                    <div className="row">
-                        <div className="day">
-                           <h2>Friday:<span style={{color: "#2197DA", float:"right"}}>{this.state.friday ? " Rostered" : " Not Rostered"}</span></h2>
+                            <button className="button" style={ roster.monday === roster.requestedMonday ? buttonMatchStyle : buttonNotMatchStyle}
+                            onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedMonday: !roster.requestedMonday}})
+                            }}>
+                                {roster.monday === roster.requestedMonday ? "Approved" : "Change Requested"}
+                            </button>
                         </div>
 
-                        <button className="button" 
-                        style={ this.state.friday === this.state.requestedFriday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
-                            this.setState({requestedFriday: !this.state.requestedFriday})
-                        }}>
-                            {this.state.friday === this.state.requestedFriday ? "Approved" : "Change Requested"}
-                        </button>
-                    </div>
-
-                    <div className="row">
-                        <div className="day">
-                           <h2>Saturday:<span style={{color: "#2197DA", float:"right"}}>{this.state.saturday ? " Rostered" : " Not Rostered"}</span></h2>
+                        <div className="row">
+                            <div className="day">
+                            <h2>Tuesday:<span style={{color: "#2197DA", float:"right"}}>{roster.tuesday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
+                            <button className="button" 
+                            style={ roster.tuesday === roster.requestedTuesday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedTuesday: !roster.requestedTuesday}})
+                            }}>
+                                {roster.tuesday === roster.requestedTuesday ? "Approved" : "Change Requested"}
+                            </button>
                         </div>
 
-                        <button className="button" 
-                        style={ this.state.saturday === this.state.requestedSaturday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
-                            this.setState({requestedSaturday: !this.state.requestedSaturday})
-                        }}>
-                            {this.state.saturday === this.state.requestedSaturday ? "Approved" : "Change Requested"}
-                        </button>
+                        <div className="row">
+                            <div className="day">
+                            <h2>Wednesday:<span style={{color: "#2197DA", float:"right"}}>{roster.wednesday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
+
+                            <button className="button" 
+                            style={ roster.wednesday === roster.requestedWednesday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedWednesday: !roster.requestedWednesday}})
+                            }}>
+                                {roster.wednesday === roster.requestedWednesday ? "Approved" : "Change Requested"}
+                            </button>
+                        </div>
+
+                        <div className="row">
+                            <div className="day">
+                            <h2>Thursday:<span style={{color: "#2197DA", float:"right"}}>{roster.thursday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
+
+                            <button className="button" 
+                            style={ roster.thursday === roster.requestedThursday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedThursday: !roster.requestedThursday}})
+                            }}>
+                                {roster.thursday === roster.requestedThursday ? "Approved" : "Change Requested"}
+                            </button>
+                        </div>
+
+                        <div className="row">
+                            <div className="day">
+                            <h2>Friday:<span style={{color: "#2197DA", float:"right"}}>{roster.friday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
+
+                            <button className="button" 
+                            style={ roster.friday === roster.requestedFriday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedFriday: !roster.requestedFriday}})
+                            }}>
+                                {roster.friday === roster.requestedFriday ? "Approved" : "Change Requested"}
+                            </button>
+                        </div>
+
+                        <div className="row">
+                            <div className="day">
+                            <h2>Saturday:<span style={{color: "#2197DA", float:"right"}}>{roster.saturday ? " Rostered" : " Not Rostered"}</span></h2>
+                            </div>
+
+                            <button className="button" 
+                            style={ roster.saturday === roster.requestedSaturday ? buttonMatchStyle : buttonNotMatchStyle} onClick = {() => {
+                                this.setState({roster: {...this.state.roster, requestedSaturday: !roster.requestedSaturday}})
+                            }}>
+                                {roster.saturday === roster.requestedSaturday ? "Approved" : "Change Requested"}
+                            </button>
+                        </div>
+                        {this.hasChangeRequests(roster) && (
+                            <button className="submitButton" onClick={this.submitData}>Submit</button>
+                        )}
+                        </div>
                     </div>
-                    <button className="submitButton" onClick={() => this.submitData()}>Submit</button>
-                    </div>
-                </div>
-            );
+                )
+            }
         }
         else{
             return <Redirect to={{ pathname: "/" }} />;
