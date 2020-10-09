@@ -57,6 +57,13 @@ class Roster extends Component{
 
     submitData = () =>
     {
+        var rost = this.state.roster;
+        rost.isApproved = false;
+        this.setState({roster: rost}, this.submit())
+    }
+
+    submit = () =>
+    {
         this.setState({roster: {...this.state.roster, isApproved : false}}, this.sendRequest())
     }
 
