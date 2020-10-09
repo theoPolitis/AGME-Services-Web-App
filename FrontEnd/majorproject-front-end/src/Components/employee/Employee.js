@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
 import "./Employee.css";
 import "../account/Account.css";
 import Axios from "axios";
@@ -12,8 +11,8 @@ class Employee extends Component {
       bookings: [],
       services: [],
       filters: {
-        serviceNo: "",
-        date: "",
+        serviceNo: null,
+        date: null,
       },
     };
   }
@@ -138,103 +137,95 @@ class Employee extends Component {
 
     //admin page
     if (this.isAdminUser()) {
-      // {
-      //   console.log(this.props);
-      // }
       return (
-        <div>
-          <div>
-            <Link to="/businessWorkingHours" className="accountButton">
-              Edit Working Hours for the week
-            </Link>
-            <div className="container">
-              <h1>Bookings</h1>
+        <body>
+          <div className="container">
+            <h1>Bookings</h1>
 
-              <div className="row">
-                <div className="col-1">
-                  <label>Service:</label>
+            <div className="row">
+              <div className="col-1">
+                <label>Service:</label>
+              </div>
+              <div className="col-2">
+                <select
+                  name="ServiceNo"
+                  value={this.state.filters.serviceNo}
+                  onChange={(e) => this.changeServiceNo(e.target.value)}
+                >
+                  <option value="">Select an option:</option>
+                  {this.state.services.map((service) => (
+                    <option value={service.serviceNo}>
+                      {service.serviceName}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="col-2">
+                <div>
+                  <label>Booking Date:</label>
                 </div>
                 <div className="col-2">
-                  <select
-                    name="ServiceNo"
-                    value={this.state.filters.serviceNo}
-                    onChange={(e) => this.changeServiceNo(e.target.value)}
+                  <input
+                    type="date"
+                    id="date-filter"
+                    value={this.state.filters.date}
+                    onChange={(e) => this.changeDateFilter(e.target.value)}
+                  ></input>
+                  <span
+                    class="button"
+                    onClick={() => this.changeDateFilter(null)}
                   >
-                    <option value="">Select an option:</option>
-                    {this.state.services.map((service) => (
-                      <option value={service.serviceNo} key={service.serviceNo}>
-                        {service.serviceName}
-                      </option>
-                    ))}
-                  </select>
-                </div>
-                <div className="col-2">
-                  <div>
-                    <label>Booking Date:</label>
-                  </div>
-                  <div className="col-2">
-                    <input
-                      type="date"
-                      id="date-filter"
-                      value={this.state.filters.date}
-                      onChange={(e) => this.changeDateFilter(e.target.value)}
-                    ></input>
-                    <span
-                      className="button"
-                      onClick={() => this.changeDateFilter(null)}
-                    >
-                      Clear date filter
-                    </span>
-                  </div>
+                    Clear date filter
+                  </span>
                 </div>
               </div>
-
-              <table className="bookings" id="bookings">
-                <thead>
-                  <tr>
-                    <td>Booking date</td>
-                    <td>Service</td>
-                    <td>Employee email</td>
-                    <td>Customer email</td>
-                    <td></td>
-                  </tr>
-                </thead>
-                <tbody>
-                  {jobs.map((job) => (
-                    <tr id={job.id} key={job.id}>
-                      <td>
-                        {job.rosterDate} {job.rosterTime}
-                      </td>
-                      <td>{job.serviceName}</td>
-                      <td>{job.employee.email}</td>
-                      <td>{job.customer.email}</td>
-                      <td>
-                        <span
-                          className="button"
-                          onClick={() => this.deleteBooking(job.id)}
-                        >
-                          Delete
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
+
+            <table class="bookings" id="bookings">
+              <thead>
+                <tr>
+                  <td>Booking date</td>
+                  <td>Service</td>
+                  <td>Employee email</td>
+                  <td>Customer email</td>
+                  <td></td>
+                </tr>
+              </thead>
+              <tbody>
+                {jobs.map((job) => (
+                  <tr id={job.id}>
+                    <td>
+                      {job.rosterDate} {job.rosterTime}
+                    </td>
+                    <td>{job.serviceName}</td>
+                    <td>{job.employee.email}</td>
+                    <td>{job.customer.email}</td>
+                    <td>
+                      <span
+                        class="button"
+                        onClick={() => this.deleteBooking(job.id)}
+                      >
+                        Delete
+                      </span>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-        </div>
+        </body>
       );
     }
 
     //employee page
     return (
-      <div>
-        <div>
+      <body>
+        <main>
           <div className="container">
             <h1>Employee</h1>
             <h1>Roster</h1>
 
-            <table className="bookings" id="bookings">
+            <table class="bookings" id="bookings">
               <thead>
                 <tr>
                   <td>Booking date</td>
@@ -246,7 +237,7 @@ class Employee extends Component {
               </thead>
               <tbody>
                 {jobs.map((job) => (
-                  <tr id={job.id} key={job.id}>
+                  <tr id={job.id}>
                     <td>
                       {job.rosterDate} {job.rosterTime}
                     </td>
@@ -257,7 +248,7 @@ class Employee extends Component {
                     <td>{job.customer.email}</td>
                     <td>
                       <span
-                        className="button"
+                        class="button"
                         onClick={() => this.markAsDone(job.id)}
                       >
                         Done
@@ -347,8 +338,8 @@ class Employee extends Component {
               </div>
             </form>
           </div>
-        </div>
-      </div>
+        </main>
+      </body>
     );
   }
 }

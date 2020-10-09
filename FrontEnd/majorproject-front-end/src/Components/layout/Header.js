@@ -21,7 +21,7 @@ class Header extends Component {
                 </div>
             </header>
             )
-        }else if(this.props.employee === true){
+        }else if(this.props.employee === true && this.props.user.admin){
             return (
                 <header>
                     <h1 className='Logo'>AGMEServices</h1>
@@ -31,6 +31,21 @@ class Header extends Component {
                         <Link to='/employee' style={linkStyle}>Employee</Link>
                         <Link to="/roster" style={linkStyle}>Roster</Link>
                         <Link to="/analytics" style={linkStyle}>Analytics</Link>
+                        <Link to='/' style={linkStyle}><button onClick={this.props.toggleLogout.bind(this)} className="RegisterButton">Log Out</button></Link>
+
+                    </div>
+                </header>
+            )
+        
+        }else if(this.props.employee === true){
+            return (  
+                <header>
+                    <h1 className='Logo'>AGMEServices</h1>
+                    <div className='top-menu'>
+                        <Link to="/" style={linkStyle} >Home</Link>
+                        <Link to="/abooutus" style={linkStyle} >About us</Link>
+                        <Link to='/employee' style={linkStyle}>Employee</Link>
+                        <Link to="/roster" style={linkStyle}>Roster</Link>
                         <Link to='/' style={linkStyle}><button onClick={this.props.toggleLogout.bind(this)} className="RegisterButton">Log Out</button></Link>
 
                     </div>

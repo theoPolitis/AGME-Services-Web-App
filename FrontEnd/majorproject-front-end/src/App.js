@@ -66,6 +66,7 @@ class App extends React.Component {
             toggleLogout={this.toggleLogout}
             customer={this.state.customer}
             employee={this.state.employee}
+            user={this.state.user}
           />
 
           <Route
