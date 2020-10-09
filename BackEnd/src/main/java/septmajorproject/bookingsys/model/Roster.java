@@ -158,7 +158,7 @@ public class Roster {
 
     public void setMonday(boolean monday){this.monday = monday;}
 
-    public boolean getRequestedMonday() { return monday;}
+    public boolean getRequestedMonday() { return requestedMonday;}
 
     public void setRequestedMonday(boolean requestedMonday){this.requestedMonday = requestedMonday;}
 
@@ -174,7 +174,7 @@ public class Roster {
 
     public void setWednesday(boolean wednesday){this.wednesday = wednesday;}
 
-    public boolean getRequestedWednesday() { return wednesday;}
+    public boolean getRequestedWednesday() { return requestedWednesday;}
 
     public void setRequestedWednesday(boolean requestedWednesday){this.requestedWednesday = requestedWednesday;}
 
