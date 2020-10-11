@@ -1,16 +1,17 @@
 - name: booking sys CD
   hosts: all
   vars:
+  #Access key that is set with nviroment variablele in CircleCi
     aws_access_key_id: ""
     aws_secret_access_key: ""
     aws_session_token: ""
   tasks:
-
+    #START
     #ensure latest version of linux is installed
     - name: update AWS sli
       shell: sudo yum update -y
 
-    #SETUP DOCKER AND MAKE SURE ITS INMSTALLED
+    #SETUP DOCKER AND MAKE SURE ITS INSTALLED
     - name: Install docker
       shell: |
         y |sudo amazon-linux-extras install docker
@@ -44,7 +45,7 @@
           'AWS Secret Access Key \[None\]' : "{{ aws_secret_access_key }}"
           'Default region name \[None\]' : 'us-east-1'
           'Default output format \[None\]' : 'text'
-
+    #Although we set the with aws configure we still need to give our AWS_SESSION_TOKEN due to our linux image
     - name: write credentials to file
       shell:
         cmd: |
@@ -74,15 +75,17 @@
     - name: Pull front end from ECR
       shell: "docker pull 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestfront"
 
+    #run docker container with coreectly exposed ports
     - name: run the docker image for frontend
       shell: "docker run -it --detach --name frontend -p 80:3000 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestfront"
     
     - name: run the docker image for the backend
       shell: "docker run --publish 8080:8080 --detach --name backend 228309231359.dkr.ecr.us-east-1.amazonaws.com/bookingsystem:latestbackend"
     
-    #reset the shell credentials 
+    #reset the shell credentials so taht its easier ffoor us to log into for another deployment
     - name: clear config file
       shell: '> .aws/config'
     
     - name: clear credentials file
       shell:  '> .aws/credentials'
+#STOP
