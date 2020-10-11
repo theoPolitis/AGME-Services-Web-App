@@ -1,3 +1,4 @@
+//define our variables that we will use for deployment and logging into aws
 variable "public_key" {
   type = string
 }
