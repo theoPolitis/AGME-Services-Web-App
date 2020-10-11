@@ -120,8 +120,6 @@ class Employee extends Component {
 
   render() {
     var jobs = this.state.bookings;
-
-    //still not listening ////////////
     // Add a "checked" symbol when clicking on a list item
     var list = document.querySelector("ul");
     if (list) {
@@ -138,16 +136,13 @@ class Employee extends Component {
 
     //admin page
     if (this.isAdminUser()) {
-      // {
-      //   console.log(this.props);
-      // }
       return (
         <div>
           <div>
             <Link to="/businessWorkingHours" className="accountButton">
               Edit Working Hours for the week
             </Link>
-            <div className="container">
+            <div className="container_emp">
               <h1>Bookings</h1>
 
               <div className="row">
@@ -230,7 +225,7 @@ class Employee extends Component {
     return (
       <div>
         <div>
-          <div className="container">
+          <div className="container_emp">
             <h1>Employee</h1>
             <h1>Roster</h1>
 

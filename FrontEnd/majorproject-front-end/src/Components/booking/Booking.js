@@ -213,7 +213,7 @@ class Booking extends Component {
           .then((res) => {
             this.setState({ alreadyBooked: res.data }, function () {
               var booked = res.data;
-              for (i = 0; i < booked.length; i++) {
+              for (let i = 0; i < booked.length; i++) {
                 times = times.filter((item) => item !== booked[i].time);
               }
               this.setState({ bookingTimes: times });
