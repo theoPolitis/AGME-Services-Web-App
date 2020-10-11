@@ -1,8 +1,10 @@
+//specify the provider that we are accessing via terraform
 provider "aws" {
   version = "~> 2.23"
   region  = "us-east-1"
 }
 
+//initiates the VPC (Virtual private cloud) so that we can deploy our instance into it
 resource "aws_vpc" "main" {
   cidr_block = "10.0.0.0/16"
 
@@ -11,6 +13,7 @@ resource "aws_vpc" "main" {
   }
 }
 
+//creates our internet gateway so we can connect to and from the internet
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.main.id
 
@@ -19,6 +22,8 @@ resource "aws_internet_gateway" "igw" {
   }
 }
 
+
+//creates our route table with an attached internet gateway
 resource "aws_default_route_table" "main" {
   default_route_table_id = aws_vpc.main.default_route_table_id
 
@@ -31,6 +36,12 @@ resource "aws_default_route_table" "main" {
     Name = "booking-sys default route table"
   }
 }
+
+/* Create our subnets for our aplication for redundancy
+3 public subnets
+3 private subnets
+3 data subnets
+*/
 
 resource "aws_subnet" "public_az1" {
   vpc_id                  = aws_vpc.main.id
@@ -131,6 +142,7 @@ resource "aws_subnet" "data_az3" {
   }
 }
 
+//create our security groups os that we can access specific ports to allow our containers to communicate with each other
 resource "aws_security_group" "allow_http_ssh" {
   description = "Allow ssh and http inbound traffic"
   vpc_id      = aws_vpc.main.id
