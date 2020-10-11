@@ -80,7 +80,20 @@ beforeEach(() => {
         return Promise.resolve({
           data: [
             {
-              time: "11:00",
+              bookingTimes: [
+                "8:00",
+                "9:00",
+                "10:00",
+                "11:00",
+                "12:00",
+                "13:00",
+                "14:00",
+                "15:00",
+                "16:00",
+                "17:00",
+                "18:00",
+                "19:00",
+              ],
             },
           ],
         });
@@ -216,33 +229,6 @@ describe("<Booking /> component tests", () => {
     //Check that the state has updated to reflect the relevant
     expect(wrapper.state("employees").length).toEqual(1);
   });
-
-  //   it("Testing Timeslots Are set When date is set", async () => {
-  //     const wrapper = shallow(<Booking />);
-  //     wrapper.setProps({ loggedInStatus: "LOGGED_IN" });
-
-  //     //Waiting for the component to mount correctly
-  //     var data = await wrapper.instance().componentDidMount();
-
-  //     //Finding the service selection field and choosing the '1E' option
-  //     const serviceNoWrapper = wrapper.find(".ServiceNo");
-  //     serviceNoWrapper.simulate("change", { target: { value: "1E" } });
-
-  //     //Waiting for the component to mount correctly
-  //     data = await wrapper.instance().componentDidMount();
-
-  //     const employeeWrapper = wrapper.find(".employeeNo");
-  //     employeeWrapper.simulate("change", { target: { value: "E1234" } });
-
-  //     data = await wrapper.instance().componentDidMount();
-
-  //     const dateWrapper = wrapper.find(".date");
-  //     dateWrapper.simulate("change", { target: { value: "2020-10-31" } });
-
-  //     data = await wrapper.instance().componentDidMount();
-
-  //     expect(wrapper.state("bookingTimes").length > 0).toEqual(true);
-  //   });
 
   it("Testing already booked times are not displayed", async () => {
     window.alert = jest.fn();
