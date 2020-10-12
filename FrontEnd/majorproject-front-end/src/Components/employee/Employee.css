@@ -159,3 +159,7 @@ ul li.checked {
   background: #1770a3;
   transition: 0.4s;
 }
+
+.button {
+  color: #fff;
+}
