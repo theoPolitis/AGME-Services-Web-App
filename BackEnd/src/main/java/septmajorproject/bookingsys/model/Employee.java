@@ -38,7 +38,7 @@ public class Employee {
     private String address;
     @NotBlank(message = "Please Enter an Address.")
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     @NotBlank(message = "Password cannot be blank")
     private String password;
     @NotBlank(message = "UserName cannot be blank")
@@ -62,7 +62,7 @@ public class Employee {
     }
 
     //simple constructor for employees
-    public Employee(String employeeIdentifier, String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password) {
+    public Employee(String employeeIdentifier, String firstName, String lastName, String email, String phoneNumber, String address, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -151,11 +151,11 @@ public class Employee {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 

@@ -246,14 +246,6 @@ class Employee extends Component {
                       Edit
                     </span>
                   </td>
-                  <td>
-                    <span
-                      className="button"
-                      onClick={() => this.deleteBooking(emp.id)}
-                    >
-                      Delete
-                    </span>
-                  </td>
                 </tr>
               ))}
               </tbody>
