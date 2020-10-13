@@ -55,6 +55,8 @@ class BusinessWorkingHours extends Component {
 
   getWorkingHourInformation = async (serviceNo) => {
     if (this.props.loggedInStatus === "LOGGED_IN") {
+      // console.log("something");
+      // console.log(this.serviceNo);
       axios
         .get("http://localhost:8080/api/serviceType/" + serviceNo, {})
         .then((res) => {
@@ -83,7 +85,7 @@ class BusinessWorkingHours extends Component {
   render() {
     // this.serviceNo = "1E"; //need to set the correct service no here so that the correct information is shown here
     // console.log(this.props);
-    this.setServiceNo();
+    // this.setServiceNo();
     if (this.props.loggedInStatus === "NOT_LOGGED_IN" && !this.isAdmin()) {
       return (
         <Redirect
@@ -91,15 +93,16 @@ class BusinessWorkingHours extends Component {
         />
       );
     } else {
+      this.setServiceNo();
       return (
         <div className="container">
           <div className="detailsList">
             <h1>Current Times:</h1>
             <span>Start Time: </span>
-            <label>{this.state.serviceTypeDetails.startTime}</label>
+            <label className="currentStartTime">{this.state.serviceTypeDetails.startTime}</label>
             <br />
             <span>End Time: </span>
-            <label>{this.state.serviceTypeDetails.endTime}</label>
+            <label className="currentEndTime">{this.state.serviceTypeDetails.endTime}</label>
           </div>
           <div>
             <h1>Edit Times</h1>
