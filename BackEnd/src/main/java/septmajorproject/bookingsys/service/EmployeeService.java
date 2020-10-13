@@ -42,6 +42,7 @@ public class EmployeeService {
             existing.setAddress(userDataMap.get("address"));
             existing.setPhoneNumber(userDataMap.get("phoneNumber"));
             existing.setEmail(userDataMap.get("email"));
+            existing.setUserName(userDataMap.get("userName"));
 
             employeeRepository.save(existing);
             return existing;

@@ -11,6 +11,7 @@ class EmployeeEdit extends Component {
             address: this.props.selectedEmployee.address,
             phoneNumber: this.props.selectedEmployee.phoneNumber,
             email: this.props.selectedEmployee.email,
+            userName: this.props.selectedEmployee.userName,
             password: "",
             confirmPassword: ""
         };
@@ -29,36 +30,35 @@ class EmployeeEdit extends Component {
             
     }
 
-    validate() {
-        if(this.state.password === this.state.confirmPassword) {
-            this.handleSubmit();
-        }
-    }
-
     handleSubmit = (event) => {
-        var postData = {}
-        postData["firstName"] = this.state.firstName;
-        postData["lastName"] = this.state.lastName;
-        postData["address"] = this.state.address;
-        postData["phoneNumber"] = this.state.phoneNumber;
-        postData["email"] = this.state.email;
-        postData["password"] = this.state.password;
-        postData["confirmPassword"] = this.state.confirmPassword;
+        if (this.state.password === this.state.confirmPassword) {
+            var postData = {}
+            postData["firstName"] = this.state.firstName;
+            postData["lastName"] = this.state.lastName;
+            postData["address"] = this.state.address;
+            postData["phoneNumber"] = this.state.phoneNumber;
+            postData["email"] = this.state.email;
+            postData["userName"] = this.state.userName;
+            postData["password"] = this.state.password;
+            postData["confirmPassword"] = this.state.confirmPassword;
 
-        axios.put('http://localhost:8080/api/employee/'+this.props.selectedEmployee.employeeIdentifier, 
-        postData).then(res => {
-            if (res.status === 200){
-                alert("Details changed successfully")
-                this.props.history.push('/employee')
-            } 
+            axios.put('http://localhost:8080/api/employee/'+this.props.selectedEmployee.employeeIdentifier, 
+            postData).then(res => {
+                if (res.status === 200){
+                    alert("Details changed successfully")
+                    this.props.history.push('/employee')
+                } 
 
-        }).catch(error => {
-            alert("ERROR");
-            console.log(error);
-        })
-
+            }).catch(error => {
+                alert("ERROR");
+                console.log(error);
+            })
+        } else {
+            alert("Passwords do not match")
+        }
+        
         event.preventDefault();
-    }
+    } 
 
     render() {
         
@@ -66,7 +66,7 @@ class EmployeeEdit extends Component {
             return(
                 <div className="container">
                 <h1>Sign Up</h1>
-                <form onSubmit={this.validate}>
+                <form onSubmit={this.handleSubmit}>
 
                     <div className="row">
                         <div className="col-1">
@@ -141,7 +141,7 @@ class EmployeeEdit extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}/>
                         </div>
                     </div>
 
@@ -152,7 +152,7 @@ class EmployeeEdit extends Component {
                         </label>
                     </div>
                     <div className="col-2">
-                        <input type="password" name="confirmPassword" placeholder="Confrim Password" value={this.state.confirmPassword} onChange={this.handleChange} required/>
+                        <input type="password" name="confirmPassword" placeholder="Confrim Password" value={this.state.confirmPassword} onChange={this.handleChange}/>
                     </div>
                 </div>
 
