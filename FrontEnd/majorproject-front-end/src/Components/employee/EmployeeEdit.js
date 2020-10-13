@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import axios from "axios";
 
+import "./Employee.css"
+
 class EmployeeEdit extends Component {
     constructor(props) {
         super(props);
@@ -65,7 +67,7 @@ class EmployeeEdit extends Component {
         if (this.isAdminUser()) {
             return(
                 <div className="container">
-                <h1>Sign Up</h1>
+                <h1>{this.state.firstName + " " + this.state.lastName}</h1>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="row">
@@ -133,6 +135,8 @@ class EmployeeEdit extends Component {
                             <input type="text" name="userName" pattern="([A-Z]|[a-z]|[0-9])+([A-Z]|[a-z]|[0-9])+([A-Z]|[a-z]|[0-9])+" title="Must be at least three charcters long and must only contain lowercase, upercase and numbers only" placeholder="Username" value={this.state.userName} onChange={this.handleChange} required/>
                         </div>
                     </div>
+
+                    <p className="SpecialInstructions">Please note: If password fields are left blank, they will not be processed.</p>
 
                     <div className="row">
                         <div className="col-1">
