@@ -13,7 +13,6 @@ class Roster extends Component{
         const { user } = props;
         if (user.admin) {
             this.state = {
-                roster: null,
                 loading: true
             };
         } else {
@@ -44,8 +43,9 @@ class Roster extends Component{
     fetchEmployeeRoster = () => {
         Axios.get("http://localhost:8080/api/employee/all/" + this.props.user.serviceNo, {}).then(
             (res) => {
-                const { roster } = res.data.filter(({ employeeId }) => employeeId !== this.props.user.employeeId)[0];
-                this.setState({ roster, loading: false });
+                const rosters = res.data.filter(({ employeeId }) => employeeId !== this.props.user.employeeId).map(({ roster }) => roster);
+                this.setState({ rosters, loading: false });
+                console.log(rosters)
             }
         ).catch(
             (error) => {
@@ -84,8 +84,8 @@ class Roster extends Component{
               })
     }
 
-    approveOrReject = (isApproved) => {
-        const newRoster = { ...this.state.roster, isApproved }
+    approveOrReject = (index, isApproved) => {
+        const newRoster = { ...this.state.rosters[index], isApproved }
         if (isApproved) {
             newRoster.sunday = newRoster.requestedSunday
             newRoster.monday = newRoster.requestedMonday
@@ -95,9 +95,11 @@ class Roster extends Component{
             newRoster.friday = newRoster.requestedFriday
             newRoster.saturday = newRoster.requestedSaturday
         }
-        this.setState({roster: newRoster}, () => {
-            Axios.put("http://localhost:8080/api/roster/update", this.state.roster).then((res) => {
-                    if(this.state.roster.isApproved)
+        const newRosters = this.state.rosters.slice();
+        newRosters[index] = newRoster;
+        this.setState({rosters: newRosters}, () => {
+            Axios.put("http://localhost:8080/api/roster/update", this.state.rosters[index]).then((res) => {
+                    if(this.state.rosters[index].isApproved)
                     {
                         alert("You approved, your roster is up to date.");
                     }else{
@@ -113,13 +115,13 @@ class Roster extends Component{
 
     render() 
     {
-        const { roster, loading } = this.state;
+        const { roster, rosters = [], loading } = this.state;
         if (this.props.loggedInStatus === "LOGGED_IN" )
         {
             if (this.props.user.admin) {
-                return !!roster && (
-                    <div className="container">
-                        <h1>Current Roster</h1>
+                return rosters.map((roster, index) => (
+                    <div key={roster.id} className="container">
+                        <h1>Employee Id: {roster.employee}</h1>
                         <div>
                             {['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'].map(day => (
                                 <div className="row" key={day}>
@@ -135,16 +137,16 @@ class Roster extends Component{
                         </div>
                         {roster.isApproved || (
                             <div>
-                                <button style={buttonMatchStyle} onClick={() => this.approveOrReject(true)}>
+                                <button style={buttonMatchStyle} onClick={() => this.approveOrReject(index, true)}>
                                     Approve
                                 </button>
-                                <button style={buttonNotMatchStyle} onClick={() => this.approveOrReject(false)}>
+                                <button style={buttonNotMatchStyle} onClick={() => this.approveOrReject(index, false)}>
                                     Reject
                                 </button>
                             </div>
                         )}
                     </div>
-                );
+                ));
             } else {
                 return (
                     <div className="container">

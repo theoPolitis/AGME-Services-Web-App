@@ -8,6 +8,14 @@ span {
     display: inline-block;
 }
 
+.day-admin {
+    display: flex;
+    align-items: center;
+}
+.day-admin h2 {
+    flex: 1;
+}
+
 .submitButton{
     color: white;
     font-size: 20px;
