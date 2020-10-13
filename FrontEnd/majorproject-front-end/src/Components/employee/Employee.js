@@ -104,6 +104,19 @@ class Employee extends Component {
       });
   }
 
+  editEmployee(id) {
+    Axios.get(`http://localhost:8080/api/employee/${id}`)
+    .then((res) => {
+      // THIS LINE DOESNT WORK
+      this.props.selectEmployee(res.data);
+      this.props.history.push('/editEmployee');
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Error retreiving employee data to edit.");
+    });
+  }
+
   //GET request determines which times the employee is already booked for on the day
 
   getBookingUrl() {
@@ -241,7 +254,7 @@ class Employee extends Component {
                   <td>
                     <span
                       className="button"
-                      onClick={() => this.deleteBooking(emp.id)}
+                      onClick={() => this.editEmployee(emp.employeeIdentifier)}
                     >
                       Edit
                     </span>

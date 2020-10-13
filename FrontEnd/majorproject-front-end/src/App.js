@@ -28,6 +28,7 @@ class App extends React.Component {
       employee: false,
       customer: false,
       user: {},
+      selectedEmployee: {}
     };
   }
 
@@ -54,6 +55,10 @@ class App extends React.Component {
       employee: false,
       user: {},
     });
+  };
+
+  selectEmployee = (data) => {
+    this.setState({ selectedEmployee: data })
   };
 
   render() {
@@ -189,6 +194,7 @@ class App extends React.Component {
               userAuth={this.state.user}
               employee={this.state.employee}
               customer={this.state.customer}
+              selectedEmployee={this.state.selectedEmployee}
             />
           )}
           />
