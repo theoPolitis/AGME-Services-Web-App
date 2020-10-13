@@ -55,8 +55,6 @@ class BusinessWorkingHours extends Component {
 
   getWorkingHourInformation = async (serviceNo) => {
     if (this.props.loggedInStatus === "LOGGED_IN") {
-      // console.log("something");
-      // console.log(this.serviceNo);
       axios
         .get("http://localhost:8080/api/serviceType/" + serviceNo, {})
         .then((res) => {
