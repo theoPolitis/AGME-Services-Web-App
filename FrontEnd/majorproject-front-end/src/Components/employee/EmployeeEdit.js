@@ -1,13 +1,24 @@
 import React, { Component } from "react";
+import axios from "axios";
 
 class EmployeeEdit extends Component {
     constructor(props) {
         super(props);
     
         this.state = {
-            selectedUser: {}
+            firstName: this.props.selectedEmployee.firstName,
+            lastName: this.props.selectedEmployee.lastName,
+            address: this.props.selectedEmployee.address,
+            phoneNumber: this.props.selectedEmployee.phoneNumber,
+            email: this.props.selectedEmployee.email,
+            password: "",
+            confirmPassword: ""
         };
       }
+
+    handleChange = (event) => {
+        this.setState({[event.target.name]: event.target.value});
+    }
 
     isAdminUser() {
         if(this.props.userAuth != null) {
@@ -18,13 +29,44 @@ class EmployeeEdit extends Component {
             
     }
 
+    validate() {
+        if(this.state.password === this.state.confirmPassword) {
+            this.handleSubmit();
+        }
+    }
+
+    handleSubmit = (event) => {
+        var postData = {}
+        postData["firstName"] = this.state.firstName;
+        postData["lastName"] = this.state.lastName;
+        postData["address"] = this.state.address;
+        postData["phoneNumber"] = this.state.phoneNumber;
+        postData["email"] = this.state.email;
+        postData["password"] = this.state.password;
+        postData["confirmPassword"] = this.state.confirmPassword;
+
+        axios.put('http://localhost:8080/api/employee/'+this.props.selectedEmployee.employeeIdentifier, 
+        postData).then(res => {
+            if (res.status === 200){
+                alert("Details changed successfully")
+                this.props.history.push('/employee')
+            } 
+
+        }).catch(error => {
+            alert("ERROR");
+            console.log(error);
+        })
+
+        event.preventDefault();
+    }
+
     render() {
         
         if (this.isAdminUser()) {
             return(
                 <div className="container">
                 <h1>Sign Up</h1>
-                <form onSubmit={this.handleSubmit}>
+                <form onSubmit={this.validate}>
 
                     <div className="row">
                         <div className="col-1">

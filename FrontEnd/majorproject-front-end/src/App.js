@@ -180,6 +180,7 @@ class App extends React.Component {
                 userAuth={this.state.user}
                 employee={this.state.employee}
                 customer={this.state.customer}
+                selectEmployee={this.selectEmployee}
               />
             )}
           />

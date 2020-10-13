@@ -33,15 +33,15 @@ public class EmployeeService {
         System.out.println("FIRSTNAME HERE: " + existing.getFirstName());
 
         if (existing != null) {
-            if (userDataMap.containsKey("password")) {
+            if (userDataMap.get("password") != "") {
                 existing.setPassword(userDataMap.get("password"));
-            } else {
-                existing.setFirstName(userDataMap.get("firstName"));
-                existing.setLastName(userDataMap.get("lastName"));
-                existing.setAddress(userDataMap.get("address"));
-                existing.setPhoneNumber(userDataMap.get("phoneNumber"));
-                existing.setEmail(userDataMap.get("email"));
             }
+
+            existing.setFirstName(userDataMap.get("firstName"));
+            existing.setLastName(userDataMap.get("lastName"));
+            existing.setAddress(userDataMap.get("address"));
+            existing.setPhoneNumber(userDataMap.get("phoneNumber"));
+            existing.setEmail(userDataMap.get("email"));
 
             employeeRepository.save(existing);
             return existing;
