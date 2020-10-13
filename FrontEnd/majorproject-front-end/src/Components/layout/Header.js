@@ -25,10 +25,9 @@ class Header extends Component {
                     <h1 className='Logo'>AGMEServices</h1>
                     <div className='top_menu'>
                         <Link to="/" style={links_style} >Home</Link>
-                        <Link to="/abooutus" style={links_style} >About us</Link>
+                        <Link to="/aboutus" style={links_style} >About us</Link>
                         <Link to='/employee' style={links_style}>Employee</Link>
                         <Link to="/roster" style={links_style}>Roster</Link>
-                        <Link to="/analytics" style={links_style}>Analytics</Link>
                         <Link to='/' style={links_style}><button onClick={this.props.toggleLogout.bind(this)} className="register_button">Log Out</button></Link>
 
                     </div>
@@ -59,4 +58,4 @@ const links_style = {
     color: 'white'
 }
 
-export default Header;
+export default Header

@@ -12,8 +12,8 @@ class Employee extends Component {
       bookings: [],
       services: [],
       filters: {
-        serviceNo: "",
-        date: "",
+        serviceNo: this.props.userAuth.serviceNo,
+        date: null,
       },
     };
   }
@@ -39,18 +39,6 @@ class Employee extends Component {
           );
         });
     }
-  }
-
-  changeServiceNo(serviceNo) {
-    this.setState(
-      {
-        filters: {
-          ...this.state.filters,
-          serviceNo: serviceNo,
-        },
-      },
-      () => this.reloadState()
-    );
   }
 
   changeDateFilter(date) {
@@ -145,23 +133,17 @@ class Employee extends Component {
             <div className="container_emp">
               <h1>Bookings</h1>
 
-              <div className="row">
-                <div className="col-1">
-                  <label>Service:</label>
-                </div>
+            <div className="row">
+            
+              <div className="col-1">
+                <label>Service No:</label>
+              </div>
+              <div className="col-2">
+                <label name="ServiceNo">{this.props.userAuth.serviceNo}</label>
+              </div>
+       
+              <div className="col-2">
                 <div className="col-2">
-                  <select
-                    name="ServiceNo"
-                    value={this.state.filters.serviceNo}
-                    onChange={(e) => this.changeServiceNo(e.target.value)}
-                  >
-                    <option value="">Select an option:</option>
-                    {this.state.services.map((service) => (
-                      <option value={service.serviceNo} key={service.serviceNo}>
-                        {service.serviceName}
-                      </option>
-                    ))}
-                  </select>
                 </div>
                 <div className="col-2">
                   <div>
@@ -217,6 +199,7 @@ class Employee extends Component {
               </table>
             </div>
           </div>
+        </div>
         </div>
       );
     }
