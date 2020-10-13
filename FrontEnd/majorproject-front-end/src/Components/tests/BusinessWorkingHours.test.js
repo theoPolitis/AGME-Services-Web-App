@@ -210,4 +210,89 @@ describe("<BusinessWorkingHours /> test for BusinessWorkingHours.js and it's com
           });
 
     });
+
+    it("Testing current end Time current start time being updated", async () => {
+
+        let adminUser = 
+            {
+                employeeId: 9,
+                employeeIdentifier: "E2351",
+                firstName: "AdminGym",
+                lastName: "AdminGym",
+                address: "admin",
+                email: "AdminGym@student.rmit.edu.au",
+                phoneNumber: 0,
+                password: "adminGym",
+                userName: "AdminGym",
+                createdDate: "2020-10-13",
+                updatedDate: null,
+                roster: {
+                    id: 35,
+                    employee: 9,
+                    sunday: true,
+                    monday: true,
+                    tuesday: true,
+                    wednesday: true,
+                    thursday: true,
+                    friday: true,
+                    saturday: true,
+                    requestedSunday: true,
+                    requestedMonday: true,
+                    requestedTuesday: true,
+                    requestedWednesday: true,
+                    requestedThursday: true,
+                    requestedFriday: true,
+                    requestedSaturday: true,
+                    isApproved: true
+                },
+                admin: true,
+                serviceNo: "2E"
+            };
+
+        window.alert = jest.fn();
+        const wrapper = shallow(<BusinessWorkingHours userAuth={adminUser} />);
+        
+        wrapper.setProps({loggedInStatus: "LOGGED_IN"});
+        wrapper.setState({serviceNo:"2E"});
+
+        var data = await wrapper.instance().componentDidMount();
+
+        const startTimeWrapper = wrapper.find('input[name="startTime"]');
+        startTimeWrapper.simulate("change", { target:
+            {
+                name:"startTime",
+                value: "10:00" 
+            } 
+        });
+
+        const endTimeWrapper = wrapper.find('input[name="endTime"]');
+        endTimeWrapper.simulate("change", { target: 
+            { 
+                name:"endTime",
+                value: "17:00"
+            } 
+        });
+
+        data = await wrapper.instance().componentDidMount();
+
+        const updateButton = wrapper.find(".UpdateButton");
+        updateButton.simulate('click');
+
+        data = await wrapper.instance().componentDidMount();
+
+        wrapper.find('.currentStartTime').equals("change", {
+            target: {
+              name: "currentStartTime",
+              value: "10:00",
+            },
+        });
+
+        wrapper.find('.currentEndTime').equals("change", {
+            target: {
+              name: "currentEndTime",
+              value: "17:00",
+            },
+        });
+
+    });
 });
