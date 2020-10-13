@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
-import "./Roster.css"
 import Axios from "axios";
 
 class Roster extends Component{
@@ -147,7 +145,7 @@ class Roster extends Component{
                             {this.state.saturday === this.state.requestedSaturday ? "Approved" : "Change Requested"}
                         </button>
                     </div>
-                    <button className="submitButton" onClick={() => this.submitData()}>Submit</button>
+                    <button className="submit_button" onClick={() => this.submitData()}>Submit</button>
                     </div>
                 </div>
             );

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./Employee.css";
 import "../account/Account.css";
 import Axios from "axios";
@@ -107,8 +108,6 @@ class Employee extends Component {
 
   render() {
     var jobs = this.state.bookings;
-
-    //still not listening ////////////
     // Add a "checked" symbol when clicking on a list item
     var list = document.querySelector("ul");
     if (list) {
@@ -126,9 +125,13 @@ class Employee extends Component {
     //admin page
     if (this.isAdminUser()) {
       return (
-        <body>
-          <div className="container">
-            <h1>Bookings</h1>
+        <div>
+          <div>
+            <Link to="/businessWorkingHours" className="accountButton">
+              Edit Working Hours for the week
+            </Link>
+            <div className="container_emp">
+              <h1>Bookings</h1>
 
             <div className="row">
             
@@ -140,71 +143,76 @@ class Employee extends Component {
               </div>
        
               <div className="col-2">
-                <div>
-                  <label>Booking Date:</label>
+                <div className="col-2">
                 </div>
                 <div className="col-2">
-                  <input
-                    type="date"
-                    id="date-filter"
-                    value={this.state.filters.date}
-                    onChange={(e) => this.changeDateFilter(e.target.value)}
-                  ></input>
-                  <span
-                    class="button"
-                    onClick={() => this.changeDateFilter(null)}
-                  >
-                    Clear date filter
-                  </span>
+                  <div>
+                    <label>Booking Date:</label>
+                  </div>
+                  <div className="col-2">
+                    <input
+                      type="date"
+                      id="date-filter"
+                      value={this.state.filters.date}
+                      onChange={(e) => this.changeDateFilter(e.target.value)}
+                    ></input>
+                    <span
+                      className="button"
+                      onClick={() => this.changeDateFilter(null)}
+                    >
+                      Clear date filter
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <table class="bookings" id="bookings">
-              <thead>
-                <tr>
-                  <td>Booking date</td>
-                  <td>Service</td>
-                  <td>Employee email</td>
-                  <td>Customer email</td>
-                  <td></td>
-                </tr>
-              </thead>
-              <tbody>
-                {jobs.map((job) => (
-                  <tr id={job.id}>
-                    <td>
-                      {job.rosterDate} {job.rosterTime}
-                    </td>
-                    <td>{job.serviceName}</td>
-                    <td>{job.employee.email}</td>
-                    <td>{job.customer.email}</td>
-                    <td>
-                      <span
-                        class="button"
-                        onClick={() => this.deleteBooking(job.id)}
-                      >
-                        Delete
-                      </span>
-                    </td>
+              <table className="bookings" id="bookings">
+                <thead>
+                  <tr>
+                    <td>Booking date</td>
+                    <td>Service</td>
+                    <td>Employee email</td>
+                    <td>Customer email</td>
+                    <td></td>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {jobs.map((job) => (
+                    <tr id={job.id} key={job.id}>
+                      <td>
+                        {job.rosterDate} {job.rosterTime}
+                      </td>
+                      <td>{job.serviceName}</td>
+                      <td>{job.employee.email}</td>
+                      <td>{job.customer.email}</td>
+                      <td>
+                        <span
+                          className="button"
+                          onClick={() => this.deleteBooking(job.id)}
+                        >
+                          Delete
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
-        </body>
+        </div>
+        </div>
       );
     }
 
     //employee page
     return (
-      <body>
-        <main>
-          <div className="container">
+      <div>
+        <div>
+          <div className="container_emp">
             <h1>Employee</h1>
             <h1>Roster</h1>
 
-            <table class="bookings" id="bookings">
+            <table className="bookings" id="bookings">
               <thead>
                 <tr>
                   <td>Booking date</td>
@@ -216,7 +224,7 @@ class Employee extends Component {
               </thead>
               <tbody>
                 {jobs.map((job) => (
-                  <tr id={job.id}>
+                  <tr id={job.id} key={job.id}>
                     <td>
                       {job.rosterDate} {job.rosterTime}
                     </td>
@@ -227,7 +235,7 @@ class Employee extends Component {
                     <td>{job.customer.email}</td>
                     <td>
                       <span
-                        class="button"
+                        className="button"
                         onClick={() => this.markAsDone(job.id)}
                       >
                         Done
@@ -317,8 +325,8 @@ class Employee extends Component {
               </div>
             </form>
           </div>
-        </main>
-      </body>
+        </div>
+      </div>
     );
   }
 }

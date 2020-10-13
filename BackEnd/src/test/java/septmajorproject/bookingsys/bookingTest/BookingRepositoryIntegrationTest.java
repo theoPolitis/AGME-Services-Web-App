@@ -73,7 +73,7 @@ public class BookingRepositoryIntegrationTest {
         employeeRepository.save(emp);
         employeeRepository.save(emp2);
 
-        ServiceType serviceType = new ServiceType("1", "haircut");
+        ServiceType serviceType = new ServiceType("1", "haircut","08:00","20:00");
         serviceTypeRepository.save(serviceType);
         Booking booking = new Booking(date, time, emp, cust, serviceType);
         Booking booking2 = new Booking(date2, time2, emp, cust, serviceType);

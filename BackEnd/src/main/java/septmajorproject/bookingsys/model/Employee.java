@@ -2,6 +2,7 @@ package septmajorproject.bookingsys.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import javax.persistence.*;
@@ -42,6 +43,7 @@ public class Employee {
     private String password;
     @NotBlank(message = "UserName cannot be blank")
     private String userName;
+    @JsonProperty("serviceNo")
     @NotBlank(message = "serviceNo cannot be blank")
     private String serviceNo;
     //created and modified date for records following format yyyy-MM-dd

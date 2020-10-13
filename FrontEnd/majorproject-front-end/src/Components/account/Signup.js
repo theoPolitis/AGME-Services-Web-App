@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import '../homepage/HomePage.css';
 import './Account.css';
 import { Redirect } from 'react-router-dom';
 

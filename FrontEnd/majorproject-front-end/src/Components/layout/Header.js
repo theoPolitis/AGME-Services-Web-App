@@ -1,5 +1,3 @@
-
-import './Layout.css';
 import { Link } from 'react-router-dom';
 import React, { Component } from 'react'
 
@@ -12,12 +10,12 @@ class Header extends Component {
             return (
                 <header>
                 <h1 className='Logo'>AGMEServices</h1>
-                <div className='top-menu'>
-                    <Link to="/" style={linkStyle} >Home</Link>
-                    <Link to="/aboutus" style={linkStyle} >About us</Link>
-                    <Link to='/booking' style={linkStyle}>Make a Booking</Link>
-                    <Link to='/customer' style={linkStyle}>Customer</Link>
-                    <Link to='/' style={linkStyle}><button onClick={() => this.toggleLogout()} className="RegisterButton">Log Out</button></Link>
+                <div className='top_menu'>
+                    <Link to="/" style={links_style} >Home</Link>
+                    <Link to="/aboutus" style={links_style} >About us</Link>
+                    <Link to='/booking' style={links_style}>Make a Booking</Link>
+                    <Link to='/customer' style={links_style}>Customer</Link>
+                    <Link to='/' style={links_style}><button onClick={() => this.toggleLogout()} className="register_button">Log Out</button></Link>
                 </div>
             </header>
             )
@@ -25,12 +23,12 @@ class Header extends Component {
             return (
                 <header>
                     <h1 className='Logo'>AGMEServices</h1>
-                    <div className='top-menu'>
-                        <Link to="/" style={linkStyle} >Home</Link>
-                        <Link to="/aboutus" style={linkStyle} >About us</Link>
-                        <Link to='/employee' style={linkStyle}>Employee</Link>
-                        <Link to="/roster" style={linkStyle}>Roster</Link>
-                        <Link to='/' style={linkStyle}><button onClick={this.props.toggleLogout.bind(this)} className="RegisterButton">Log Out</button></Link>
+                    <div className='top_menu'>
+                        <Link to="/" style={links_style} >Home</Link>
+                        <Link to="/aboutus" style={links_style} >About us</Link>
+                        <Link to='/employee' style={links_style}>Employee</Link>
+                        <Link to="/roster" style={links_style}>Roster</Link>
+                        <Link to='/' style={links_style}><button onClick={this.props.toggleLogout.bind(this)} className="register_button">Log Out</button></Link>
 
                     </div>
                 </header>
@@ -39,12 +37,12 @@ class Header extends Component {
             return (
                 <header>
                     <h1 className='Logo'>AGMEServices</h1>
-                    <div className='top-menu'>
-                        <Link to="/" style={linkStyle} >Home</Link>
-                        <Link to="/aboutus" style={linkStyle} >About us</Link>
-                        <Link to='/login' style={linkStyle}>Login</Link>
-                        <Link to='/staffLogin' style={linkStyle}>Staff Login</Link>
-                        <Link to='/createAccount' style={linkStyle}><button className="RegisterButton">Register</button></Link>
+                    <div className='top_menu'>
+                        <Link to="/" style={links_style} >Home</Link>
+                        <Link to="/aboutus" style={links_style} >About us</Link>
+                        <Link to='/login' style={links_style}>Login</Link>
+                        <Link to='/staffLogin' style={links_style}>Staff Login</Link>
+                        <Link to='/createAccount' style={links_style}><button className="register_button">Register</button></Link>
                     </div>
             </header>
             )
@@ -52,7 +50,7 @@ class Header extends Component {
     }
 }
 
-const linkStyle = {
+const links_style = {
     paddingLeft: '10px',
     paddingRight: '10px',
     fontSize: '25px',

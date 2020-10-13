@@ -1,11 +1,8 @@
 .BookingsTitle {
-
   color: #ffffff;
 }
 
 .Bookings {
-  
-
   /* background: #51778c; */
   background: white;
   mix-blend-mode: exclusion;
@@ -21,6 +18,7 @@ p {
 .detailsList > span {
   font-weight: bolder;
   display: inline;
+  float: left;
 }
 
 .detailsList > p {
@@ -29,8 +27,6 @@ p {
 }
 
 .SpecialInstructions {
-
-
   font-family: Lato;
   font-style: normal;
   font-weight: normal;
@@ -47,7 +43,6 @@ p {
   margin: 5px auto;
   width: 400px;
   height: 22px;
-
 
   font-family: Lato;
   font-style: normal;
@@ -83,4 +78,16 @@ input {
 .accountButton:hover {
   background: #1770a3;
   transition: 0.4s;
+}
+
+.cancelButton {
+  color: white;
+  font-size: 20px;
+  background: #2197da;
+  border: 0;
+  cursor: pointer;
+  margin-top: 17px;
+  width: 100px;
+  height: 35px;
+  border-radius: 12px;
 }

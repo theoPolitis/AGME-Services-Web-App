@@ -9,11 +9,13 @@ import Signup from "./Components/account/Signup.js";
 import Login from "./Components/account/Login.js";
 import StaffLogin from "./Components/account/StaffLogin";
 import Booking from "./Components/booking/Booking";
-import AboutUs from "./Components/aboutUs/AboutUs"
+import AboutUs from "./Components/aboutUs/AboutUs";
 import Customer from "./Components/customer/Customer";
-import AccountEdit from "./Components/account/AccountEdit"
-import PasswordChange from "./Components/account/PasswordChange"
 import Roster from "./Components/roster/Roster";
+import Analytics from "./Components/analytics/Analytics";
+import AccountEdit from "./Components/account/AccountEdit";
+import PasswordChange from "./Components/account/PasswordChange";
+import BusinessWorkingHours from "./Components/account/BusinessWorkingHours";
 
 class App extends React.Component {
   constructor() {
@@ -31,42 +33,42 @@ class App extends React.Component {
     this.setState({
       user: data,
       customer: true,
-      loggedInStatus: "LOGGED_IN"
-    })
-  }
+      loggedInStatus: "LOGGED_IN",
+    });
+  };
 
   employeeAuth = (data) => {
     this.setState({
       user: data,
       employee: true,
-      loggedInStatus: "LOGGED_IN"
-    })
-  }
-  
+      loggedInStatus: "LOGGED_IN",
+    });
+  };
+
   toggleLogout = () => {
     this.setState({
       loggedInStatus: "NOT_LOGGED_IN",
       customer: false,
       employee: false,
-      user: {}
-    })
-  }
+      user: {},
+    });
+  };
 
   render() {
     return (
       <Router>
         <div>
-          <Header toggleLogout={this.toggleLogout} 
-                  customer={this.state.customer} 
-                  employee={this.state.employee} 
-                   />
+          <Header
+            toggleLogout={this.toggleLogout}
+            customer={this.state.customer}
+            employee={this.state.employee}
+          />
 
           <Route
             exact
             path="/"
             render={(props) => (
-              <HomePage {...props} 
-                        loggedInStatus={this.state.loggedInStatus} />
+              <HomePage {...props} loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
@@ -74,20 +76,23 @@ class App extends React.Component {
 
           <Route exact path="/roster" render={(props) =>(<Roster {...props} user={this.state.user} customerAuth={this.customerAuth} loggedInStatus = {this.state.loggedInStatus}/>)}></Route>
 
+          <Route exact path="/analytics" render={(props) =>(<Analytics {...props} user={this.state.user} customerAuth={this.customerAuth} loggedInStatus = {this.state.loggedInStatus}/>)}></Route>
+
           <Route
             path="/login"
             render={(props) => (
-              <Login {...props} 
-                     customerAuth={this.customerAuth} 
-                     loggedInStatus={this.state.loggedInStatus} />
+              <Login
+                {...props}
+                customerAuth={this.customerAuth}
+                loggedInStatus={this.state.loggedInStatus}
+              />
             )}
           />
 
           <Route
             path="/createAccount"
             render={(props) => (
-              <Signup {...props} 
-                      loggedInStatus={this.state.loggedInStatus} />
+              <Signup {...props} loggedInStatus={this.state.loggedInStatus} />
             )}
           />
 
@@ -105,47 +110,70 @@ class App extends React.Component {
           <Route
             path="/booking"
             render={(props) => (
-              <Booking {...props} 
-                       loggedInStatus={this.state.loggedInStatus} user={this.state.user}/>
+              <Booking
+                {...props}
+                loggedInStatus={this.state.loggedInStatus}
+                user={this.state.user}
+              />
             )}
           />
 
           <Route
             path="/customer"
             render={(props) => (
-              <Customer {...props} 
-                        loggedInStatus={this.state.loggedInStatus}
-                        userAuth={this.state.user} 
-                        customer={this.state.customer}/>
+              <Customer
+                {...props}
+                loggedInStatus={this.state.loggedInStatus}
+                userAuth={this.state.user}
+                customer={this.state.customer}
+              />
             )}
           />
 
           <Route
-          path="/editDetails"
-          render={(props) => (
-            <AccountEdit {...props} 
-                      loggedInStatus={this.state.loggedInStatus} 
-                      currentCustomer={this.state.user}/>
-          )}
-        />
+            path="/editDetails"
+            render={(props) => (
+              <AccountEdit
+                {...props}
+                loggedInStatus={this.state.loggedInStatus}
+                currentCustomer={this.state.user}
+              />
+            )}
+          />
 
-        <Route
-        path="/changePassword"
-        render={(props) => (
-          <PasswordChange {...props} 
-                    loggedInStatus={this.state.loggedInStatus} 
-                    currentCustomer={this.state.user}/>
-        )}
-      />
+          <Route
+            path="/businessWorkingHours"
+            render={(props) => (
+              <BusinessWorkingHours
+                {...props}
+                loggedInStatus={this.state.loggedInStatus}
+                userAuth={this.state.user}
+                employee={this.state.employee}
+              />
+            )}
+          />
+
+          <Route
+            path="/changePassword"
+            render={(props) => (
+              <PasswordChange
+                {...props}
+                loggedInStatus={this.state.loggedInStatus}
+                currentCustomer={this.state.user}
+              />
+            )}
+          />
 
           <Route
             path="/employee"
             render={(props) => (
-              <Employee {...props}
-                        loggedInStatus={this.state.loggedInStatus}
-                        userAuth={this.state.user}
-                        employee={this.state.employee}
-                        customer={this.state.customer} />
+              <Employee
+                {...props}
+                loggedInStatus={this.state.loggedInStatus}
+                userAuth={this.state.user}
+                employee={this.state.employee}
+                customer={this.state.customer}
+              />
             )}
           />
         </div>
