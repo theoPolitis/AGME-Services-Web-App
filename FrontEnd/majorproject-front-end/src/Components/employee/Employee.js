@@ -13,7 +13,7 @@ class Employee extends Component {
       services: [],
       filters: {
         serviceNo: this.props.userAuth.serviceNo,
-        date: null,
+        date: "",
       },
     };
   }

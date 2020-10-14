@@ -148,6 +148,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Services are Set when Booking is rendered", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         const data = await wrapper.instance().componentDidMount();
@@ -155,6 +156,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Service updates state when selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         const data = await wrapper.instance().componentDidMount();
@@ -164,6 +166,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Service updates to null when null state when selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         const data = await wrapper.instance().componentDidMount();
@@ -175,6 +178,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Employees Field is diabled when no service is selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         //Wait till the component mounts i.e. set state and axios have finished running before checking state attributes.
@@ -183,6 +187,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Date Field is diabled when no service is selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         //Wait till the component mounts i.e. set state and axios have finished running before checking state attributes.
@@ -191,6 +196,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Time Field is diabled when no service is selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         //Wait till the component mounts i.e. set state and axios have finished running before checking state attributes.
@@ -199,6 +205,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Submit Button is diabled when no service is selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         //Wait till the component mounts i.e. set state and axios have finished running before checking state attributes.
@@ -207,6 +214,7 @@ describe('<Booking /> component tests', () => {
     });
 
     it("Testing Employees update when service selected", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
         //Wait till the component mounts i.e. set state and axios have finished running before checking state attributes.
@@ -222,34 +230,8 @@ describe('<Booking /> component tests', () => {
         expect(wrapper.state('employees').length).toEqual(1);
     });
 
-    // it("Testing Timeslots Are set When date is set", async () => {
-    //     const wrapper = shallow(<Booking />);
-    //     wrapper.setProps({loggedInStatus: "LOGGED_IN"});
-
-    //     //Waiting for the component to mount correctly
-    //     var data = await wrapper.instance().componentDidMount();
-
-    //     //Finding the service selection field and choosing the '1E' option
-    //     const serviceNoWrapper = wrapper.find('.ServiceNo');
-    //     serviceNoWrapper.simulate('change', {target: { value : '1E'}});
-
-    //     //Waiting for the component to mount correctly
-    //     data = await wrapper.instance().componentDidMount();
-
-    //     const employeeWrapper = wrapper.find('.employeeNo');
-    //     employeeWrapper.simulate('change', {target: {value : 'E1234'}});
-
-    //     data = await wrapper.instance().componentDidMount();
-
-    //     const dateWrapper = wrapper.find('.date');
-    //     dateWrapper.simulate('change', {target: {value : '2020-10-31'}});
-
-    //     data = await wrapper.instance().componentDidMount();
-
-    //     expect(wrapper.state('bookingTimes').length > 0).toEqual(true);
-    // });
-
     it("Testing already booked times are not displayed", async () => {
+      window.alert = jest.fn();
         const wrapper = shallow(<Booking />);
         wrapper.setProps({loggedInStatus: "LOGGED_IN"});
 
