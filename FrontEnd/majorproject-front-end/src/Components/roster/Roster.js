@@ -248,7 +248,7 @@ class Roster extends Component{
                             </button>
                         </div>
                         {this.hasChangeRequests(roster) && (
-                            <button className="submitButton" onClick={this.submitData}>Submit</button>
+                            <button className="submit_button" onClick={this.submitData}>Submit</button>
                         )}
                         </div>
                     </div>
