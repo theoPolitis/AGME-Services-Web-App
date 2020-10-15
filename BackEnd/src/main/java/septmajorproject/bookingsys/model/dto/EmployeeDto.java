@@ -7,6 +7,9 @@ import java.util.Date;
 
 @Data
 public class EmployeeDto {
+    //The @Data tag is a lombok annotation that auto-implements all setters and getters for the attributes
+
+    //Each of these attributes match attributes in the Employee model
     private long employeeId;
     private String employeeIdentifier;
     private boolean isAdmin;
@@ -14,7 +17,7 @@ public class EmployeeDto {
     private String lastName;
     private String address;
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     private String userName;
     private String serviceNo;
 

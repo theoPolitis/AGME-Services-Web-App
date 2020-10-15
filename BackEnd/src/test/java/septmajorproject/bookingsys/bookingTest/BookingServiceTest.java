@@ -63,12 +63,12 @@ public class BookingServiceTest {
         Time time3 = new Time(9,30,0);
         Date date3 = new Date(2020,9,17);
 
-        Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
-        Employee emp2 = new Employee("5678","Sarah", "Doe", "sarah@doe.com", 39593925, "123 street", "somethingHere", "test");
+        Employee emp = new Employee("1234","Bob", "Smith", "bob@smith.com", "39593925", "123 street", "anotherOne", "test");
+        Employee emp2 = new Employee("5678","Sarah", "Doe", "sarah@doe.com", "39593925", "123 street", "somethingHere", "test");
 
         Customer cust = new Customer("test", "test@email.com", "Julz", "riz", "123 street", "04373847545", "testSomething");
         Customer cust2 = new Customer("test", "test@email.com", "Rufus", "Du Sol", "123 street", "04373847545", "Rufus");
-        ServiceType serviceType = new ServiceType("1", "haircut");
+        ServiceType serviceType = new ServiceType("1", "haircut","08:00","20:00");
         Booking booking = new Booking(date, time, emp, cust, serviceType);
         Booking booking2 = new Booking(date2, time2, emp, cust, serviceType);
         Booking booking3 = new Booking(date3, time3, emp, cust, serviceType);

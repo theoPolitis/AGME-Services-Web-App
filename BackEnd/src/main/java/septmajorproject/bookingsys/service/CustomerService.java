@@ -13,7 +13,7 @@ import java.util.Map;
 public class CustomerService {
     @Autowired
     private CustomerRepository customerRepository;
-
+    //saves or updates the given customer in the backend
     public Customer saveOrUpdateCustomer(Customer customer) {
         try {
             customer.setUsername(customer.getUsername());
@@ -28,7 +28,7 @@ public class CustomerService {
             throw new CustomerException("Username: " + customer.getUsername() + " already exists");
         }
     }
-
+    //Used in conjunction with put requests, takes the request body and updates the customer
     public Customer updateExistingCustomer(String id, Map<String, String> userDataMap) {
 
         Customer existing = customerRepository.findByIdentificationNumber(id);
@@ -52,7 +52,7 @@ public class CustomerService {
     }
 
 
-
+    //Returns the customer by the id
     public Customer findCustomerByIdentificatioNumber(String id) {
         Customer found = customerRepository.findByIdentificationNumber(id);
         System.out.println(id);
@@ -62,7 +62,7 @@ public class CustomerService {
 
         return found;
     }
-
+    //Returns the given customer by the given email address
     public Customer findCustomerByEmail(String email) {
         Customer found = customerRepository.findByEmail(email);
 
@@ -72,7 +72,7 @@ public class CustomerService {
 
         return found;
     }
-
+    //Finds the customer by a given username
     public Customer findCustomerByUserName(String username) {
         Customer found = customerRepository.findByUsername(username);
 
@@ -82,7 +82,7 @@ public class CustomerService {
 
         return found;
     }
-
+    //Finds the customer by the username and password, useful for logging in
     public Customer findByUsernameAndPassword(String username, String password) {
         Customer found = customerRepository.findByUsernameAndPassword(username, password);
 
@@ -92,11 +92,11 @@ public class CustomerService {
 
         return found;
     }
-
+    //Finds all customers in the backend
     public List<Customer> findAllCustomers() {
         return customerRepository.findAll();
     }
-
+    //used to delete a customer from the backend
     public void deleteCustomerByIdentifier(String customerId) {
         Customer found = customerRepository.findByIdentificationNumber(customerId);
         if (found == null) {

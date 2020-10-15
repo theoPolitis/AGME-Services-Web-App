@@ -2,18 +2,10 @@ package septmajorproject.bookingsys.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.Date;
@@ -32,9 +24,11 @@ public class Employee {
     @Column(name = "employee_id")
     //provides a unique id for each employee that is generated
     private long employeeId;
+    //Another attribute that is used similarly to the employeeId, more of a user friendly tag used in the front end.
     @NotBlank(message = "Employee Identifier required")
     @Column(updatable = false, unique = true)
     private String employeeIdentifier;
+    //a basic attribute to determine admin priveledges, much simpler than generating a new extended class.
     private boolean isAdmin;
     @Size(min = 3, max = Integer.MAX_VALUE, message = "Enter a Valid first name that is greater than two character.")
     @NotBlank(message = "Please Enter a First Name.")
@@ -46,11 +40,12 @@ public class Employee {
     private String address;
     @NotBlank(message = "Please Enter an Address.")
     private String email;
-    private int phoneNumber;
+    private String phoneNumber;
     @NotBlank(message = "Password cannot be blank")
     private String password;
     @NotBlank(message = "UserName cannot be blank")
     private String userName;
+    @JsonProperty("serviceNo")
     @NotBlank(message = "serviceNo cannot be blank")
     private String serviceNo;
     //created and modified date for records following format yyyy-MM-dd
@@ -59,11 +54,9 @@ public class Employee {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date updatedDate;
 
-    //foreign keys to other databses
-    @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL)
-    private List<Roster> rosterList;
-    @OneToMany(mappedBy = "employee")
-    private List<Roster> bookingList;
+    //foreign keys to other databases
+    @OneToOne(mappedBy = "employee", cascade = CascadeType.ALL)
+    private Roster roster;
 
     //default constructor
     public Employee() {
@@ -71,7 +64,7 @@ public class Employee {
     }
 
     //simple constructor for employees
-    public Employee(String employeeIdentifier, String firstName, String lastName, String email, int phoneNumber, String address, String userName, String password) {
+    public Employee(String employeeIdentifier, String firstName, String lastName, String email, String phoneNumber, String address, String userName, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -93,9 +86,9 @@ public class Employee {
         this.updatedDate = new Date();
     }
 
-    //getters and setters
-
-
+    /*
+     *  Setters and Getters below:
+     */
     public String getEmployeeIdentifier() {
         return employeeIdentifier;
     }
@@ -160,11 +153,11 @@ public class Employee {
         this.email = email;
     }
 
-    public int getPhoneNumber() {
+    public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(int phoneNumber) {
+    public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
 
@@ -176,27 +169,19 @@ public class Employee {
         this.password = password;
     }
 
-    public void setRosterList(List<Roster> rosterArray) {
-        this.rosterList = rosterArray;
+    public void setRoster(Roster roster) {
+        this.roster = roster;
     }
 
-    public void setBookingList(List<Roster> bookingArray) {
-        this.bookingList = bookingArray;
-    }
-
-    public List<Roster> getRosterList() {
-        return rosterList;
-    }
-
-    public List<Roster> getBookingList() {
-        return bookingList;
+    public Roster getRoster() {
+        return roster;
     }
 
     public void setServiceNo(String serviceNo) {
         this.serviceNo = serviceNo;
     }
 
-    public String getServiceNo(String serviceNo) {
+    public String getServiceNo() {
         return this.serviceNo;
     }
 
@@ -207,4 +192,6 @@ public class Employee {
     public Date getUpdatedDate() {
         return updatedDate;
     }
+
+
 }

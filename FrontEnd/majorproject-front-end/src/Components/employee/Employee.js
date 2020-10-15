@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import "./Employee.css";
 import "../account/Account.css";
 import Axios from "axios";
@@ -7,12 +8,14 @@ class Employee extends Component {
   constructor(props) {
     super(props);
 
+    // States of bookings, serives, employees and filters
     this.state = {
       bookings: [],
       services: [],
+      employees: [],
       filters: {
-        serviceNo: null,
-        date: null,
+        serviceNo: this.props.userAuth.serviceNo,
+        date: "",
       },
     };
   }
@@ -21,41 +24,46 @@ class Employee extends Component {
     this.reloadState();
   }
 
+  // data to be reloaded upon refresh/reloading page
   reloadState() {
+    // only to be done if logged in
     if (this.props.loggedInStatus === "LOGGED_IN") {
-      Axios.get("http://localhost:8080/api/serviceType/all", {}).then((res) => {
+      Axios.get("http://3.237.224.176:8080/api/serviceType/all", {}).then((res) => {
         this.setState({ services: res.data });
       });
 
+      // get all bookings under the selected service
       Axios.get(this.getBookingUrl(), {})
         .then((res) => {
+          // the result is stored in the bookings state
           this.setState({ bookings: res.data });
         })
+        // logs error to console if encoutered + window alert
         .catch((error) => {
           console.log(error);
           alert(
             "An error occured, it seems the backend cannot be reached or no services are present in our backend"
           );
         });
+
+        Axios.get("http://3.237.224.176:8080/api/employee/all/"+this.props.userAuth.serviceNo)
+        .then((res) => {
+          this.setState({employees: res.data });
+        })
+        // logs error to console if encoutered
+        .catch((error) => {
+          console.log(error);
+        });
+
     }
   }
 
-  changeServiceNo(serviceNo) {
-    this.setState(
-      {
-        filters: {
-          ...this.state.filters,
-          serviceNo: serviceNo,
-        },
-      },
-      () => this.reloadState()
-    );
-  }
-
+  // function to run to change displayed bookings based on the date
   changeDateFilter(date) {
     if (date == null) {
       document.getElementById("date-filter").value = "";
     }
+    // sets the filter to the state
     this.setState(
       {
         filters: {
@@ -63,13 +71,16 @@ class Employee extends Component {
           date: date,
         },
       },
+      // reloads the state to apply filters
       () => this.reloadState()
     );
   }
 
+  // mark booking as done via a post request
   markAsDone(bookingId) {
-    Axios.post(`http://localhost:8080/api/booking/${bookingId}/complete`)
+    Axios.post(`http://3.237.224.176:8080/api/booking/${bookingId}/complete`)
       .then((res) => {
+        // reloads the state so changes can take effect
         this.reloadState();
       })
       .catch((error) => {
@@ -80,9 +91,11 @@ class Employee extends Component {
       });
   }
 
+  // delete booking based on a delete request
   deleteBooking(bookingId) {
-    Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
+    Axios.delete(`http://3.237.224.176:8080/api/booking/${bookingId}`)
       .then((res) => {
+        // reloads state to update changes
         this.reloadState();
       })
       .catch((error) => {
@@ -91,36 +104,54 @@ class Employee extends Component {
           "An error occured, it seems the backend cannot be reached or no services are present in our backend"
         );
       });
+  }
+
+  editEmployee(id) {
+    Axios.get(`http://3.237.224.176:8080/api/employee/${id}`)
+    .then((res) => {
+      // changes the selected employee prop to admin's chosen user from list
+      this.props.selectEmployee(res.data);
+      // changes the page to the edit page
+      this.props.history.push('/editEmployee');
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Error retreiving employee data to edit.");
+    });
   }
 
   //GET request determines which times the employee is already booked for on the day
 
   getBookingUrl() {
+    // bookings for admin
     if (this.isAdminUser()) {
+      // paramters are used to filter the serviceNo and date
       var params = [];
       if (this.state.filters.date) {
         params.push(`date=${this.state.filters.date}`);
       }
-      if (this.state.filters.serviceNo) {
-        params.push(`serviceNo=${this.state.filters.serviceNo}`);
-      }
+      params.push(`serviceNo=${this.props.userAuth.serviceNo}`);
       let queryString = params.join("&");
-      return `http://localhost:8080/api/booking/all?${queryString}`;
+      return `http://3.237.224.176:8080/api/booking/all?${queryString}`;
     }
+    // bookings for employees
     return (
-      "http://localhost:8080/api/booking/employee/" +
+      "http://3.237.224.176:8080/api/booking/employee/" +
       this.props.userAuth.employeeId
     );
   }
 
+  // checks if the logged in user is an admin
   isAdminUser() {
     return this.props.userAuth.admin === true;
   }
 
   render() {
+    // sets variables to be loaded into the tables
     var jobs = this.state.bookings;
+    var employees = this.state.employees;
 
-    //still not listening ////////////
+
     // Add a "checked" symbol when clicking on a list item
     var list = document.querySelector("ul");
     if (list) {
@@ -135,97 +166,128 @@ class Employee extends Component {
       );
     }
 
-    //admin page
+    // ADMIN PAGE -----------------------------------------------------
     if (this.isAdminUser()) {
       return (
-        <body>
-          <div className="container">
-            <h1>Bookings</h1>
-
-            <div className="row">
-              <div className="col-1">
-                <label>Service:</label>
-              </div>
-              <div className="col-2">
-                <select
-                  name="ServiceNo"
-                  value={this.state.filters.serviceNo}
-                  onChange={(e) => this.changeServiceNo(e.target.value)}
-                >
-                  <option value="">Select an option:</option>
-                  {this.state.services.map((service) => (
-                    <option value={service.serviceNo}>
-                      {service.serviceName}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div className="col-2">
-                <div>
-                  <label>Booking Date:</label>
-                </div>
+        <div>
+          <div>
+            <Link to="/businessWorkingHours" className="accountButton">
+              Edit Working Hours for the week
+            </Link>
+            <div className="container_emp">
+              <h1>Bookings</h1>
+              <div className="row">
                 <div className="col-2">
-                  <input
-                    type="date"
-                    id="date-filter"
-                    value={this.state.filters.date}
-                    onChange={(e) => this.changeDateFilter(e.target.value)}
-                  ></input>
-                  <span
-                    class="button"
-                    onClick={() => this.changeDateFilter(null)}
-                  >
-                    Clear date filter
-                  </span>
+                  <div>
+                    <label>Booking Date:</label>
+                  </div>
+                  <div className="col-2">
+                    <input
+                      type="date"
+                      id="date-filter"
+                      value={this.state.filters.date}
+                      onChange={(e) => this.changeDateFilter(e.target.value)}
+                    ></input>
+                    <span
+                      className="button"
+                      onClick={() => this.changeDateFilter(null)}
+                    >
+                      Clear date filter
+                    </span>
+                  </div>
                 </div>
               </div>
+
+              <table className="bookings" id="bookings">
+                <thead>
+                  <tr>
+                    <td>Booking date</td>
+                    <td>Service</td>
+                    <td>Employee email</td>
+                    <td>Customer email</td>
+                    <td></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {jobs.map((job) => (
+                    <tr id={job.id} key={job.id}>
+                      <td>
+                        {job.rosterDate} {job.rosterTime}
+                      </td>
+                      <td>{job.serviceName}</td>
+                      <td>{job.employee.email}</td>
+                      <td>{job.customer.email}</td>
+                      <td>
+                        <span
+                          className="button"
+                          onClick={() => this.deleteBooking(job.id)}
+                        >
+                          Delete
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
 
-            <table class="bookings" id="bookings">
+
+            <div className="container">
+            <h1>Employee Registry</h1>
+            <table className="bookings" id="bookings">
               <thead>
                 <tr>
-                  <td>Booking date</td>
-                  <td>Service</td>
-                  <td>Employee email</td>
-                  <td>Customer email</td>
+                  <td>Identifier</td>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>Email</td>
+                  <td>Username</td>
+                  <td></td>
                   <td></td>
                 </tr>
               </thead>
+  
               <tbody>
-                {jobs.map((job) => (
-                  <tr id={job.id}>
-                    <td>
-                      {job.rosterDate} {job.rosterTime}
-                    </td>
-                    <td>{job.serviceName}</td>
-                    <td>{job.employee.email}</td>
-                    <td>{job.customer.email}</td>
-                    <td>
-                      <span
-                        class="button"
-                        onClick={() => this.deleteBooking(job.id)}
-                      >
-                        Delete
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+              {employees.map((emp) => (
+                <tr id={emp.employeeId}>
+                  <td>{emp.employeeIdentifier}</td>
+                  <td>{emp.firstName}</td>
+                  <td>{emp.lastName}</td>
+                  <td>{emp.email}</td>
+                  <td>{emp.userName}</td>
+                  <td>
+                    <span
+                      className="button"
+                      onClick={() => this.editEmployee(emp.employeeIdentifier)}
+                    >
+                      Edit
+                    </span>
+                  </td>
+                </tr>
+              ))}
               </tbody>
             </table>
+  
+            <br></br>
+  
+            <Link to='/addEmployee' className="accountButton right">Add Employee</Link>
+  
+            </div>
+  
           </div>
-        </body>
+        </div>
       );
     }
 
-    //employee page
+    // EMPLOYEE PAGE ---------------------------------------------------
     return (
-      <body>
-        <main>
-          <div className="container">
+      <div>
+        <div>
+          <div className="container_emp">
             <h1>Employee</h1>
             <h1>Roster</h1>
 
-            <table class="bookings" id="bookings">
+            <table className="bookings" id="bookings">
               <thead>
                 <tr>
                   <td>Booking date</td>
@@ -237,7 +299,7 @@ class Employee extends Component {
               </thead>
               <tbody>
                 {jobs.map((job) => (
-                  <tr id={job.id}>
+                  <tr id={job.id} key={job.id}>
                     <td>
                       {job.rosterDate} {job.rosterTime}
                     </td>
@@ -248,7 +310,7 @@ class Employee extends Component {
                     <td>{job.customer.email}</td>
                     <td>
                       <span
-                        class="button"
+                        className="button"
                         onClick={() => this.markAsDone(job.id)}
                       >
                         Done
@@ -338,8 +400,8 @@ class Employee extends Component {
               </div>
             </form>
           </div>
-        </main>
-      </body>
+        </div>
+      </div>
     );
   }
 }

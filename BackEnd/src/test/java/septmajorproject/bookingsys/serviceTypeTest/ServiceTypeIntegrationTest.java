@@ -39,7 +39,7 @@ public class ServiceTypeIntegrationTest {
     //testing what happens if the service number is blank
     @Test
     public void whenInsertServiceTypeWithBlankServiceNo_thenReturnFalse(){
-        ServiceType newServiceType = new ServiceType("","Test");
+        ServiceType newServiceType = new ServiceType("","Test","08:00","20:00");
 
         Set<ConstraintViolation<ServiceType>> constraintViolations = localValidatorFactory.validate(newServiceType);
         assertFalse(constraintViolations.size() == 0, "service number must not be blank.");
@@ -49,7 +49,7 @@ public class ServiceTypeIntegrationTest {
     //testing what happens if the service number is  not blank
     @Test
     public void whenInsertServiceTypeWithValidServiceNo_thenReturnTrue(){
-        ServiceType newServiceType = new ServiceType("testNo","Test");
+        ServiceType newServiceType = new ServiceType("testNo","Test","08:00","20:00");
 
         Set<ConstraintViolation<ServiceType>> constraintViolations = localValidatorFactory.validate(newServiceType);
         assertTrue(" ",constraintViolations.size()==0);
@@ -58,7 +58,7 @@ public class ServiceTypeIntegrationTest {
     //testing what happens if the service name is blank
     @Test
     public void whenInsertServiceTypeWithBlankServiceName_thenReturnFalse(){
-        ServiceType newServiceType = new ServiceType("test","");
+        ServiceType newServiceType = new ServiceType("test","","08:00","20:00");
 
         Set<ConstraintViolation<ServiceType>> constraintViolations = localValidatorFactory.validate(newServiceType);
         assertFalse(constraintViolations.size() == 0, "service name must not be blank.");
@@ -66,7 +66,7 @@ public class ServiceTypeIntegrationTest {
 
     //testing what happens if the service name is not blank
     public void whenInsertServiceTypeWithValidServiceName_thenReturnTrue(){
-        ServiceType newServiceType = new ServiceType("test","Testame");
+        ServiceType newServiceType = new ServiceType("test","Testame","08:00","20:00");
 
         Set<ConstraintViolation<ServiceType>> constraintViolations = localValidatorFactory.validate(newServiceType);
         assertTrue(" ",constraintViolations.size()==0);

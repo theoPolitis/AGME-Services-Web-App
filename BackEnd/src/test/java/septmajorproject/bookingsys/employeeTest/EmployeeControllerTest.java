@@ -42,7 +42,7 @@ public class EmployeeControllerTest {
     //testing if the controller returns all employees
     @Test
     public void givenEmployees_whenGetEmployees_thenReturnJsonArray() throws Exception{
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
         
         List<Employee> allEmployees = Arrays.asList(newEmployeeOne);
 
@@ -57,7 +57,7 @@ public class EmployeeControllerTest {
     //testing to see if able to get an employee from API using Id
     @Test
     public void givenEmployeesId_whenGetEmployeesById_thenReturnEmployee() throws Exception{
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
 
         given(employeeService.findByEmployeeIdentifier("1234")).willReturn(newEmployeeOne);
 
@@ -70,7 +70,7 @@ public class EmployeeControllerTest {
     //testing if able to delete an employee with given id
     @Test
     public void givenEmployeeId_whenDeleteEmployeeById_thenReturnDelete() throws Exception{
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
 
         String deleteString = "Person with ID: " + newEmployeeOne.getEmployeeIdentifier() + " was deleted";
 
@@ -83,7 +83,7 @@ public class EmployeeControllerTest {
     //testing if able to add an employee pass test
     @Test
     public void givenEmployee_whenAddingNewEmployee_thenSuccesfullPostRequest() throws Exception{
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
 
         mvc.perform(post("/api/employee/")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -95,7 +95,7 @@ public class EmployeeControllerTest {
     //test if able to get Employee with username or password
     @Test
     public void getAllEmployeeWithUserNameAndPassword_thenSuccessfulGetRequest() throws Exception{
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
 
         given(employeeService.findByUsernameAndPassword(newEmployeeOne.getUserName(), newEmployeeOne.getPassword())).willReturn(newEmployeeOne);
 

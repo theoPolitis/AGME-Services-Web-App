@@ -7,6 +7,9 @@ import java.util.Date;
 
 @Data
 public class CustomerDto {
+    //The @Data tag is a lombok annotation that auto-implements all setters and getters for the attributes
+
+    //Each of these attributes match the attributes in the Customer model
     private Long id;
     private String identificationNumber;
     private String email;

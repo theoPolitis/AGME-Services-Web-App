@@ -26,9 +26,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @DataJpaTest
 public class RosterRepositoryTest {
 
-    Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-    Employee employeeTwo = new Employee("5678", "Alma", "Tests", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-    Employee employeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", 0424735213, "Something", "s3661673", "password");
+    Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
+    Employee employeeTwo = new Employee("5678", "Alma", "Tests", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
+    Employee employeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", "0424735213", "Something", "s3661673", "password");
 
     @Autowired
     private TestEntityManager testEntityManager;
@@ -52,11 +52,11 @@ public class RosterRepositoryTest {
         employeeRepository.save(employeeTwo);
         employeeRepository.save(employeeThree);
 
-        Roster rosterOne = new Roster(employeeOne,(new Date(2020,8,27)),(new Time(12,30,0)));
-        Roster rosterTwo = new Roster(employeeOne,(new Date(2020,8,28)),(new Time(12,30,0)));
-        Roster rosterThree = new Roster(employeeOne,(new Date(2020,8,29)),(new Time(12,30,0)));
-        Roster rosterFour = new Roster(employeeTwo,(new Date(2020,8,30)),(new Time(12,30,0)));
-        Roster rosterFive = new Roster(employeeTwo,(new Date(2020,8,31)),(new Time(12,30,0)));
+        Roster rosterOne = new Roster(employeeOne);
+        Roster rosterTwo = new Roster(employeeOne);
+        Roster rosterThree = new Roster(employeeOne);
+        Roster rosterFour = new Roster(employeeTwo);
+        Roster rosterFive = new Roster(employeeTwo);
 
         testEntityManager.persist(employeeOne);
         testEntityManager.persist(rosterOne);

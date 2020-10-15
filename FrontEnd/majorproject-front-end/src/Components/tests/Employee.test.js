@@ -1,12 +1,8 @@
 import React from "react";
-import Login from "../account/Login";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import renderer from "react-test-renderer";
 import axios from "axios";
-import renderWithRouter from "./TestingRouter";
-import Booking from "../booking/Booking";
 import Employee from "../employee/Employee";
 
 jest.mock("axios");
@@ -15,7 +11,7 @@ Enzyme.configure({ adapter: new Adapter() });
 
 beforeEach(() => {
   axios.get.mockImplementation((url) => {
-    var baseUrl = "http://localhost:8080/api";
+    var baseUrl = "http://3.237.224.176:8080/api";
     switch (url) {
       case baseUrl + "/employee/E1234/":
         return Promise.resolve({
@@ -78,9 +74,7 @@ describe("<Employee /> test for Employee.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Employee userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('input[name="firstname"]').equals("change", {
       target: {
         name: "firstname",
@@ -102,9 +96,7 @@ describe("<Employee /> test for Employee.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Employee userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('input[name="lastname"]').equals("change", {
       target: {
         name: "lastname",
@@ -126,9 +118,7 @@ describe("<Employee /> test for Employee.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Employee userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('input[name="email"]').equals("change", {
       target: {
         name: "email",
@@ -150,9 +140,7 @@ describe("<Employee /> test for Employee.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Employee userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('input[name="address"]').equals("change", {
       target: {
         name: "address",
@@ -174,9 +162,7 @@ describe("<Employee /> test for Employee.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Employee userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('input[name="mobilenumber"]').equals("change", {
       target: {
         name: "mobilenumber",

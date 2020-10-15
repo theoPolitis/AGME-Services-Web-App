@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import axios from "axios";
 import { v4 as uuidv4 } from 'uuid';
-import '../homepage/HomePage.css';
 import './Account.css';
 import { Redirect } from 'react-router-dom';
 
@@ -31,7 +30,7 @@ class Signup extends Component {
         event.preventDefault();
         //console.log(this.state)
         if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            axios.post("http://localhost:8080/api/customer", {
+            axios.post("http://3.237.224.176:8080/api/customer", {
                     identificationNumber: this.id,
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,

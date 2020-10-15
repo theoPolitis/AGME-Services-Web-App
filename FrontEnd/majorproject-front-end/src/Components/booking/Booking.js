@@ -20,9 +20,10 @@ class Booking extends Component {
       employeeDisabled: true,
       dateDisabled: true,
       timeDisabled: true,
+      serviceTypeDetails: [],
     };
     //retrieves all front end services
-    Axios.get("http://localhost:8080/api/serviceType/all", {})
+    Axios.get("http://3.237.224.176:8080/api/serviceType/all", {})
       .then((res) => {
         this.setState({ services: res.data });
       })
@@ -36,17 +37,17 @@ class Booking extends Component {
 
   componentDidMount = () => {};
 
+   //Called when we submit our data, assumes that the state has been properly managed.
   handleSubmit = (event) => {
+    //The relevant data is put into the relevant format
     var postData = {};
     postData["employeeIdentifier"] = this.state.selectedEmployee;
     postData["customerIdentifier"] = this.props.user.identificationNumber;
     postData["serviceNo"] = this.state.selectedService;
     postData["rosterTime"] = this.state.selectedTime;
     postData["rosterDate"] = this.state.selectedDate;
-    Axios.post(
-      "http://localhost:8080/api/booking/newBooking",
-      postData
-    )
+    //Sending the data as a post request, which creates a new booking in the backend.
+    Axios.post("http://3.237.224.176:8080/api/booking/newBooking", postData)
       .then((res) => {
         alert(res.data);
       })
@@ -54,125 +55,239 @@ class Booking extends Component {
         console.log(error.response.status);
         alert("An error occured, you booking was not created");
       });
-    this.setState({ employees: [] });
-    this.setState({ employeeDisabled: true });
-    this.setState({ dateDisabled: true });
-    this.setState({ bookingTimes: [] });
-    this.setState({ buttonDisabled: true });
-    this.setState({ timeDisabled: true });
+    //Refreshes the state to allow for more bookings to be created.
+    this.setState({ employees: [],
+      employeeDisabled: true,
+      dateDisabled: true,
+      bookingTimes: [],
+      buttonDisabled: true,
+      timeDisabled: true 
+     });
+    //Prevents the default submission of the form.
     event.preventDefault();
   };
 
+  //Called when the user selects which service they are booking
   handleServiceSelection = (event) => {
     //Set the state of the service
     this.setState({ selectedService: event.target.value });
     //Checking if the selected option is not the "none" attribute
     if (event.target.value !== "none") {
+      //Retrieve all of the employees for the service
       Axios.get(
-        "http://localhost:8080/api/employee/all/" + event.target.value,
+        "http://3.237.224.176:8080/api/employee/all/" + event.target.value,
         {}
       )
         .then((res) => {
           var employees = res.data;
           employees = employees.filter((emp) => !emp.admin);
-          this.setState({ employees: employees });
-          this.setState({ employeeDisabled: false });
-          this.setState({ dateDisabled: true });
-          this.setState({ bookingTimes: [] });
-          this.setState({ buttonDisabled: true });
-          this.setState({ timeDisabled: true });
+          this.setState({ employees: employees,
+            employeeDisabled: false,
+            dateDisabled: true,
+            bookingTimes: [],
+            buttonDisabled: true,
+            timeDisabled: true
+            });
         })
         .catch((error) => {
           alert("An error occured, details : " + error.response.status);
         });
+      //Gets more details for the specifically selected service.
+      Axios.get(
+        "http://3.237.224.176:8080/api/serviceType/" + event.target.value,
+        {}
+      )
+        .then((res) => {
+          //passers GET data to app.js
+          this.setState({ serviceTypeDetails: res.data });
+        })
+        .catch((e) => {
+          this.setState({
+            error: true,
+          });
+          if (this.state.error === true) {
+            console.log(
+              "Something went wrong in booking.js in get handleServiceSelection, getting service details"
+            );
+          }
+        });
     } else {
-      this.setState({ employees: [] });
-      this.setState({ employeeDisabled: true });
-      this.setState({ dateDisabled: true });
-      this.setState({ bookingTimes: [] });
-      this.setState({ buttonDisabled: true });
-      this.setState({ timeDisabled: true });
+      //If we reached this statement, then no service has been selected and we clear the state variables.
+      this.setState({ employees: [],
+        employeeDisabled: true,
+        dateDisabled: true,
+        bookingTimes: [],
+        buttonDisabled: true,
+        timeDisabled: true
+        });
     }
   };
 
+  //Called when the user selects an employee
   handleEmployeeSelection = (event) => {
+    //Sets the state of the employee
     this.setState({ selectedEmployee: event.target.value });
+    //If an actual employee was selected, we set the relevant state variables
     if (event.target.value !== "none") {
-      this.setState({ dateDisabled: false });
-      this.setState({ buttonDisabled: true });
-      this.setState({ timeDisabled: true });
-      this.setState({ times: [] });
+      this.setState({ dateDisabled: false,
+        buttonDisabled: true,
+        timeDisabled: true,
+        times: []
+       });
     } else {
-      this.setState({ dateDisabled: true });
-      this.setState({ buttonDisabled: true });
-      this.setState({ bookingTimes: [] });
+      //otherwise we set the values to placeholders.
+      this.setState({ dateDisabled: true,
+        buttonDisabled: true,
+        bookingTimes: []
+       });
     }
   };
 
   handleDateSelection = (event) => {
+    //Creates date objects to represent today, the selected day, and a week from now.
     var date = new Date(event.target.value);
     var today = new Date();
+    var nextWeek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 8
+    );
     //If the selected date is in the future, proceed
-    if (today.getTime() < date.getTime()) {
-      //Formatting the date to the correct date
-      var year = "" + date.getFullYear();
-      var month = "" + (date.getMonth() + 1);
-      var day = "" + date.getDate();
-      if (month.length < 2) {
-        month = "0" + month;
-      }
-      if (day.length < 2) {
-        day = "0" + day;
-      }
-      var formattedDate = year + "-" + month + "-" + day;
-      this.setState({ selectedDate: formattedDate });
-      var startTime = 6;
-      var endTime = 18;
-      var times = [];
-      for (var i = startTime; i < endTime; i++) {
-        times.push(i + ":00");
-      }
-      //GET request determines which times the employee is already booked for on the day
-      Axios.get(
-        "http://localhost:8080/api/booking/" +
-          formattedDate +
-          "/" +
-          this.state.selectedEmployee,
-        {}
-      )
-        .then((res) => {
-          this.setState({ alreadyBooked: res.data }, function () {
-            var booked = res.data;
-            for (i = 0; i < booked.length; i++) {
-              times = times.filter((item) => item !== booked[i].time);
-            }
-            this.setState({ bookingTimes: times });
-          });
-          this.setState({ timeDisabled: false });
-        })
-        .catch((e) => {
-          //If no booking times are detected, then no times are removed from the selection list.
-          if (e.response.status === 400) {
-            this.setState({ timeDisabled: false });
-            this.setState({ bookingTimes: times });
+    if (
+      today.getTime() < date.getTime() &&
+      date.getTime() < nextWeek.getTime()
+    ) {
+      var flag = true;
+      var weekDay = date.getDay();
+      var employee = this.state.employees.find((employee) => {
+        return employee.employeeIdentifier === this.state.selectedEmployee;
+      });
+      switch (weekDay) {
+        case 0:
+          if (!employee.roster.sunday) {
+            flag = false;
           }
-        });
+          break;
+        case 1:
+          if (!employee.roster.monday) {
+            flag = false;
+          }
+          break;
+        case 2:
+          if (!employee.roster.tuesday) {
+            flag = false;
+          }
+          break;
+        case 3:
+          if (!employee.roster.wednesday) {
+            flag = false;
+          }
+          break;
+        case 4:
+          if (!employee.roster.thursday) {
+            flag = false;
+          }
+          break;
+        case 5:
+          if (!employee.roster.friday) {
+            flag = false;
+          }
+          break;
+        case 6:
+          if (!employee.roster.saturday) {
+            flag = false;
+          }
+          break;
+        default:
+          flag = true;
+      }
+      //if the day is a day the employee is rostered on, we continue
+      if (flag) {
+        //Formatting the date to the correct date
+        var year = "" + date.getFullYear();
+        var month = "" + (date.getMonth() + 1);
+        var day = "" + date.getDate();
+        if (month.length < 2) {
+          month = "0" + month;
+        }
+        if (day.length < 2) {
+          day = "0" + day;
+        }
+        //Create a formatted string that we can send as post data.
+        var formattedDate = year + "-" + month + "-" + day;
+        this.setState({ selectedDate: formattedDate });
+        //Create all booking timeslots that a service has
+        var endTime = parseInt(this.state.serviceTypeDetails.endTime);
+        var startTime = parseInt(this.state.serviceTypeDetails.startTime);
+        var times = [];
+        for (var i = startTime; i < endTime; i++) {
+          times.push(i + ":00");
+        }
+        //GET request determines which times the employee is already booked for on the day
+        Axios.get(
+          "http://3.237.224.176:8080/api/booking/" +
+            formattedDate +
+            "/" +
+            this.state.selectedEmployee,
+          {}
+        )
+          .then((res) => {
+            this.setState({ alreadyBooked: res.data }, function () {
+              var booked = res.data;
+              for (let i = 0; i < booked.length; i++) {
+                times = times.filter((item) => item !== booked[i].time);
+              }
+              this.setState({ bookingTimes: times });
+            });
+            this.setState({ timeDisabled: false });
+          })
+          .catch((e) => {
+            //If no booking times are detected, then no times are removed from the selection list.
+            if (e.response.status === 400) {
+              this.setState({ timeDisabled: false,
+                bookingTimes: times
+               });
+            }
+          });
+      } else {
+        //if the date is a day the employee isn't rostered, we inform the user.
+        this.setState({ bookingTimes: [],
+          buttonDisabled: true,
+          timeDisabled: true
+         });
+        alert("Employee is not working on this day");
+      }
     } else {
-      alert("Please Select a Date that is Not in the past!");
+      //If we are in this segment, it means the date is either in the past or beyond a week from now
+      this.setState({ bookingTimes: [],
+        buttonDisabled: true,
+        timeDisabled: true
+       });
+      if (today.getTime() > date.getTime()) {
+        //Printed if the date is in the past
+        alert("Please Select a Date that is Not in the past!");
+      } else {
+        //Printed if the date is beyond a week from now.
+        alert("You can only select bookings withing the next 7 days");
+      }
     }
   };
 
+  //Called when a booking time is selected.
   handleTimeSelection = (event) => {
     //Make sure the selected value is a relevant one
     if (event.target.value !== "none") {
-      this.setState({ selectedTime: event.target.value + ":00" });
-      this.setState({ buttonDisabled: false });
+      //Set the state, and enable the submit button
+      this.setState({ selectedTime: event.target.value + ":00",
+      buttonDisabled: false
+     });
     } else {
       this.setState({ buttonDisabled: true });
     }
   };
 
   render() {
+    //Checks if the user is logged in when they navigate to the page
     if (this.props.loggedInStatus === "LOGGED_IN") {
       return (
         <div className="container">
@@ -267,6 +382,7 @@ class Booking extends Component {
         </div>
       );
     } else {
+      //Redirects the user to the home page if they are not logged in
       return <Redirect to={{ pathname: "/" }} />;
     }
   }

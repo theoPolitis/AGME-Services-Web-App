@@ -6,9 +6,13 @@ import lombok.Data;
 import java.sql.Time;
 import java.util.Date;
 
+/**
+ * Represents the request body that would be sent for post/put requests from the front end.
+ */
+
 @Data
 public class NewBookingCommand {
-
+    //Lombok auto-implements setters and getters for each of these attributes
     private String employeeIdentifier;
 
     private String customerIdentifier;
