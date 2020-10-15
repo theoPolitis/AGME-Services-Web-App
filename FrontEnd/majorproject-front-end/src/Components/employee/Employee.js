@@ -8,6 +8,7 @@ class Employee extends Component {
   constructor(props) {
     super(props);
 
+    // States of bookings, serives, employees and filters
     this.state = {
       bookings: [],
       services: [],
@@ -23,16 +24,21 @@ class Employee extends Component {
     this.reloadState();
   }
 
+  // data to be reloaded upon refresh/reloading page
   reloadState() {
+    // only to be done if logged in
     if (this.props.loggedInStatus === "LOGGED_IN") {
       Axios.get("http://3.237.224.176:8080/api/serviceType/all", {}).then((res) => {
         this.setState({ services: res.data });
       });
 
+      // get all bookings under the selected service
       Axios.get(this.getBookingUrl(), {})
         .then((res) => {
+          // the result is stored in the bookings state
           this.setState({ bookings: res.data });
         })
+        // logs error to console if encoutered + window alert
         .catch((error) => {
           console.log(error);
           alert(
@@ -44,6 +50,7 @@ class Employee extends Component {
         .then((res) => {
           this.setState({employees: res.data });
         })
+        // logs error to console if encoutered
         .catch((error) => {
           console.log(error);
         });
@@ -51,10 +58,12 @@ class Employee extends Component {
     }
   }
 
+  // function to run to change displayed bookings based on the date
   changeDateFilter(date) {
     if (date == null) {
       document.getElementById("date-filter").value = "";
     }
+    // sets the filter to the state
     this.setState(
       {
         filters: {
@@ -62,13 +71,16 @@ class Employee extends Component {
           date: date,
         },
       },
+      // reloads the state to apply filters
       () => this.reloadState()
     );
   }
 
+  // mark booking as done via a post request
   markAsDone(bookingId) {
     Axios.post(`http://3.237.224.176:8080/api/booking/${bookingId}/complete`)
       .then((res) => {
+        // reloads the state so changes can take effect
         this.reloadState();
       })
       .catch((error) => {
@@ -79,9 +91,11 @@ class Employee extends Component {
       });
   }
 
+  // delete booking based on a delete request
   deleteBooking(bookingId) {
     Axios.delete(`http://3.237.224.176:8080/api/booking/${bookingId}`)
       .then((res) => {
+        // reloads state to update changes
         this.reloadState();
       })
       .catch((error) => {
@@ -95,8 +109,9 @@ class Employee extends Component {
   editEmployee(id) {
     Axios.get(`http://3.237.224.176:8080/api/employee/${id}`)
     .then((res) => {
-      // THIS LINE DOESNT WORK
+      // changes the selected employee prop to admin's chosen user from list
       this.props.selectEmployee(res.data);
+      // changes the page to the edit page
       this.props.history.push('/editEmployee');
     })
     .catch((error) => {
@@ -108,7 +123,9 @@ class Employee extends Component {
   //GET request determines which times the employee is already booked for on the day
 
   getBookingUrl() {
+    // bookings for admin
     if (this.isAdminUser()) {
+      // paramters are used to filter the serviceNo and date
       var params = [];
       if (this.state.filters.date) {
         params.push(`date=${this.state.filters.date}`);
@@ -117,17 +134,20 @@ class Employee extends Component {
       let queryString = params.join("&");
       return `http://3.237.224.176:8080/api/booking/all?${queryString}`;
     }
+    // bookings for employees
     return (
       "http://3.237.224.176:8080/api/booking/employee/" +
       this.props.userAuth.employeeId
     );
   }
 
+  // checks if the logged in user is an admin
   isAdminUser() {
     return this.props.userAuth.admin === true;
   }
 
   render() {
+    // sets variables to be loaded into the tables
     var jobs = this.state.bookings;
     var employees = this.state.employees;
 
@@ -146,7 +166,7 @@ class Employee extends Component {
       );
     }
 
-    //admin page
+    // ADMIN PAGE -----------------------------------------------------
     if (this.isAdminUser()) {
       return (
         <div>
@@ -259,7 +279,7 @@ class Employee extends Component {
       );
     }
 
-    //employee page
+    // EMPLOYEE PAGE ---------------------------------------------------
     return (
       <div>
         <div>
