@@ -95,6 +95,15 @@ class Roster extends Component{
             newRoster.friday = newRoster.requestedFriday
             newRoster.saturday = newRoster.requestedSaturday
         }
+        else{
+            newRoster.requestedSunday = newRoster.sunday
+            newRoster.requestedMonday = newRoster.monday
+            newRoster.requestedTuesday = newRoster.tuesday
+            newRoster.requestedWednesday = newRoster.wednesday
+            newRoster.requestedThursday = newRoster.thursday
+            newRoster.requestedFriday = newRoster.friday
+            newRoster.requestedSaturday = newRoster.saturday
+        }
         const newRosters = this.state.rosters.slice();
         newRosters[index] = newRoster;
         this.setState({rosters: newRosters}, () => {
