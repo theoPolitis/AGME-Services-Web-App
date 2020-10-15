@@ -30,7 +30,11 @@ public class Roster {
     @Column(name = "id")
     //provides a unique id for each roster that is generated
     private long id;
-
+    /*
+     * Booleans represent availability on each week day
+     *
+     * Requested booleans represent the employees requested availability changes
+     */
     @NotNull(message = "Every day must be accounted for : Sunday not filled")
     private boolean sunday;
 
@@ -72,7 +76,7 @@ public class Roster {
 
     @NotNull(message = "Every day must be accounted for : Saturday not filled")
     private boolean requestedSaturday;
-
+    //Boolean used to represent if the roster currently has changes requested.
     @NotNull(message = "Must give an approval status")
     private boolean isApproved;
 
@@ -98,9 +102,10 @@ public class Roster {
     }
 
     /**
-     * constructor
+     * constructor : By default sets all booleans to true
      *
      * @param employee : employee
+     *
      */
     public Roster(Employee employee) {
         this.employee = employee;
@@ -121,6 +126,18 @@ public class Roster {
         this.isApproved = true;
     }
 
+    /**
+     * constructor : By default sets all booleans to true
+     *
+     * @param employee : employee
+     * @param sunday : sunday
+     * @param monday : monday
+     * @param tuesday : tuesday
+     * @param wednesday : wednesday
+     * @param thursday : thursday
+     * @param friday : friday
+     * @param saturday : saturday
+     */
     public Roster(Employee employee,  boolean sunday, boolean monday, boolean tuesday,
                   boolean wednesday, boolean thursday, boolean friday, boolean saturday) {
         this.employee = employee;

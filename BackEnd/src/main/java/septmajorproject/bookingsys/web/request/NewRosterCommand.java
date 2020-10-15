@@ -2,8 +2,11 @@ package septmajorproject.bookingsys.web.request;
 
 import javax.validation.constraints.NotNull;
 
-
+/**
+ * Represents the request body that is sent for PUT requests
+ */
 public class NewRosterCommand {
+    //Each of these attributes represent attributes in the roster model
     @NotNull(message = "Need an ID")
     private long id;
     @NotNull(message = "Need the Employee ID")

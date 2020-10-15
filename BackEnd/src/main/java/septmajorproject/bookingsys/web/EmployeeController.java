@@ -22,7 +22,7 @@ public class EmployeeController {
 
     @Autowired
     private MapValidationErrorService mapValidation;
-
+    //Postmapping that creates a new employee in the backend
     @PostMapping("")
     public ResponseEntity<?> createNewEmployee(@Valid @RequestBody Employee employee, BindingResult result) {
         //cleans up the error message that is displayed
@@ -37,38 +37,38 @@ public class EmployeeController {
 
         return new ResponseEntity<Employee>(employee, HttpStatus.CREATED);
     }
-
+    //GetMapping that returns the employee associated with the given employee id
     @GetMapping("/{employeeId}")
     public ResponseEntity<?> getPersonById(@PathVariable String employeeId) {
         Employee employee = employeeService.findByEmployeeIdentifier(employeeId);
 
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
-
+    //GetMapping that returns all employees in the backend
     @GetMapping("/all")
     public List<Employee> getAllEmployees() {
         return employeeService.findAllEmployees();
     }
-
+    //Get mapping that returns the given employee by username and passwords, useful for login functionality
     @GetMapping("/{username}/{password}")
     public ResponseEntity<?> getbyUsernameAndPassword(@PathVariable String username, @PathVariable String password) {
         Employee employee = employeeService.findByUsernameAndPassword(username, password);
 
         return new ResponseEntity<Employee>(employee, HttpStatus.OK);
     }
-
+    //Delete Mapping that deletes the employee associated with the given id
     @DeleteMapping("/{employeeId}")
     public ResponseEntity<?> deleteEmployeeByIdentifier(@PathVariable String employeeId) {
         employeeService.deleteEmployeeByIdentifier(employeeId);
 
         return new ResponseEntity<String>("Person with ID: " + employeeId + " was deleted", HttpStatus.OK);
     }
-
+    //Get Mapping that returns all employees associated with the given service
     @GetMapping("/all/{serviceNo}")
     public List<Employee> getEmployeesByServiceNo(@PathVariable String serviceNo) {
         return employeeService.findByServiceNo(serviceNo);
     }
-
+    //Put Mapping that updates the employee using the given request body
     @PutMapping("/{employeeId}")
     public ResponseEntity<?> updateEmployee(@PathVariable String employeeId, @RequestBody Map<String, String> userDataMap, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);

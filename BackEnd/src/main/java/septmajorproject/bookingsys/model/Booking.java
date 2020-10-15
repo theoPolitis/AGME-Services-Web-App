@@ -49,11 +49,11 @@ public class Booking {
     @NotNull(message = "Customer required")
     @JoinColumn(name = "customer_id", nullable = false)
     private Customer customer;
-
+    //Many to one connection that maps the booking to a service, as a service can have many bookings
     @ManyToOne
     @JoinColumn(name = "service_type_id", nullable = false)
     private ServiceType serviceType;
-
+    //Enforces that the date cannot be left as null
     @NotNull(message = "Please attach a date")
     @JsonFormat(pattern = "yyyy-MM-dd")
     private Date rosterDate;
@@ -61,7 +61,7 @@ public class Booking {
     @NotNull(message = "Please attach a time")
     @JsonFormat(pattern = "HH:mm:ss")
     private Time rosterTime;
-
+    //Boolean represents if the booking has been fulfilled by the employee.
     @Column(name = "completed", nullable = false)
     private boolean completed = Boolean.FALSE;
 

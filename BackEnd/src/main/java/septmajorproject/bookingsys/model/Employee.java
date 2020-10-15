@@ -24,9 +24,11 @@ public class Employee {
     @Column(name = "employee_id")
     //provides a unique id for each employee that is generated
     private long employeeId;
+    //Another attribute that is used similarly to the employeeId, more of a user friendly tag used in the front end.
     @NotBlank(message = "Employee Identifier required")
     @Column(updatable = false, unique = true)
     private String employeeIdentifier;
+    //a basic attribute to determine admin priveledges, much simpler than generating a new extended class.
     private boolean isAdmin;
     @Size(min = 3, max = Integer.MAX_VALUE, message = "Enter a Valid first name that is greater than two character.")
     @NotBlank(message = "Please Enter a First Name.")
@@ -84,9 +86,9 @@ public class Employee {
         this.updatedDate = new Date();
     }
 
-    //getters and setters
-
-
+    /*
+     *  Setters and Getters below:
+     */
     public String getEmployeeIdentifier() {
         return employeeIdentifier;
     }

@@ -17,12 +17,12 @@ public class RosterService {
     @Autowired
     private RosterRepository rosterRepository;
 
-
+    //Saves the given roster in the backend
     public Roster createOrUpdateRosterEntry(Roster roster) {
         return rosterRepository.save(roster);
     }
 
-
+    //deletes the given roster by an id
     public void deleteRosterByIdentifier(long id) {
 
         Roster found = rosterRepository.findRosterById(id);
@@ -35,7 +35,7 @@ public class RosterService {
 
 
     }
-
+    //Finds a roster by a given identifier
     public Roster findRosterByIdentificationNumber(long rosterId) {
 
         Roster rosterFound = rosterRepository.findRosterById(rosterId);
@@ -46,17 +46,17 @@ public class RosterService {
             return rosterFound;
         }
     }
-
+    //Returns all rosters in the backend
     public List<Roster> getAll() {
         return rosterRepository.findAll();
     }
-
+    //Finds the roster for the assosiated employee
     public List<Roster> findRostersByEmployee(Employee employee)
     {
         List<Roster> roster = rosterRepository.findAllByEmployee(employee);
         return roster;
     }
-
+    //Used in conjunction with the put mapping, updates the roster information using the given request body
     public Roster updateExistingRoster(NewRosterCommand newRoster)
     {
         Roster rost = rosterRepository.findRosterById(newRoster.getId());
@@ -82,7 +82,7 @@ public class RosterService {
         rosterRepository.save(rost);
         return rost;
     }
-
+    //Finds all rosters that have not currently been requested for a change
     public List<Roster> findRostersByApproval(boolean b) {
         List<Roster> rosters = rosterRepository.findAllByIsApproved(b);
         return rosters;
