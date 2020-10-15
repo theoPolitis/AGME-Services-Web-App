@@ -21,7 +21,11 @@ describe('Header elements', () => {
 
     test('handle logout when employee is logged in', () => {
         const spy = jest.fn();
-        const wrapper = shallow(<Header employee={true} toggleLogout={spy} />)
+        const user = {
+            admin: true
+        }
+
+        const wrapper = shallow(<Header employee={true} user={user} toggleLogout={spy} />)
         
         wrapper.find('button').simulate('click');
         expect(spy.mock.calls.length).toEqual(1);
@@ -29,7 +33,11 @@ describe('Header elements', () => {
 
     test('handle logout when customer is logged in', () => {
         const spy = jest.fn();
-        const wrapper = shallow(<Header customer={true} toggleLogout={spy} />)
+        const user = {
+            admin: true
+        }
+
+        const wrapper = shallow(<Header customer={true} user={user} toggleLogout={spy} />)
         
         wrapper.find('button').simulate('click');
         expect(spy.mock.calls.length).toEqual(1);
