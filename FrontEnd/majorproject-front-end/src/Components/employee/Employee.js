@@ -78,6 +78,7 @@ class Employee extends Component {
   markAsDone(bookingId) {
     Axios.post(`http://localhost:8080/api/booking/${bookingId}/complete`)
       .then((res) => {
+        // reloads the state so changes can take effect
         this.reloadState();
       })
       .catch((error) => {
@@ -108,7 +109,7 @@ class Employee extends Component {
     .then((res) => {
       // changes the selected employee prop to admin's chosen user from list
       this.props.selectEmployee(res.data);
-      // changes the page
+      // changes the page to the edit page
       this.props.history.push('/editEmployee');
     })
     .catch((error) => {
