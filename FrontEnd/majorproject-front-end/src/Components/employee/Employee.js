@@ -28,6 +28,9 @@ class Employee extends Component {
   reloadState() {
     // only to be done if logged in
     if (this.props.loggedInStatus === "LOGGED_IN") {
+      Axios.get("http://3.237.224.176:8080/api/serviceType/all", {}).then((res) => {
+        this.setState({ services: res.data });
+      });
 
       // get all bookings under the selected service
       Axios.get(this.getBookingUrl(), {})
@@ -43,8 +46,7 @@ class Employee extends Component {
           );
         });
 
-        // get all employees under the current service
-        Axios.get("http://localhost:8080/api/employee/all/"+this.props.userAuth.serviceNo)
+        Axios.get("http://3.237.224.176:8080/api/employee/all/"+this.props.userAuth.serviceNo)
         .then((res) => {
           this.setState({employees: res.data });
         })
@@ -76,7 +78,7 @@ class Employee extends Component {
 
   // mark booking as done via a post request
   markAsDone(bookingId) {
-    Axios.post(`http://localhost:8080/api/booking/${bookingId}/complete`)
+    Axios.post(`http://3.237.224.176:8080/api/booking/${bookingId}/complete`)
       .then((res) => {
         // reloads the state so changes can take effect
         this.reloadState();
@@ -91,7 +93,7 @@ class Employee extends Component {
 
   // delete booking based on a delete request
   deleteBooking(bookingId) {
-    Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
+    Axios.delete(`http://3.237.224.176:8080/api/booking/${bookingId}`)
       .then((res) => {
         // reloads state to update changes
         this.reloadState();
@@ -105,7 +107,7 @@ class Employee extends Component {
   }
 
   editEmployee(id) {
-    Axios.get(`http://localhost:8080/api/employee/${id}`)
+    Axios.get(`http://3.237.224.176:8080/api/employee/${id}`)
     .then((res) => {
       // changes the selected employee prop to admin's chosen user from list
       this.props.selectEmployee(res.data);
@@ -130,11 +132,11 @@ class Employee extends Component {
       }
       params.push(`serviceNo=${this.props.userAuth.serviceNo}`);
       let queryString = params.join("&");
-      return `http://localhost:8080/api/booking/all?${queryString}`;
+      return `http://3.237.224.176:8080/api/booking/all?${queryString}`;
     }
     // bookings for employees
     return (
-      "http://localhost:8080/api/booking/employee/" +
+      "http://3.237.224.176:8080/api/booking/employee/" +
       this.props.userAuth.employeeId
     );
   }

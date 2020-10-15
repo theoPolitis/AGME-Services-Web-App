@@ -15,7 +15,7 @@ jest.mock("axios");
 
 beforeEach(() => {
     axios.get.mockImplementation((url) => {
-      var baseUrl = "http://localhost:8080/api";
+      var baseUrl = "http://3.237.224.176:8080/api";
       switch (url) {
         case baseUrl + "/customer/1TP/":
           return Promise.resolve({

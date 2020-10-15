@@ -1,4 +1,4 @@
 #set the ipv4 so that ansible can log into the ec2 instance 
 all:
   hosts:
-    "3.90.140.163"
+    "3.237.224.176"

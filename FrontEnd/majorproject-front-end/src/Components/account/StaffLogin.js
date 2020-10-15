@@ -18,7 +18,7 @@ class StaffLogin extends Component {
     try {
       axios
         .get(
-          "http://localhost:8080/api/employee/" + username + "/" + password,
+          "http://3.237.224.176:8080/api/employee/" + username + "/" + password,
           {}
         )
         .then((res) => {

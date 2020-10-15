@@ -17,7 +17,7 @@ let adminAttribute;
 
 beforeEach(() => {
     axios.get.mockImplementation((url) => {
-      var baseUrl = "http://localhost:8080/api";
+      var baseUrl = "http://3.237.224.176:8080/api";
       switch (url) {
         case baseUrl + "/employee/E3456/":
           return Promise.resolve({
