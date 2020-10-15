@@ -44,7 +44,7 @@ class EmployeeEdit extends Component {
             postData["password"] = this.state.password;
             postData["confirmPassword"] = this.state.confirmPassword;
 
-            axios.put('http://localhost:8080/api/employee/'+this.props.selectedEmployee.employeeIdentifier, 
+            axios.put('http://3.237.224.176:8080/api/employee/'+this.props.selectedEmployee.employeeIdentifier, 
             postData).then(res => {
                 if (res.status === 200){
                     alert("Details changed successfully")

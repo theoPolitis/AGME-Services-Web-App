@@ -19,7 +19,7 @@ class Login extends Component {
     toggeleGet = async(username, password)=> {
         //passes username and password the user entered and retreives a customer
         try{
-            axios.get("http://localhost:8080/api/customer/" + username + "/" + password, {
+            axios.get("http://3.237.224.176:8080/api/customer/" + username + "/" + password, {
             })
             .then(res => {
                 this.setState({

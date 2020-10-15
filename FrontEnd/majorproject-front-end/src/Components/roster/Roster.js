@@ -39,7 +39,7 @@ class Roster extends Component{
     }
 
     fetchEmployeeRoster = () => {
-        Axios.get("http://localhost:8080/api/employee/all/" + this.props.user.serviceNo, {}).then(
+        Axios.get("http://3.237.224.176:8080/api/employee/all/" + this.props.user.serviceNo, {}).then(
             (res) => {
                 const rosters = res.data.filter(({ employeeId }) => employeeId !== this.props.user.employeeId).map(({ roster }) => roster);
                 this.setState({ rosters, loading: false });
@@ -67,7 +67,7 @@ class Roster extends Component{
 
     sendRequest = () => 
     {
-        Axios.put("http://localhost:8080/api/roster/update",this.state.roster).then((res) => {
+        Axios.put("http://3.237.224.176:8080/api/roster/update",this.state.roster).then((res) => {
             
                 if(this.state.roster.isApproved)
                 {
@@ -105,7 +105,7 @@ class Roster extends Component{
         const newRosters = this.state.rosters.slice();
         newRosters[index] = newRoster;
         this.setState({rosters: newRosters}, () => {
-            Axios.put("http://localhost:8080/api/roster/update", this.state.rosters[index]).then((res) => {
+            Axios.put("http://3.237.224.176:8080/api/roster/update", this.state.rosters[index]).then((res) => {
                     if(this.state.rosters[index].isApproved)
                     {
                         alert("You approved, your roster is up to date.");

@@ -48,13 +48,13 @@ class Customer extends Component {
   //url for the api for retrivel from the backend
   getMyBookingsUrl() {
     return (
-      "http://localhost:8080/api/booking/customer/" + this.props.userAuth.id
+      "http://3.237.224.176:8080/api/booking/customer/" + this.props.userAuth.id
     );
   }
 
   //handles the button data ehrn casncelling a booking
   cancelBooking(bookingId) {
-    Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
+    Axios.delete(`http://3.237.224.176:8080/api/booking/${bookingId}`)
       .then((res) => {
         this.reloadState();
       })

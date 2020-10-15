@@ -32,7 +32,7 @@ class BusinessWorkingHours extends Component {
 
     axios
       .put(
-        "http://localhost:8080/api/serviceType/" + this.serviceNo, // either this link is wrong or the method in the back end is not implemented
+        "http://3.237.224.176:8080/api/serviceType/" + this.serviceNo, // either this link is wrong or the method in the back end is not implemented
         postData
       )
       .then((res) => {
@@ -60,7 +60,7 @@ class BusinessWorkingHours extends Component {
   getWorkingHourInformation = async (serviceNo) => {
     if (this.props.loggedInStatus === "LOGGED_IN") {
       axios
-        .get("http://localhost:8080/api/serviceType/" + serviceNo, {})
+        .get("http://3.237.224.176:8080/api/serviceType/" + serviceNo, {})
         .then((res) => {
           //passers GET data to app.js
           this.setState({ serviceTypeDetails: res.data });

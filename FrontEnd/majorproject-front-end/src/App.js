@@ -239,7 +239,7 @@ class App extends React.Component {
 
   populateAnalytics = (user) => {
     //Get all of the employees from the database
-    Axios.get("http://localhost:8080/api/employee/all/" + user.serviceNo, {}).then(
+    Axios.get("http://3.237.224.176:8080/api/employee/all/" + user.serviceNo, {}).then(
       (res) => { this.setState({ employees: res.data.filter((emp) => (emp.admin === false)) }, this.populateRosterInformation(res.data)) }
     ).catch(
       (error) => {
@@ -311,7 +311,7 @@ class App extends React.Component {
     }
     this.setState({dates: dates});
     //Find the relevant bookings for each employee by querying the backend
-    employees.map((employee) => (Axios.get("http://localhost:8080/api/booking/employee/"
+    employees.map((employee) => (Axios.get("http://3.237.224.176:8080/api/booking/employee/"
       + employee.employeeId, {})
       .then(
         (res) => { bookingDataArray.push({ name: employee.firstName, dates: this.employeePlot(res.data, dates) }); }
