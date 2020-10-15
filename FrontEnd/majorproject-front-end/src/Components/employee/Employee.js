@@ -11,6 +11,7 @@ class Employee extends Component {
     this.state = {
       bookings: [],
       services: [],
+      employees: [],
       filters: {
         serviceNo: this.props.userAuth.serviceNo,
         date: "",
@@ -38,6 +39,15 @@ class Employee extends Component {
             "An error occured, it seems the backend cannot be reached or no services are present in our backend"
           );
         });
+
+        Axios.get("http://localhost:8080/api/employee/all/"+this.props.userAuth.serviceNo)
+        .then((res) => {
+          this.setState({employees: res.data });
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+
     }
   }
 
@@ -82,6 +92,19 @@ class Employee extends Component {
       });
   }
 
+  editEmployee(id) {
+    Axios.get(`http://localhost:8080/api/employee/${id}`)
+    .then((res) => {
+      // THIS LINE DOESNT WORK
+      this.props.selectEmployee(res.data);
+      this.props.history.push('/editEmployee');
+    })
+    .catch((error) => {
+      console.log(error);
+      alert("Error retreiving employee data to edit.");
+    });
+  }
+
   //GET request determines which times the employee is already booked for on the day
 
   getBookingUrl() {
@@ -90,9 +113,7 @@ class Employee extends Component {
       if (this.state.filters.date) {
         params.push(`date=${this.state.filters.date}`);
       }
-      if (this.state.filters.serviceNo) {
-        params.push(`serviceNo=${this.state.filters.serviceNo}`);
-      }
+      params.push(`serviceNo=${this.props.userAuth.serviceNo}`);
       let queryString = params.join("&");
       return `http://localhost:8080/api/booking/all?${queryString}`;
     }
@@ -108,6 +129,9 @@ class Employee extends Component {
 
   render() {
     var jobs = this.state.bookings;
+    var employees = this.state.employees;
+
+
     // Add a "checked" symbol when clicking on a list item
     var list = document.querySelector("ul");
     if (list) {
@@ -132,19 +156,7 @@ class Employee extends Component {
             </Link>
             <div className="container_emp">
               <h1>Bookings</h1>
-
-            <div className="row">
-            
-              <div className="col-1">
-                <label>Service No:</label>
-              </div>
-              <div className="col-2">
-                <label name="ServiceNo">{this.props.userAuth.serviceNo}</label>
-              </div>
-       
-              <div className="col-2">
-                <div className="col-2">
-                </div>
+              <div className="row">
                 <div className="col-2">
                   <div>
                     <label>Booking Date:</label>
@@ -198,6 +210,50 @@ class Employee extends Component {
                 </tbody>
               </table>
             </div>
+
+
+            <div className="container">
+            <h1>Employee Registry</h1>
+            <table className="bookings" id="bookings">
+              <thead>
+                <tr>
+                  <td>Identifier</td>
+                  <td>First Name</td>
+                  <td>Last Name</td>
+                  <td>Email</td>
+                  <td>Username</td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </thead>
+  
+              <tbody>
+              {employees.map((emp) => (
+                <tr id={emp.employeeId}>
+                  <td>{emp.employeeIdentifier}</td>
+                  <td>{emp.firstName}</td>
+                  <td>{emp.lastName}</td>
+                  <td>{emp.email}</td>
+                  <td>{emp.userName}</td>
+                  <td>
+                    <span
+                      className="button"
+                      onClick={() => this.editEmployee(emp.employeeIdentifier)}
+                    >
+                      Edit
+                    </span>
+                  </td>
+                </tr>
+              ))}
+              </tbody>
+            </table>
+  
+            <br></br>
+  
+            <Link to='/addEmployee' className="accountButton right">Add Employee</Link>
+  
+            </div>
+  
           </div>
         </div>
         </div>

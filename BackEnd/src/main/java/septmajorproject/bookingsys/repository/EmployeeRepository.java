@@ -23,7 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     Employee findByEmail(String email);
 
     //find employee by unique phone number
-    Employee findByPhoneNumber(int phoneNumber);
+    Employee findByPhoneNumber(String phoneNumber);
 
     //Find by employeeIdentifier
     Employee findByEmployeeIdentifier(String id);

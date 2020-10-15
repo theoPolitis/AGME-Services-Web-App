@@ -37,6 +37,10 @@ button[type="submit"] {
   border-radius: 12px;
 }
 
+p {
+  color: #fff;
+}
+
 .col-1 {
   width: 20%;
   float: left;
@@ -155,4 +159,8 @@ ul li.checked {
 .accountButton:hover {
   background: #1770a3;
   transition: 0.4s;
+}
+
+.button {
+  color: #fff;
 }

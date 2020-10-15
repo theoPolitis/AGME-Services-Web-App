@@ -17,6 +17,8 @@ import Analytics from "./Components/analytics/Analytics";
 import AccountEdit from "./Components/account/AccountEdit";
 import PasswordChange from "./Components/account/PasswordChange";
 import BusinessWorkingHours from "./Components/account/BusinessWorkingHours";
+import EditEmployee from "./Components/employee/EmployeeEdit";
+import AddEmployee from "./Components/employee/EmployeeAdd";
 
 class App extends React.Component {
   constructor() {
@@ -27,6 +29,7 @@ class App extends React.Component {
       employee: false,
       customer: false,
       user: {},
+      selectedEmployee: {}
     };
   }
 
@@ -56,6 +59,10 @@ class App extends React.Component {
       employee: false,
       user: {},
     });
+  };
+
+  selectEmployee = (data) => {
+    this.setState({ selectedEmployee: data })
   };
 
   render() {
@@ -191,9 +198,40 @@ class App extends React.Component {
                 userAuth={this.state.user}
                 employee={this.state.employee}
                 customer={this.state.customer}
+                selectEmployee={this.selectEmployee}
               />
             )}
           />
+
+
+          <Route 
+          path="/editEmployee"
+          render={(props) => (
+            <EditEmployee
+              {...props}
+              loggedInStatus={this.state.loggedInStatus}
+              userAuth={this.state.user}
+              employee={this.state.employee}
+              customer={this.state.customer}
+              selectedEmployee={this.state.selectedEmployee}
+            />
+          )}
+          />
+
+          <Route 
+          path="/addEmployee"
+          render={(props) => (
+            <AddEmployee
+              {...props}
+              loggedInStatus={this.state.loggedInStatus}
+              userAuth={this.state.user}
+              employee={this.state.employee}
+              customer={this.state.customer}
+            />
+          )}
+          />
+
+          
         </div>
       </Router>
     );

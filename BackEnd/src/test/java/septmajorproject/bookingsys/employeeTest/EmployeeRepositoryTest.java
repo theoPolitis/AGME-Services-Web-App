@@ -27,10 +27,10 @@ public class EmployeeRepositoryTest {
     //generates test data and constructs testing objects
     @Before
     public void setUp() {
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
-        Employee newEmployeeTwo = new Employee("2345", "Tom", "Anthony", "s36@student.rmit.edu.au", 0424735214, "Something", "s3661672", "password");
-        Employee newEmployeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", 0424735213, "Something", "s3661673", "password");
-        Employee newEmployeeFour = new Employee("4567", "Leigh", "Dean", "s36616@student.rmit.edu.au", 0424735211, "Something", "s3661674", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
+        Employee newEmployeeTwo = new Employee("2345", "Tom", "Anthony", "s36@student.rmit.edu.au", "0424735214", "Something", "s3661672", "password");
+        Employee newEmployeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", "0424735213", "Something", "s3661673", "password");
+        Employee newEmployeeFour = new Employee("4567", "Leigh", "Dean", "s36616@student.rmit.edu.au", "0424735211", "Something", "s3661674", "password");
         newEmployeeOne.setServiceNo("1E");
         newEmployeeTwo.setServiceNo("3E");
         newEmployeeThree.setServiceNo("2E");
@@ -66,7 +66,7 @@ public class EmployeeRepositoryTest {
     //find employee by phone number PASS
     @Test
     public void findEmployeeWithPhoneNumber(){
-        Employee foundEmployee = employeeRepository.findByPhoneNumber(0424735215);
+        Employee foundEmployee = employeeRepository.findByPhoneNumber("0424735215");
 
         assert(foundEmployee.getFirstName().equals("Alex"));
     }
@@ -74,7 +74,7 @@ public class EmployeeRepositoryTest {
     //find employee by phone number FAIL
     @Test
     public void findEmployeeWithIncorrectPhoneNumber_thenReturnNull(){
-        Employee foundEmployee = employeeRepository.findByPhoneNumber(7888);
+        Employee foundEmployee = employeeRepository.findByPhoneNumber("7888");
 
         assert(foundEmployee == null);
     }

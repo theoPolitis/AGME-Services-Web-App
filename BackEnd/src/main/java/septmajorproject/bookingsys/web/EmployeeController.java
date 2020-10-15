@@ -11,6 +11,7 @@ import septmajorproject.bookingsys.service.MapValidationErrorService;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/employee")
@@ -67,5 +68,18 @@ public class EmployeeController {
     public List<Employee> getEmployeesByServiceNo(@PathVariable String serviceNo) {
         return employeeService.findByServiceNo(serviceNo);
     }
-    
+
+    @PutMapping("/{employeeId}")
+    public ResponseEntity<?> updateEmployee(@PathVariable String employeeId, @RequestBody Map<String, String> userDataMap, BindingResult result) {
+        ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);
+
+        if(errorMap != null){
+            return errorMap;
+        }
+
+        employeeService.updateExistingEmployee(employeeId, userDataMap);
+
+        return new ResponseEntity<>(userDataMap,HttpStatus.OK);
+    }
+
 }

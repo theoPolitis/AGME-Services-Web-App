@@ -24,7 +24,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
             "Alex",
             "Test",
             "s3661671@student.rmit.edu.au",
-            0424735215,
+            "0424735215",
             "Something",
             "Alex",
             "alex");
@@ -36,7 +36,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
             "AdminGym",
             "AdminGym",
             "AdminGym@student.rmit.edu.au",
-            000,
+            "000",
             "admin",
             "AdminGym",
             "adminGym");
@@ -48,7 +48,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "AdminPhrezCut",
                 "AdminPhrezCut",
                 "AdminPhrezCut@student.rmit.edu.au",
-                000,
+                "000",
                 "admin",
                 "AdminPhrezCut",
                 "adminPhrezCut");
@@ -60,7 +60,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
                 "AdminBarber",
                 "AdminBarber",
                 "AdminBarber@student.rmit.edu.au",
-                000,
+                "000",
                 "admin",
                 "AdminBarber",
                 "adminBarber");
@@ -73,7 +73,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
             "Sam",
             "ten",
             "sam@student.rmit.edu.au",
-            0544654634,
+            "0544654634",
             "10 the parade",
             "Sam",
             "sam");
@@ -84,7 +84,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
             "Lucas",
             "Angelo",
             "lucas@student.rmit.edu.au",
-            463413476,
+            "463413476",
             "10 rover street",
             "Lucas",
             "lucas");
@@ -95,7 +95,7 @@ public class EmployeeDatabaseLoader implements CommandLineRunner {
             "Massimo",
             "Sette",
             "massimo@student.rmit.edu.au",
-            658454556,
+            "658454556",
             "10 link parade",
             "Massimo",
             "massimo");
