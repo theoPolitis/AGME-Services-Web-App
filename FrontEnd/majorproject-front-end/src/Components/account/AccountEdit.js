@@ -29,7 +29,7 @@ class AccountEdit extends Component {
 
         console.log(this.state.identificationNumber)
 
-        axios.put('http://localhost:8080/api/customer/'+this.state.identificationNumber, 
+        axios.put('http://3.237.224.176:8080/api/customer/'+this.state.identificationNumber, 
         postData).then(res => {
             if (res.status === 200){
                 alert("Details changed successfully")

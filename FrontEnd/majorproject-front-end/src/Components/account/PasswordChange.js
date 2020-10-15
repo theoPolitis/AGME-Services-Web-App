@@ -25,7 +25,7 @@ class ChangePassword extends Component {
 
         //checks the validate fields to make sure confirmPassword and password fields match
         if (this.validatePasswordFields() === "ok") {
-            axios.put('http://localhost:8080/api/customer/'+this.state.identificationNumber, 
+            axios.put('http://3.237.224.176:8080/api/customer/'+this.state.identificationNumber, 
         postData).then(res => {
             if (res.status === 200){
                 alert("Password changed successfully")

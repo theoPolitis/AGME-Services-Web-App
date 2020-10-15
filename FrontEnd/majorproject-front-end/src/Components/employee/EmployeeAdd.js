@@ -23,7 +23,7 @@ class EmployeeAdd extends Component {
 
         }
 
-        axios.get("http://localhost:8080/api/serviceType/all", {}).then((res) => {
+        axios.get("http://3.237.224.176:8080/api/serviceType/all", {}).then((res) => {
             this.setState({ services: res.data });
             this.setState({ serviceNo: res.data[0].serviceNo });
         });
@@ -34,7 +34,7 @@ class EmployeeAdd extends Component {
         event.preventDefault();
         //console.log(this.state)
         if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            axios.post("http://localhost:8080/api/employee", {
+            axios.post("http://3.237.224.176:8080/api/employee", {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     employeeIdentifier: this.state.employeeIdentifier,

@@ -25,7 +25,7 @@ class Employee extends Component {
 
   reloadState() {
     if (this.props.loggedInStatus === "LOGGED_IN") {
-      Axios.get("http://localhost:8080/api/serviceType/all", {}).then((res) => {
+      Axios.get("http://3.237.224.176:8080/api/serviceType/all", {}).then((res) => {
         this.setState({ services: res.data });
       });
 
@@ -40,7 +40,7 @@ class Employee extends Component {
           );
         });
 
-        Axios.get("http://localhost:8080/api/employee/all/"+this.props.userAuth.serviceNo)
+        Axios.get("http://3.237.224.176:8080/api/employee/all/"+this.props.userAuth.serviceNo)
         .then((res) => {
           this.setState({employees: res.data });
         })
@@ -67,7 +67,7 @@ class Employee extends Component {
   }
 
   markAsDone(bookingId) {
-    Axios.post(`http://localhost:8080/api/booking/${bookingId}/complete`)
+    Axios.post(`http://3.237.224.176:8080/api/booking/${bookingId}/complete`)
       .then((res) => {
         this.reloadState();
       })
@@ -80,7 +80,7 @@ class Employee extends Component {
   }
 
   deleteBooking(bookingId) {
-    Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
+    Axios.delete(`http://3.237.224.176:8080/api/booking/${bookingId}`)
       .then((res) => {
         this.reloadState();
       })
@@ -93,7 +93,7 @@ class Employee extends Component {
   }
 
   editEmployee(id) {
-    Axios.get(`http://localhost:8080/api/employee/${id}`)
+    Axios.get(`http://3.237.224.176:8080/api/employee/${id}`)
     .then((res) => {
       // THIS LINE DOESNT WORK
       this.props.selectEmployee(res.data);
@@ -115,10 +115,10 @@ class Employee extends Component {
       }
       params.push(`serviceNo=${this.props.userAuth.serviceNo}`);
       let queryString = params.join("&");
-      return `http://localhost:8080/api/booking/all?${queryString}`;
+      return `http://3.237.224.176:8080/api/booking/all?${queryString}`;
     }
     return (
-      "http://localhost:8080/api/booking/employee/" +
+      "http://3.237.224.176:8080/api/booking/employee/" +
       this.props.userAuth.employeeId
     );
   }

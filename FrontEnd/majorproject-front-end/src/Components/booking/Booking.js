@@ -23,7 +23,7 @@ class Booking extends Component {
       serviceTypeDetails: [],
     };
     //retrieves all front end services
-    Axios.get("http://localhost:8080/api/serviceType/all", {})
+    Axios.get("http://3.237.224.176:8080/api/serviceType/all", {})
       .then((res) => {
         this.setState({ services: res.data });
       })
@@ -44,7 +44,7 @@ class Booking extends Component {
     postData["serviceNo"] = this.state.selectedService;
     postData["rosterTime"] = this.state.selectedTime;
     postData["rosterDate"] = this.state.selectedDate;
-    Axios.post("http://localhost:8080/api/booking/newBooking", postData)
+    Axios.post("http://3.237.224.176:8080/api/booking/newBooking", postData)
       .then((res) => {
         alert(res.data);
       })
@@ -67,7 +67,7 @@ class Booking extends Component {
     //Checking if the selected option is not the "none" attribute
     if (event.target.value !== "none") {
       Axios.get(
-        "http://localhost:8080/api/employee/all/" + event.target.value,
+        "http://3.237.224.176:8080/api/employee/all/" + event.target.value,
         {}
       )
         .then((res) => {
@@ -85,7 +85,7 @@ class Booking extends Component {
         });
 
       Axios.get(
-        "http://localhost:8080/api/serviceType/" + event.target.value,
+        "http://3.237.224.176:8080/api/serviceType/" + event.target.value,
         {}
       )
         .then((res) => {
@@ -204,7 +204,7 @@ class Booking extends Component {
         }
         //GET request determines which times the employee is already booked for on the day
         Axios.get(
-          "http://localhost:8080/api/booking/" +
+          "http://3.237.224.176:8080/api/booking/" +
             formattedDate +
             "/" +
             this.state.selectedEmployee,
