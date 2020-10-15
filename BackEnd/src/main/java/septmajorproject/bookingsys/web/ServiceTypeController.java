@@ -23,7 +23,7 @@ public class ServiceTypeController {
     @Autowired
     private MapValidationErrorService mapValidation;
 
-
+    //Post mapping that generates a new service
     @PostMapping("")
     public ResponseEntity<?> createNewServiceType(@Valid @RequestBody ServiceType serviceType, BindingResult result) {
         //cleans up the error message that is displayed
@@ -39,27 +39,27 @@ public class ServiceTypeController {
         return new ResponseEntity<ServiceType>(serviceType, HttpStatus.CREATED);
 
     }
-
+    //Get mapping that returns all services in the backend
     @GetMapping("/all")
     public List<ServiceType> getAllServiceType() {
         return serviceTypeService.findAllServiceType();
     }
 
-
+    //Get mapping that returns the service associated with the given id
     @GetMapping("/{serviceTypeNo}")
     public ResponseEntity<?> getServiceTypeByNo(@PathVariable String serviceTypeNo) {
         ServiceType serviceType = serviceTypeService.findByServiceNo(serviceTypeNo);
 
         return new ResponseEntity<ServiceType>(serviceType, HttpStatus.OK);
     }
-
+    //Delete mapping that deletes the service associated with the given id
     @DeleteMapping("/{serviceTypeNo}")
     public ResponseEntity<?> deleteServiceTypeByNo(@PathVariable String serviceTypeNo) {
         serviceTypeService.deleteServiceTypeByNo(serviceTypeNo);
 
         return new ResponseEntity<String>("service type with number: " + serviceTypeNo + " was deleted", HttpStatus.OK);
     }
-
+    //Put mapping that updates the service associated with the given id using the values given in the requestBody
     @PutMapping("/{serviceNo}")
     public ResponseEntity<?> updateServicetype(@PathVariable String serviceNo, @RequestBody Map<String, String> serviceTypeDataMap, BindingResult result){
         ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);

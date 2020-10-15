@@ -30,7 +30,7 @@ public class CustomerController {
 
     @Autowired
     private MapValidationErrorService mapValidation;
-
+    //Post mapping that creates a new Customer
     @PostMapping("")
     public ResponseEntity<?> createNewCustomer(@Valid @RequestBody Customer customer, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);
@@ -43,7 +43,7 @@ public class CustomerController {
 
         return new ResponseEntity<Customer>(customer, HttpStatus.CREATED);
     }
-
+    //Put mapping that updates the employee from the provided request body
     @PutMapping("/{customerId}")
     public ResponseEntity<?> updateEmployee(@PathVariable String customerId, @RequestBody Map<String, String> userDataMap, BindingResult result) {
         ResponseEntity<?> errorMap = mapValidation.MapValidationService(result);
@@ -57,7 +57,7 @@ public class CustomerController {
         return new ResponseEntity<>(userDataMap,HttpStatus.OK);
     }
 
-
+    //Get mapping that returns the Customer by username and password, useful for login functionality
     @GetMapping("{username}/{password}")
     public ResponseEntity<?> getPersonByUserNameAndPassword(@PathVariable String username, @PathVariable String password) {
         Customer customer = customerService.findByUsernameAndPassword(username, password);
@@ -65,19 +65,19 @@ public class CustomerController {
         return new ResponseEntity<Customer>(customer, HttpStatus.OK);
     }
 
-
+    //Get mapping that returns all customers
     @GetMapping("/all")
     public List<Customer> getAllCustomers() {
         return customerService.findAllCustomers();
     }
-
+    //Get mapping that returns a customer associated with the provided customer id
     @GetMapping("/{customerId}")
     public ResponseEntity<?> findEmployeeById(@PathVariable String customerId) {
         Customer customer = customerService.findCustomerByIdentificatioNumber(customerId);
 
         return new ResponseEntity<Customer>(customer, HttpStatus.OK);
     }
-
+    //Delete mapping that deletes the customer associated with the provided customer id
     @DeleteMapping("/{customerId}")
     public ResponseEntity<?> deleteCustomerById(@PathVariable String customerId) {
         customerService.deleteCustomerByIdentifier(customerId);

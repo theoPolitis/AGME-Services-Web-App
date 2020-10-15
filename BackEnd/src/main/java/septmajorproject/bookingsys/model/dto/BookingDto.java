@@ -9,8 +9,12 @@ import java.util.Date;
 @Data
 public class BookingDto {
 
+    //The lombok @Data tag auto-implements the setters and getters for each of the attributes
+
+    //Each of these attributes match those present in the Booking model.
     private long id;
 
+    //All of the DTOs replace the relevant model information that would be present in a booking object
     private EmployeeDto employee;
 
     private CustomerDto customer;

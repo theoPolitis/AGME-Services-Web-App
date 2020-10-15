@@ -23,13 +23,12 @@ import java.util.Map;
 @CrossOrigin
 @RequestMapping("/api/roster")
 public class RosterController {
-    //TODO: Add functionality for communication between frontend and backend.
 
     @Autowired
     private RosterService rosterService;
     @Autowired
     private EmployeeService employeeService;
-
+    //Post mapping that saves a new employee in the backend
     @PostMapping("")
     public ResponseEntity<?> createNewRoster(@Valid @RequestBody Roster roster, BindingResult result) {
         Map<String, String> errorMap = new HashMap<>();
@@ -41,40 +40,40 @@ public class RosterController {
 
         return new ResponseEntity<Roster>(roster, HttpStatus.CREATED);
     }
-
+    //Get mapping that returns all rosters in the backend
     @GetMapping("/all")
     public List<Roster> all() {
         return rosterService.getAll();
     }
-
+    //Get mapping that returns all rosters that have been approved - useful to show roster information to admins
     @GetMapping("/all/approved")
     public List<Roster> findApprovedRosters()
     {
         List<Roster> rosters = rosterService.findRostersByApproval(true);
         return rosters;
     }
-
+    //Get mapping that returns all non approved rosters - useful to show roster information to admins
     @GetMapping("/all/notApproved")
     public List<Roster> findUnApprovedRosters()
     {
         List<Roster> rosters = rosterService.findRostersByApproval(false);
         return rosters;
     }
-
+    //Get mapping to return the roster associated with the given roster id
     @GetMapping("/{rosterId}")
     public ResponseEntity<?> findRosterById(@PathVariable long rosterId) {
         Roster roster = rosterService.findRosterByIdentificationNumber(rosterId);
 
         return new ResponseEntity<>(roster, HttpStatus.OK);
     }
-
+    //Delete mapping that removes the roster from the backend associated with the given roster id
     @DeleteMapping("/{rosterId}")
     public ResponseEntity<?> deleteRosterById(@PathVariable long rosterId) {
         rosterService.deleteRosterByIdentifier(rosterId);
         ;
         return new ResponseEntity<String>("Roster with ID: " + rosterId + " was deleted", HttpStatus.OK);
     }
-
+    //Getmapping used to test the API in the JUNIT tests
     @GetMapping("/tester")
     public Roster test() {
 
@@ -88,7 +87,7 @@ public class RosterController {
         return roster;
 
     }
-
+    //GetMapping that returns the roster associated with the givne employee identifier
     @GetMapping("/employee/{employeeIdentifier}")
     public ResponseEntity<?> getRostersByEmployee(@PathVariable String employeeIdentifier)
     {
@@ -96,7 +95,7 @@ public class RosterController {
         List<Roster> roster = rosterService.findRostersByEmployee(emp);
         return new ResponseEntity<>(roster, HttpStatus.OK);
     }
-
+    //Putmapping that updates the roster using the given request body
     @PutMapping("/update")
     public ResponseEntity<?> updateRoster(@RequestBody NewRosterCommand newRoster)
     {

@@ -24,13 +24,12 @@ public class BookingService {
     private final EmployeeRepository employeeRepository;
     private final CustomerRepository customerRepository;
 
-    //Add in addition/modification/retrieval logic
-
+    //Saves the given booking in the backend
     @Transactional
     public Booking saveOrUpdateBooking(Booking booking) {
         return bookingRepository.save(booking);
     }
-
+    //Returns the booking associated with the given id
     @Transactional(readOnly = true)
     public Booking findBookingByIdentificationNumber(Long id) {
         Booking found = bookingRepository.findBookingById(id);
@@ -42,12 +41,12 @@ public class BookingService {
         }
 
     }
-
+    //Returns all bookings
     @Transactional(readOnly = true)
     public List<Booking> getAll() {
         return bookingRepository.findAll();
     }
-
+    //Deletes a booking associated with the given id
     @Transactional
     public void deleteBookingByIdentifier(Long id) {
         Booking found = bookingRepository.findBookingById(id);
@@ -58,7 +57,7 @@ public class BookingService {
             bookingRepository.delete(found);
         }
     }
-
+    //Used to find all bookings associated with the employee on a given date
     @Transactional(readOnly = true)
     public List<Booking> findAllByDateAndEmployee(Employee employee, Date date) {
         List<Booking> bookings = bookingRepository.findAllByEmployee(employee);
@@ -73,21 +72,21 @@ public class BookingService {
         }
         return returned;
     }
-
+    //Used to get all bookings associated with the employee
     @Transactional(readOnly = true)
     public List<Booking> getBookingsForEmployee(Long employeeId) {
         Employee employee = employeeRepository.findById(employeeId)
             .orElseThrow(() -> new RuntimeException("Employee not found: " + employeeId));
         return bookingRepository.findAllByEmployeeAndCompleted(employee, false);
     }
-
+    //Used to get all bookings associated with a given customer
     @Transactional(readOnly = true)
     public List<Booking> getBookingsForCustomer(Long customerId) {
         Customer customer = customerRepository.findById(customerId)
             .orElseThrow(() -> new RuntimeException("Customer not found: " + customerId));
         return bookingRepository.findAllByCustomerAndCompleted(customer, false);
     }
-
+    //Used to update the bookings completed attribute (a boolean)
     @Transactional
     public void completeBooking(Long bookingId) {
         Booking booking = bookingRepository.findById(bookingId)
@@ -95,7 +94,7 @@ public class BookingService {
         booking.setCompleted(true);
         bookingRepository.save(booking);
     }
-
+    //Gets all bookings associated with a date and service
     public List<Booking> getBookings(Date date, String serviceNo) {
         String dateStr = null;
         if (date != null) {
