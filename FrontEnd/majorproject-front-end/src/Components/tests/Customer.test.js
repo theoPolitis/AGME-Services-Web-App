@@ -1,12 +1,8 @@
 import React from "react";
-import Login from "../account/Login";
-import { shallow, mount } from "enzyme";
+import { shallow } from "enzyme";
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import renderer from "react-test-renderer";
 import axios from "axios";
-import renderWithRouter from "./TestingRouter";
-import Booking from "../booking/Booking";
 import Customer from "../customer/Customer";
 
 jest.mock("axios");
@@ -84,9 +80,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Customer userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
 
     wrapper.find('label[name="firstName"]').equals("change", {
       target: {
@@ -109,9 +103,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Customer userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('label[name="lastName"]').equals("change", {
       target: {
         name: "lastName",
@@ -133,9 +125,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Customer userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('label[name="address"]').equals("change", {
       target: {
         name: "address",
@@ -157,9 +147,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Customer userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('label[name="email"]').equals("change", {
       target: {
         name: "email",
@@ -181,9 +169,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Customer userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('label[name="mobileNumber"]').equals("change", {
       target: {
         name: "mobileNumber",
@@ -205,9 +191,7 @@ describe("<Customer /> test for Customer.js and it's components", () => {
     ];
 
     const wrapper = shallow(<Customer userAuth={auth} />);
-    const instance = wrapper.instance();
 
-    var data = await wrapper.instance().componentDidMount();
     wrapper.find('label[name="userName"]').equals("change", {
       target: {
         name: "userName",
@@ -215,56 +199,4 @@ describe("<Customer /> test for Customer.js and it's components", () => {
       },
     });
   });
-
-  //   it("Testing bookingCancelButton", async () => { // not sure how to do this
-  //     const auth = [
-  //       {
-  //         firstName: "Alocious",
-  //         Address: "20 mongol street, eliot",
-  //         email: "alichan@email.com",
-  //         lastName: "Kronos",
-  //         phoneNumber: "0405811816",
-  //         userName: "Alocious",
-  //         customerList: [
-  //           {
-  //             id: 17,
-  //             employee: {
-  //               employeeId: 9,
-  //               employeeIdentifier: "E3456",
-  //               firstName: "Sam",
-  //               lastName: "ten",
-  //               address: "10 the parade",
-  //               email: "sam@student.rmit.edu.au",
-  //               phoneNumber: 93542812,
-  //               password: "sam",
-  //               userName: "Sam",
-  //               createdDate: "2020-09-19",
-  //               updatedDate: null,
-  //               rosterList: [],
-  //               bookingList: [],
-  //               admin: false,
-  //             },
-  //             customer: 1,
-  //             serviceType: {
-  //               serviceNo: "3E",
-  //               serviceName: "Barber",
-  //               createdDate: "2020-09-19",
-  //               updatedDate: null,
-  //             },
-  //             rosterDate: "2020-09-19",
-  //             rosterTime: "17:22:39",
-  //             completed: false,
-  //           },
-  //         ],
-  //       },
-  //     ];
-
-  //     const wrapper = shallow(<Customer userAuth={auth} />);
-  //     const instance = wrapper.instance();
-
-  //     var data = await wrapper.instance().componentDidMount();
-
-  //     const button = wrapper.find('span[class = "button"]');
-  //     button.simulate("click");
-  //   });
 });

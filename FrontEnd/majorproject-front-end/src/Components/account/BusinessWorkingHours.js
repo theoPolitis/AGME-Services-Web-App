@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Link, Redirect } from "react-router-dom";
+import { Redirect } from "react-router-dom";
 
 import axios from "axios";
 import "../customer/Customer.css";
@@ -19,10 +19,12 @@ class BusinessWorkingHours extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  //returns true if the logged in user is the admin
   isAdmin() {
     return this.props.userAuth.admin === true;
   }
 
+  // updating call to the back end
   handleSubmit = (event) => {
     var postData = {};
     postData["startTime"] = this.state.startTime;
@@ -49,10 +51,12 @@ class BusinessWorkingHours extends Component {
     event.preventDefault();
   };
 
+  // whenever the component did mount is called the back end is contacted to get the latest information
   componentDidMount() {
     this.getWorkingHourInformation(this.serviceNo);
   }
 
+  // retrieving the information about the service from the back end
   getWorkingHourInformation = async (serviceNo) => {
     if (this.props.loggedInStatus === "LOGGED_IN") {
       axios
@@ -74,6 +78,7 @@ class BusinessWorkingHours extends Component {
     }
   };
 
+  //sets the service no to be used when retrieving the details from back end
   setServiceNo() {
     if (this.props.userAuth.admin === true) {
       this.serviceNo = this.props.userAuth.serviceNo;
@@ -81,9 +86,6 @@ class BusinessWorkingHours extends Component {
   }
 
   render() {
-    // this.serviceNo = "1E"; //need to set the correct service no here so that the correct information is shown here
-    // console.log(this.props);
-    this.setServiceNo();
     if (this.props.loggedInStatus === "NOT_LOGGED_IN" && !this.isAdmin()) {
       return (
         <Redirect
@@ -91,15 +93,16 @@ class BusinessWorkingHours extends Component {
         />
       );
     } else {
+      this.setServiceNo();
       return (
         <div className="container">
           <div className="detailsList">
             <h1>Current Times:</h1>
             <span>Start Time: </span>
-            <label>{this.state.serviceTypeDetails.startTime}</label>
+            <label className="currentStartTime">{this.state.serviceTypeDetails.startTime}</label>
             <br />
             <span>End Time: </span>
-            <label>{this.state.serviceTypeDetails.endTime}</label>
+            <label className="currentEndTime">{this.state.serviceTypeDetails.endTime}</label>
           </div>
           <div>
             <h1>Edit Times</h1>

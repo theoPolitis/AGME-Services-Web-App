@@ -24,6 +24,7 @@ class Customer extends Component {
     this.cancellableBooking = true;
   }
 
+  //checks whether the component mounted, react basic function, here it will reload the state each time
   componentDidMount() {
     this.reloadState();
   }
@@ -53,7 +54,6 @@ class Customer extends Component {
 
   //handles the button data ehrn casncelling a booking
   cancelBooking(bookingId) {
-    console.log("button clicked");
     Axios.delete(`http://localhost:8080/api/booking/${bookingId}`)
       .then((res) => {
         this.reloadState();
@@ -82,7 +82,8 @@ class Customer extends Component {
 
     if (
       Math.floor(
-        Math.abs(currentDateTime - bookingDateTime) / (60 * 60 * 24 * 1000)
+        // checking if the booking is within the 2 day/48hour time period
+        Math.abs(currentDateTime - bookingDateTime) / (60 * 60 * 24 * 1000) 
       ) >= 2
     ) {
       this.cancellableBooking = true;
@@ -128,6 +129,7 @@ class Customer extends Component {
                   </tr>
                 </thead>
                 <tbody>
+                  {/* customer bookings are looped over here */}
                   {bookings.map((booking) => (
                     <tr id={booking.id} key={booking.id}>
                       <td>

@@ -13,7 +13,7 @@ class Employee extends Component {
       services: [],
       employees: [],
       filters: {
-        serviceNo: "",
+        serviceNo: this.props.userAuth.serviceNo,
         date: "",
       },
     };
@@ -49,18 +49,6 @@ class Employee extends Component {
         });
 
     }
-  }
-
-  changeServiceNo(serviceNo) {
-    this.setState(
-      {
-        filters: {
-          ...this.state.filters,
-          serviceNo: serviceNo,
-        },
-      },
-      () => this.reloadState()
-    );
   }
 
   changeDateFilter(date) {
@@ -143,7 +131,7 @@ class Employee extends Component {
     var jobs = this.state.bookings;
     var employees = this.state.employees;
 
-    //still not listening ////////////
+
     // Add a "checked" symbol when clicking on a list item
     var list = document.querySelector("ul");
     if (list) {
@@ -160,18 +148,14 @@ class Employee extends Component {
 
     //admin page
     if (this.isAdminUser()) {
-      // {
-      //   console.log(this.props);
-      // }
       return (
         <div>
           <div>
             <Link to="/businessWorkingHours" className="accountButton">
               Edit Working Hours for the week
             </Link>
-            <div className="container">
+            <div className="container_emp">
               <h1>Bookings</h1>
-
               <div className="row">
                 <div className="col-2">
                   <div>
@@ -272,6 +256,7 @@ class Employee extends Component {
   
           </div>
         </div>
+        </div>
       );
     }
 
@@ -279,7 +264,7 @@ class Employee extends Component {
     return (
       <div>
         <div>
-          <div className="container">
+          <div className="container_emp">
             <h1>Employee</h1>
             <h1>Roster</h1>
 
