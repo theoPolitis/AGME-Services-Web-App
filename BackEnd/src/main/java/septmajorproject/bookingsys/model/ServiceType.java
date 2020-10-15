@@ -30,6 +30,14 @@ public class ServiceType {
     @NotBlank(message = "Please Enter a service name.")
     private String serviceName;
 
+    @Size(min = 1, max = Integer.MAX_VALUE)
+    @NotBlank(message = "Please Enter a start time for the week.")
+    private String startTime;
+
+    @Size(min = 1, max = Integer.MAX_VALUE)
+    @NotBlank(message = "Please Enter a end time for the week.")
+    private String endTime;
+
 
     //created and modified date for records following format yyyy-MM-dd
     @JsonFormat(pattern = "yyyy-MM-dd")
@@ -43,9 +51,11 @@ public class ServiceType {
     }
 
     //simple constructor for ServiceType
-    public ServiceType(String serviceNo, String serviceName) {
+    public ServiceType(String serviceNo, String serviceName, String startTime, String endTime) {
         this.serviceNo = serviceNo;
         this.serviceName = serviceName;
+        this.startTime = startTime;
+        this.endTime = endTime;
 
     }
 
@@ -77,6 +87,22 @@ public class ServiceType {
 
     public void setServiceName(String serviceName) {
         this.serviceName = serviceName;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }
 

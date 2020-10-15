@@ -46,7 +46,7 @@ public class ServiceTypeControllerTest {
 
     @Test
     public void givenServiceType_whenGetServiceType_thenReturnJsonArray() throws Exception{
-        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning");
+        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning","08:00","20:00");
         List<ServiceType> allServiceTypes = Arrays.asList(ServiceType1);
 
         given(serviceTypeService.findAllServiceType()).willReturn(allServiceTypes);
@@ -69,7 +69,7 @@ public class ServiceTypeControllerTest {
 
     @Test
     public void givenNewServiceType_whenPostNewServiceType_thenNewServiceTypeIsAdded() throws Exception {
-        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning");
+        ServiceType ServiceType1 = new ServiceType("RC01","Room Cleaning","08:00","20:00");
         mvc.perform(post("/api/serviceType/")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(ServiceType1)))

@@ -20,6 +20,7 @@ class Booking extends Component {
       employeeDisabled: true,
       dateDisabled: true,
       timeDisabled: true,
+      serviceTypeDetails: [],
     };
     //retrieves all front end services
     Axios.get("http://localhost:8080/api/serviceType/all", {})
@@ -34,7 +35,7 @@ class Booking extends Component {
       });
   }
 
-  componentDidMount = () => { };
+  componentDidMount = () => {};
 
   handleSubmit = (event) => {
     var postData = {};
@@ -43,10 +44,7 @@ class Booking extends Component {
     postData["serviceNo"] = this.state.selectedService;
     postData["rosterTime"] = this.state.selectedTime;
     postData["rosterDate"] = this.state.selectedDate;
-    Axios.post(
-      "http://localhost:8080/api/booking/newBooking",
-      postData
-    )
+    Axios.post("http://localhost:8080/api/booking/newBooking", postData)
       .then((res) => {
         alert(res.data);
       })
@@ -85,6 +83,25 @@ class Booking extends Component {
         .catch((error) => {
           alert("An error occured, details : " + error.response.status);
         });
+
+      Axios.get(
+        "http://localhost:8080/api/serviceType/" + event.target.value,
+        {}
+      )
+        .then((res) => {
+          //passers GET data to app.js
+          this.setState({ serviceTypeDetails: res.data });
+        })
+        .catch((e) => {
+          this.setState({
+            error: true,
+          });
+          if (this.state.error === true) {
+            console.log(
+              "Something went wrong in booking.js in get handleServiceSelection, getting service details"
+            );
+          }
+        });
     } else {
       this.setState({ employees: [] });
       this.setState({ employeeDisabled: true });
@@ -112,12 +129,21 @@ class Booking extends Component {
   handleDateSelection = (event) => {
     var date = new Date(event.target.value);
     var today = new Date();
-    var nextWeek = new Date(today.getFullYear(), today.getMonth(), today.getDate()+8);
+    var nextWeek = new Date(
+      today.getFullYear(),
+      today.getMonth(),
+      today.getDate() + 8
+    );
     //If the selected date is in the future, proceed
-    if (today.getTime() < date.getTime() && date.getTime() < nextWeek.getTime()) {
+    if (
+      today.getTime() < date.getTime() &&
+      date.getTime() < nextWeek.getTime()
+    ) {
       var flag = true;
       var weekDay = date.getDay();
-      var employee = this.state.employees.find(employee => { return employee.employeeIdentifier === this.state.selectedEmployee });
+      var employee = this.state.employees.find((employee) => {
+        return employee.employeeIdentifier === this.state.selectedEmployee;
+      });
       switch (weekDay) {
         case 0:
           if (!employee.roster.sunday) {
@@ -170,8 +196,8 @@ class Booking extends Component {
         }
         var formattedDate = year + "-" + month + "-" + day;
         this.setState({ selectedDate: formattedDate });
-        var startTime = 6;
-        var endTime = 18;
+        var endTime = parseInt(this.state.serviceTypeDetails.endTime);
+        var startTime = parseInt(this.state.serviceTypeDetails.startTime);
         var times = [];
         for (var i = startTime; i < endTime; i++) {
           times.push(i + ":00");
@@ -179,15 +205,15 @@ class Booking extends Component {
         //GET request determines which times the employee is already booked for on the day
         Axios.get(
           "http://localhost:8080/api/booking/" +
-          formattedDate +
-          "/" +
-          this.state.selectedEmployee,
+            formattedDate +
+            "/" +
+            this.state.selectedEmployee,
           {}
         )
           .then((res) => {
             this.setState({ alreadyBooked: res.data }, function () {
               var booked = res.data;
-              for (i = 0; i < booked.length; i++) {
+              for (let i = 0; i < booked.length; i++) {
                 times = times.filter((item) => item !== booked[i].time);
               }
               this.setState({ bookingTimes: times });
@@ -201,23 +227,21 @@ class Booking extends Component {
               this.setState({ bookingTimes: times });
             }
           });
-      }else {
+      } else {
         this.setState({ bookingTimes: [] });
         this.setState({ buttonDisabled: true });
         this.setState({ timeDisabled: true });
         alert("Employee is not working on this day");
       }
-
     } else {
       this.setState({ bookingTimes: [] });
       this.setState({ buttonDisabled: true });
       this.setState({ timeDisabled: true });
-      if(today.getTime() > date.getTime()){
+      if (today.getTime() > date.getTime()) {
         alert("Please Select a Date that is Not in the past!");
-      }else{
+      } else {
         alert("You can only select bookings withing the next 7 days");
       }
-      
     }
   };
 

@@ -27,7 +27,7 @@ public class RosterIntegrationTest {
     private LocalValidatorFactoryBean localValidatorFactoryBean;
 
 
-    Employee employee = new Employee("EmpIdentity", "Bob", "Smith", "bob@smith.com", 39593925, "123 street", "anotherOne", "test");
+    Employee employee = new Employee("EmpIdentity", "Bob", "Smith", "bob@smith.com", "39593925", "123 street", "anotherOne", "test");
 
 
 

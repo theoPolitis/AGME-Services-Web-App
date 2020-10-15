@@ -1,16 +1,14 @@
 import React, { Component } from 'react'
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
-import './Account.css';
 import { Redirect } from 'react-router-dom';
 
-class Signup extends Component {
-    id = uuidv4();
+class EmployeeAdd extends Component {
     constructor(props){
         super(props);
 
         this.state = {
-            personIdentifier: "",
+            services: [],
+            employeeIdentifier: "",
             firstName: "",
             lastName: "",
             email: "",
@@ -19,10 +17,16 @@ class Signup extends Component {
             userName: "",
             password: "",
             confirmPassword: "",
+            serviceNo: "",
             errors: "",
             isSignedUp: false
 
         }
+
+        axios.get("http://localhost:8080/api/serviceType/all", {}).then((res) => {
+            this.setState({ services: res.data });
+            this.setState({ serviceNo: res.data[0].serviceNo });
+        });
 
     }
 
@@ -30,22 +34,23 @@ class Signup extends Component {
         event.preventDefault();
         //console.log(this.state)
         if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            axios.post("http://localhost:8080/api/customer", {
-                    identificationNumber: this.id,
+            axios.post("http://localhost:8080/api/employee", {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
+                    employeeIdentifier: this.state.employeeIdentifier,
                     phoneNumber: this.state.phoneNumber,
                     email: this.state.email,
                     address: this.state.address,
-                    username: this.state.userName,
-                    password: this.state.password
+                    userName: this.state.userName,
+                    password: this.state.password,
+                    serviceNo: this.state.serviceNo
             }).then(res => {
                 if(res.status === 201){
                     this.setState({ isSignedUp: true });
                 }
 
             }).catch(error => {
-                alert("Username already exists");
+                alert("Username or Employee Identifier already exists");
                 //console.log(error);
             })
 
@@ -57,13 +62,12 @@ class Signup extends Component {
 
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
-
         }
 
     validate(password, confirmPassword){
         if(password === confirmPassword){
             return true;
-        }else{
+        } else {
             return false;
        }
 
@@ -71,13 +75,26 @@ class Signup extends Component {
 
     render() {
         if(this.state.isSignedUp === true){
-            return <Redirect to={{pathname: "/"}}/>;
+            return <Redirect to={{pathname: "/employee"}}/>;
         }
+
         return (
                 
             <div className="container">
-                <h1>Sign Up</h1>
+                <h1>New Employee</h1>
                 <form onSubmit={this.handleSubmit}>
+
+
+                    <div className="row">
+                        <div className="col-1">
+                            <label>
+                                Employee Identifier:
+                            </label>
+                        </div>
+                        <div className="col-2">
+                            <input type="text" name="employeeIdentifier" placeholder="Employee Identifier" value={this.state.employeeIdentifier} onChange={this.handleChange} required/>
+                        </div>
+                    </div>
 
                     <div className="row">
                         <div className="col-1">
@@ -148,6 +165,28 @@ class Signup extends Component {
                     <div className="row">
                         <div className="col-1">
                             <label>
+                                Service:
+                            </label>
+                        </div>
+                        <div className="col-2">
+                        <select
+                        name="serviceNo"
+                        value={this.state.serviceNo}
+                        onChange={this.handleChange}
+                        >
+                        {this.state.services.map((service) => (
+                            <option value={service.serviceNo}>
+                              {service.serviceName}
+                            </option>
+                          ))}
+                        </select>
+                        
+                        </div>
+                    </div>
+
+                    <div className="row">
+                        <div className="col-1">
+                            <label>
                                 Password:
                             </label>
                         </div>
@@ -167,11 +206,11 @@ class Signup extends Component {
                     </div>
                 </div>
 
-                    <button type="submit" value="Submit">Register</button>
+                    <button type="submit" value="Submit">Create</button>
                 </form>
             </div>
 
         )
     }
 }
-export default Signup;
+export default EmployeeAdd;

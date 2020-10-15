@@ -46,7 +46,7 @@ public class RosterServiceTest {
     @Before
     public void setUp(){
 
-        Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee employeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
 
         Roster rosterOne = new Roster(employeeOne);
         Roster rosterTwo = new Roster(employeeOne);

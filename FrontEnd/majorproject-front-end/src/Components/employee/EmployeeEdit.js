@@ -1,82 +1,73 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 import axios from "axios";
-import { v4 as uuidv4 } from 'uuid';
-import './Account.css';
-import { Redirect } from 'react-router-dom';
 
-class Signup extends Component {
-    id = uuidv4();
-    constructor(props){
+import "./Employee.css"
+
+class EmployeeEdit extends Component {
+    constructor(props) {
         super(props);
-
+    
         this.state = {
-            personIdentifier: "",
-            firstName: "",
-            lastName: "",
-            email: "",
-            phoneNumber: "",
-            address: "",
-            userName: "",
+            firstName: this.props.selectedEmployee.firstName,
+            lastName: this.props.selectedEmployee.lastName,
+            address: this.props.selectedEmployee.address,
+            phoneNumber: this.props.selectedEmployee.phoneNumber,
+            email: this.props.selectedEmployee.email,
+            userName: this.props.selectedEmployee.userName,
             password: "",
-            confirmPassword: "",
-            errors: "",
-            isSignedUp: false
-
-        }
-
-    }
-
-    handleSubmit = (event) => { 
-        event.preventDefault();
-        //console.log(this.state)
-        if(this.validate(this.state.password, this.state.confirmPassword) === true){
-            axios.post("http://localhost:8080/api/customer", {
-                    identificationNumber: this.id,
-                    firstName: this.state.firstName,
-                    lastName: this.state.lastName,
-                    phoneNumber: this.state.phoneNumber,
-                    email: this.state.email,
-                    address: this.state.address,
-                    username: this.state.userName,
-                    password: this.state.password
-            }).then(res => {
-                if(res.status === 201){
-                    this.setState({ isSignedUp: true });
-                }
-
-            }).catch(error => {
-                alert("Username already exists");
-                //console.log(error);
-            })
-
-            //console.log("form Submitted");
-        }else{
-            alert("Passwords do not match");
-        }
-    }
+            confirmPassword: ""
+        };
+      }
 
     handleChange = (event) => {
         this.setState({[event.target.name]: event.target.value});
-
-        }
-
-    validate(password, confirmPassword){
-        if(password === confirmPassword){
-            return true;
-        }else{
-            return false;
-       }
-
     }
 
-    render() {
-        if(this.state.isSignedUp === true){
-            return <Redirect to={{pathname: "/"}}/>;
+    isAdminUser() {
+        if(this.props.userAuth != null) {
+            return this.props.userAuth.admin === true;
+        } else {
+            return false;
         }
-        return (
-                
-            <div className="container">
-                <h1>Sign Up</h1>
+            
+    }
+
+    handleSubmit = (event) => {
+        if (this.state.password === this.state.confirmPassword) {
+            var postData = {}
+            postData["firstName"] = this.state.firstName;
+            postData["lastName"] = this.state.lastName;
+            postData["address"] = this.state.address;
+            postData["phoneNumber"] = this.state.phoneNumber;
+            postData["email"] = this.state.email;
+            postData["userName"] = this.state.userName;
+            postData["password"] = this.state.password;
+            postData["confirmPassword"] = this.state.confirmPassword;
+
+            axios.put('http://localhost:8080/api/employee/'+this.props.selectedEmployee.employeeIdentifier, 
+            postData).then(res => {
+                if (res.status === 200){
+                    alert("Details changed successfully")
+                    this.props.history.push('/employee')
+                } 
+
+            }).catch(error => {
+                alert("ERROR");
+                console.log(error);
+            })
+        } else {
+            alert("Passwords do not match")
+        }
+        
+        event.preventDefault();
+    } 
+
+    render() {
+        
+        if (this.isAdminUser()) {
+            return(
+                <div className="container">
+                <h1>{this.state.firstName + " " + this.state.lastName}</h1>
                 <form onSubmit={this.handleSubmit}>
 
                     <div className="row">
@@ -145,6 +136,8 @@ class Signup extends Component {
                         </div>
                     </div>
 
+                    <p className="SpecialInstructions">Please note: If password fields are left blank, they will not be processed.</p>
+
                     <div className="row">
                         <div className="col-1">
                             <label>
@@ -152,7 +145,7 @@ class Signup extends Component {
                             </label>
                         </div>
                         <div className="col-2">
-                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange} required/>
+                            <input type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.handleChange}/>
                         </div>
                     </div>
 
@@ -163,15 +156,23 @@ class Signup extends Component {
                         </label>
                     </div>
                     <div className="col-2">
-                        <input type="password" name="confirmPassword" placeholder="Confrim Password" value={this.state.confirmPassword} onChange={this.handleChange} required/>
+                        <input type="password" name="confirmPassword" placeholder="Confrim Password" value={this.state.confirmPassword} onChange={this.handleChange}/>
                     </div>
                 </div>
 
-                    <button type="submit" value="Submit">Register</button>
+                    <button type="submit" value="Submit">Update</button>
                 </form>
             </div>
-
-        )
+            );
+        } else {
+            return(
+                <div className="container">
+                    <h1>You must be signed in with an Administrator account to access this feature.</h1>
+                </div>
+            );
+        }
     }
+
 }
-export default Signup;
+
+export default EmployeeEdit

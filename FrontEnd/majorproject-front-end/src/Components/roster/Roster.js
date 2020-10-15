@@ -1,7 +1,5 @@
 import React, { Component } from "react";
-import { Link } from 'react-router-dom';
 import { Redirect } from "react-router-dom";
-import "./Roster.css"
 import Axios from "axios";
 
 class Roster extends Component{
@@ -237,7 +235,6 @@ class Roster extends Component{
                                 {roster.friday === roster.requestedFriday ? "Approved" : "Change Requested"}
                             </button>
                         </div>
-
                         <div className="row">
                             <div className="day">
                             <h2>Saturday:<span style={{color: "#2197DA", float:"right"}}>{roster.saturday ? " Rostered" : " Not Rostered"}</span></h2>

@@ -38,11 +38,11 @@ public class EmployeeServiceTest {
 
     @Before
     public void setUp(){
-        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", 0424735215, "Something", "s3661671", "password");
+        Employee newEmployeeOne = new Employee("1234", "Alex", "Test", "s3661671@student.rmit.edu.au", "0424735215", "Something", "s3661671", "password");
 
-        Employee newEmployeeTwo = new Employee("2345", "Tom", "Anthony", "s36@student.rmit.edu.au", 0424735214, "Something", "s3661672", "password");
-        Employee newEmployeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", 0424735213, "Something", "s3661673", "password");
-        Employee newEmployeeFour = new Employee("4567", "Leigh", "Dean", "s36616@student.rmit.edu.au", 0424735211, "Something", "s3661674", "password");
+        Employee newEmployeeTwo = new Employee("2345", "Tom", "Anthony", "s36@student.rmit.edu.au", "0424735214", "Something", "s3661672", "password");
+        Employee newEmployeeThree = new Employee("3456", "Sam", "Rizzo", "s3661@student.rmit.edu.au", "0424735213", "Something", "s3661673", "password");
+        Employee newEmployeeFour = new Employee("4567", "Leigh", "Dean", "s36616@student.rmit.edu.au", "0424735211", "Something", "s3661674", "password");
 
         List<Employee> testList = new ArrayList<Employee>();
         testList.add(newEmployeeTwo);
@@ -106,7 +106,7 @@ public class EmployeeServiceTest {
 
     @Test
     public void whenValidPhoneNumber_ThenEmployeeShouldBeFound(){
-        int phoneNumber = 0424735215;
+        String phoneNumber = "0424735215";
 
         Employee found = employeeService.findEmployeeByPhoneNumber(phoneNumber);
 
@@ -115,7 +115,7 @@ public class EmployeeServiceTest {
 
     @Test(expected = EmployeeException.class)
     public void whenInValidPhoneNumber_ThenThrowEmployeeException(){
-        int phoneNumber = 0;
+        String phoneNumber = "0";
 
         Employee found = employeeService.findEmployeeByPhoneNumber(phoneNumber);
     }
