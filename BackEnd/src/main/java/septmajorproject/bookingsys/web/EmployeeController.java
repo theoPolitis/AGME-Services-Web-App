@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import septmajorproject.bookingsys.model.Employee;
+import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.service.EmployeeService;
 import septmajorproject.bookingsys.service.MapValidationErrorService;
 
@@ -32,7 +33,6 @@ public class EmployeeController {
         if (errorMap != null) {
             return errorMap;
         }
-
         Employee employeeOne = employeeService.saveOrUpdateEmployee(employee);
 
         return new ResponseEntity<Employee>(employee, HttpStatus.CREATED);
