@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import septmajorproject.bookingsys.exception.EmployeeException;
 import septmajorproject.bookingsys.model.Customer;
 import septmajorproject.bookingsys.model.Employee;
+import septmajorproject.bookingsys.model.Roster;
 import septmajorproject.bookingsys.repository.EmployeeRepository;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class EmployeeService {
     public Employee saveOrUpdateEmployee(Employee employee) {
         try {
             employee.setEmployeeIdentifier(employee.getEmployeeIdentifier().toUpperCase());
+            employee.setRoster(new Roster(employee));
             return employeeRepository.save(employee);
         } catch (Exception e) {
             throw new EmployeeException("Employee Identifier: " + employee.getEmployeeIdentifier() + " already exists");

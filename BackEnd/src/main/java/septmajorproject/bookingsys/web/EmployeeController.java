@@ -33,7 +33,6 @@ public class EmployeeController {
         if (errorMap != null) {
             return errorMap;
         }
-        employee.setRoster(new Roster());
         Employee employeeOne = employeeService.saveOrUpdateEmployee(employee);
 
         return new ResponseEntity<Employee>(employee, HttpStatus.CREATED);
